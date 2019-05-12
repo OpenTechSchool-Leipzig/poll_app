@@ -16,6 +16,13 @@
             </div>
             <textarea v-if="question.options.explanation"/>
           </div>
+          <ul class="form-scala" v-if="question.type==='scale'">
+            <li>{{question.options.startValue}}</li>
+            <li v-for="n in parseInt(question.options.scaleSteps)" v-bind:key="n">
+              <input type="radio">
+            </li>
+            <li>{{question.options.endValue}}</li>
+          </ul>
         </form>
       </li>
     </ul>

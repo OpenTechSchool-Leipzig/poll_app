@@ -51,7 +51,7 @@ export default {
           customAnswer: false,
           startValue: "Totally Agree",
           endValue: "Toatally Disagree",
-          scaleSteps: 5
+          scaleSteps: "5"
         }
       },
       answerInput: null
@@ -59,7 +59,7 @@ export default {
   },
   methods: {
     emitQuestion() {
-      let value = JSON.parse(JSON.stringify(this.newQuestion))
+      let value = JSON.parse(JSON.stringify(this.newQuestion));
       this.$emit("addQuestion", value);
     }
   }
