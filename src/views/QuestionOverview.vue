@@ -1,7 +1,23 @@
 <template>
   <div class="questionsOverview">
     <ul>
-      <li v-for="question in questions" v-bind:key="question.id">{{question.text}}</li>
+      <li v-for="question in questions" v-bind:key="question.id">
+        <h3>{{question.text}}</h3>
+        <form>
+          <textarea v-if="question.type==='open'"/>
+          <div class="form-choices">
+            <div class="answer" v-for="answer in question.answers" v-bind:key="answer">
+              <input id="answer" value="answer" type="checkbox">
+              <label for="answer">{{answer}}</label>
+            </div>
+            <div v-if="question.options.customAnswer" class="answer">
+              <input id="custom-answer" type="checkbox">
+              <input type="answer">
+            </div>
+            <textarea v-if="question.options.explanation"/>
+          </div>
+        </form>
+      </li>
     </ul>
     <AddQuestion @addQuestion="addQuestionHandler"/>
   </div>
@@ -21,11 +37,9 @@ export default {
   },
   methods: {
     addQuestionHandler(value) {
-      //The way I set this up created an weird error: all objects in the questions array are somehow connected to the child-input!
-      let addedQuestion = value;
-      addedQuestion.id = Math.floor(Math.random() * 9000000);
-      console.log(addedQuestion);
-      this.questions.push(addedQuestion);
+      //create random id for testing purpose. the real ID should come from firebase
+      value.id = Math.floor(Math.random() * 9000000);
+      this.questions.push(value);
     }
   }
 };

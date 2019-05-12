@@ -59,7 +59,8 @@ export default {
   },
   methods: {
     emitQuestion() {
-      this.$emit("addQuestion", this.newQuestion);
+      let value = JSON.parse(JSON.stringify(this.newQuestion))
+      this.$emit("addQuestion", value);
     }
   }
 };
@@ -67,7 +68,8 @@ export default {
 
 <style lang="scss" scoped>
 form {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
