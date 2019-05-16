@@ -39,7 +39,7 @@
 
 <script>
 export default {
-  name: "AddQuestion",
+  name: 'AddQuestion',
   data: function() {
     return {
       newQuestion: {
@@ -49,20 +49,20 @@ export default {
         options: {
           explanation: false,
           customAnswer: false,
-          startValue: "Totally Agree",
-          endValue: "Toatally Disagree",
-          scaleSteps: "5"
-        }
+          startValue: 'Totally Agree',
+          endValue: 'Totally Disagree',
+          scaleSteps: '5',
+        },
       },
-      answerInput: null
+      answerInput: null,
     };
   },
   methods: {
     emitQuestion() {
       let value = JSON.parse(JSON.stringify(this.newQuestion));
-      this.$emit("addQuestion", value);
-    }
-  }
+      this.$emit('addQuestion', value);
+    },
+  },
 };
 </script>
 
