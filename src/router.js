@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import QuestionOverview from './views/QuestionOverview.vue';
+import CreatePoll from './views/CreatePoll.vue';
 
 Vue.use(Router);
 
@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: QuestionOverview,
+      component: CreatePoll,
     },
     {
       path: '/about',

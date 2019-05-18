@@ -14,16 +14,22 @@
       </select>
     </div>
     <div class="form-div" v-if="newQuestion.type === 'choice'">
-      <div class="form-checkbox">
-        <input type="checkbox" id="explanation" v-model="newQuestion.options.isYesNo">
-        <label for="explanation">Yes/No Question</label>
-        <input type="checkbox" id="explanation" v-model="newQuestion.options.withText">
-        <label for="explanation">add textfield for explanation</label>
-        <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer">
-        <label for="customanswer">allow user to add answer</label>
+      <div class="form-checkboxes">
+        <div class="form-check">
+          <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo">
+          <label for="yesno">Yes/No Question</label>
+        </div>
+        <div class="form-check">
+          <input type="checkbox" id="explanation" v-model="newQuestion.options.withText">
+          <label for="explanation">add textfield for explanation</label>
+        </div>
+        <div class="form-check" v-if="!newQuestion.options.isYesNo">
+          <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer">
+          <label for="customanswer">allow user to add answer</label>
+        </div>
       </div>
       <div class="form-input">
-        <input v-if="!newQuestion.options.isYesNo" type="answers" v-model="answerInput">
+        <input v-if="!newQuestion.options.isYesNo" type="choices" v-model="answerInput">
         <button @click.prevent="newQuestion.options.choices.push(answerInput)">add answer</button>
       </div>
     </div>
