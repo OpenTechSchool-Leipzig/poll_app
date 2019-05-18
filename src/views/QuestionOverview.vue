@@ -31,23 +31,47 @@
 </template>
 
 <script>
-import AddQuestion from "@/components/AddQuestion.vue";
+import AddQuestion from '@/components/AddQuestion.vue';
+import firebase from 'firebase';
 export default {
-  name: "questionsOverview",
+  name: 'questionsOverview',
   components: {
-    AddQuestion
+    AddQuestion,
   },
   data: function() {
     return {
-      questions: []
+      questions: [],
     };
   },
   methods: {
-    addQuestionHandler(value) {
+    async addQuestionHandler(value) {
       //create random id for testing purpose. the real ID should come from firebase
       value.id = Math.floor(Math.random() * 9000000);
       this.questions.push(value);
-    }
-  }
+      const res = await firebase
+        .firestore()
+        .collection('test')
+        .doc()
+        .set(value);
+      try {
+        //It seems that we cannot get the ID from the set action. So we will need to fetch the questionslist again
+        console.log('success');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async fetchQuestions() {
+      const snapshot = await firebase
+        .firestore()
+        .collection('test')
+        .get();
+      const data = snapshot.forEach(doc => {
+        this.questions.push(doc.data());
+      });
+    },
+  },
+  mounted: function() {
+    this.fetchQuestions();
+  },
 };
 </script>

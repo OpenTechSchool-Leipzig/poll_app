@@ -14,15 +14,17 @@
       </select>
     </div>
     <div class="form-div" v-if="newQuestion.type === 'choice'">
-      <div class="form-input">
-        <input type="answers" v-model="answerInput">
-        <button @click.prevent="newQuestion.answers.push(answerInput)">add answer</button>
-      </div>
       <div class="form-checkbox">
-        <input type="checkbox" id="explanation" v-model="newQuestion.options.explanation">
+        <input type="checkbox" id="explanation" v-model="newQuestion.options.isYesNo">
+        <label for="explanation">Yes/No Question</label>
+        <input type="checkbox" id="explanation" v-model="newQuestion.options.withText">
         <label for="explanation">add textfield for explanation</label>
         <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer">
         <label for="customanswer">allow user to add answer</label>
+      </div>
+      <div class="form-input">
+        <input v-if="!newQuestion.options.isYesNo" type="answers" v-model="answerInput">
+        <button @click.prevent="newQuestion.options.choices.push(answerInput)">add answer</button>
       </div>
     </div>
     <div class="form-div" v-if="newQuestion.type === 'scale'">
@@ -45,10 +47,11 @@ export default {
       newQuestion: {
         text: null,
         type: null,
-        answers: [],
         options: {
-          explanation: false,
+          withText: false,
           customAnswer: false,
+          isYesNo: false,
+          choices: [],
           startValue: 'Totally Agree',
           endValue: 'Totally Disagree',
           scaleSteps: '5',
