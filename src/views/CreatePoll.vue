@@ -14,7 +14,7 @@ export default {
   name: 'createPoll',
   components: {
     AddQuestion,
-    QuestionList
+    QuestionList,
   },
   data: function() {
     return {
@@ -31,7 +31,7 @@ export default {
       try {
         //It seems that we cannot get the ID from the set action. So we will need to fetch the questionslist again
         console.log('success');
-        this.fetchQuestions;
+        this.fetchQuestions();
       } catch (error) {
         console.log(error);
       }

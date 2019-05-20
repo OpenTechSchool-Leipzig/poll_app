@@ -8,9 +8,9 @@
           <div class="form-choices" v-if="question.type!=='open'">
             <div v-if="question.options.isYesNo">
               <div class="choice">
-                <input id="yes" type="checkbox" value="true">
+                <input id="yes" type="radio" value="true">
                 <label for="yes">Yes</label>
-                <input id="no" type="checkbox" value="false">
+                <input id="no" type="radio" value="false">
                 <label for="no">No</label>
               </div>
             </div>

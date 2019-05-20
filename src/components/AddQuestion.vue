@@ -69,6 +69,24 @@ export default {
   methods: {
     emitQuestion() {
       let value = JSON.parse(JSON.stringify(this.newQuestion));
+      //v-model overwrites all values. So we have to define default options in the object
+      //and therefore need to clean unneccasary options
+      switch (value.type) {
+        case 'open':
+          delete value.options;
+          break;
+        case 'choice':
+          delete value.options.startValue;
+          delete value.options.endValue;
+          delete value.options.scaleSteps;
+          break;
+        case 'scale':
+          delete value.options.withText;
+          delete value.options.customAnswer;
+          delete value.options.isYesNo;
+          delete value.options.choices;
+          break;
+      }
       this.$emit('addQuestion', value);
     },
   },
