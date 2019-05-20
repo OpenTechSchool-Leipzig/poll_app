@@ -6,7 +6,7 @@ import store from './store';
 import './registerServiceWorker';
 
 firebase.initializeApp({
-  // insert API Key...
+  // Add API Data here!!!
 });
 
 Vue.config.productionTip = false;
