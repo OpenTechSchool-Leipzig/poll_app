@@ -1,5 +1,9 @@
 <template>
   <form>
+    <header>
+      <h2>New Question</h2>
+      <button @click.prevent="$emit('close')">close</button>
+    </header>
     <div class="form-input">
       <label>Question Text</label>
       <input type="text" v-model="newQuestion.text">
@@ -41,7 +45,7 @@
       <label>Number of Steps</label>
       <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps">
     </div>
-    <button @click.prevent="emitQuestion">Add Question</button>
+    <button class="submit-btn" @click.prevent="emitQuestion">Add Question</button>
   </form>
 </template>
 
@@ -70,7 +74,7 @@ export default {
     emitQuestion() {
       let value = JSON.parse(JSON.stringify(this.newQuestion));
       //v-model overwrites all values. So we have to define default options in the object
-      //and therefore need to clean unneccasary options
+      //and therefore need to clean unneccasary options on emit
       switch (value.type) {
         case 'open':
           delete value.options;
@@ -96,13 +100,17 @@ export default {
 <style lang="scss" scoped>
 form {
   width: 100%;
-  max-width: 500px;
+  height: calc(100%);
+  z-index: 1000;
+  background-color: $primary-light;
   display: flex;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   align-items: center;
 }
-
+header {
+  @include section-header;
+}
 input,
 select {
   padding: 0.5rem;
@@ -122,5 +130,9 @@ select {
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center;
+  margin-bottom: 10px;
+}
+.submit-btn {
+  @include btn-primary;
 }
 </style>
