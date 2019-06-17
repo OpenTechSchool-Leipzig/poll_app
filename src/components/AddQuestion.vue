@@ -70,6 +70,10 @@ export default {
       answerInput: null,
     };
   },
+  updated() {
+    console.log('updated');
+    this.emitObject();
+  },
   methods: {
     emitQuestion() {
       let value = JSON.parse(JSON.stringify(this.newQuestion));
@@ -92,6 +96,23 @@ export default {
           break;
       }
       this.$emit('addQuestion', value);
+      this.newQuestion = {
+        text: null,
+        type: null,
+        options: {
+          withText: false,
+          customAnswer: false,
+          isYesNo: false,
+          choices: [],
+          startValue: 'Totally Agree',
+          endValue: 'Totally Disagree',
+          scaleSteps: '5',
+        },
+      };
+      this.$emit('newQuestion', null);
+    },
+    emitObject() {
+      this.$emit('newQuestion', this.newQuestion);
     },
   },
 };

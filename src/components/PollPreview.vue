@@ -3,6 +3,7 @@
     <header>
       <h2>Poll Preview</h2>
     </header>
+    <div class="poll-preview__title"></div>
     <ul class="poll-preview__list">
       <li class="poll-preview__item" v-for="question in questions" v-bind:key="question.id">
         <h3>{{question.text}}</h3>

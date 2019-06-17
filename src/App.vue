@@ -26,4 +26,7 @@
     }
   }
 }
+button {
+  cursor: pointer;
+}
 </style>

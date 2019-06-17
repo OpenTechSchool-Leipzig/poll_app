@@ -4,7 +4,8 @@
       <AddQuestion
         v-show="showAddQuestion"
         @addQuestion="addQuestionHandler"
-        @close="showAddQuestion=false"
+        @close="closeAddQuestionHandler"
+        @newQuestion="updateQuestionPreviewHandler"
       />
       <QuestionList
         v-show="!showAddQuestion"
@@ -17,6 +18,7 @@
       </div>
     </div>
     <div class="col-right">
+      <QuestionPreview v-show="newQuestion" :question="newQuestion"/>
       <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler"/>
     </div>
   </div>
@@ -26,6 +28,7 @@
 import AddQuestion from '@/components/AddQuestion.vue';
 import QuestionList from '@/components/QuestionList.vue';
 import PollPreview from '@/components/PollPreview.vue';
+import QuestionPreview from '@/components/QuestionPreview.vue';
 import firebase from 'firebase';
 
 export default {
@@ -34,9 +37,11 @@ export default {
     AddQuestion,
     QuestionList,
     PollPreview,
+    QuestionPreview,
   },
   data: function() {
     return {
+      newQuestion: null,
       showAddQuestion: false,
       poll: {
         title: null,
@@ -44,7 +49,7 @@ export default {
         questions: [],
       },
       questionList: [
-        {
+        /* {
           id: 1,
           text: 'A Simple Open Question: Why do you hate polls?',
           type: 'open',
@@ -84,7 +89,7 @@ export default {
             isYesNo: true,
             choices: [],
           },
-        },
+        }, */
       ],
     };
   },
@@ -98,12 +103,19 @@ export default {
     },
   },
   methods: {
+    updateQuestionPreviewHandler(payload) {
+      this.newQuestion = payload;
+    },
     selectQuestionHandler(id) {
       this.poll.questions.push(id);
     },
     removeQuestionHandler(id) {
       let prevSelection = this.poll.questions;
       this.poll.questions = prevSelection.filter(x => x !== id);
+    },
+    closeAddQuestionHandler() {
+      this.showAddQuestion = false;
+      this.newQuestion = null;
     },
     async addQuestionHandler(value) {
       const res = await firebase
@@ -115,12 +127,13 @@ export default {
         //It seems that we cannot get the ID from the set action. So we will need to fetch the questionslist again
         console.log('success');
         this.fetchQuestions();
+        //this.poll.questions.push(value.id); not working since we can't get the ID
       } catch (error) {
         console.log(error);
       }
     },
     async fetchQuestions() {
-      /* this.questionList = []; */
+      this.questionList = [];
       const snapshot = await firebase
         .firestore()
         .collection('test')
@@ -142,7 +155,7 @@ export default {
 .wrapper {
   width: 100%;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
 }
 .col-left {
   width: 33%;
@@ -151,7 +164,7 @@ export default {
   min-height: calc(100vh - 40px);
 }
 .col-right {
-  width: 60%;
+  width: 64%;
 }
 .q-button {
   @include btn-primary;

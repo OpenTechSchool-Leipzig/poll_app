@@ -75,6 +75,7 @@ ul {
 
   &:hover {
     @include shadow2;
+    opacity: 0.9;
   }
 
   &__details {
@@ -97,6 +98,7 @@ ul {
       max-width: 80%;
       margin: 0;
       text-align: left;
+      cursor: pointer;
     }
   }
 }
