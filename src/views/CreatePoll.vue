@@ -98,7 +98,6 @@ export default {
       let questionObjects = this.questionList.filter(x =>
         this.poll.questions.includes(x.id)
       );
-      console.log(questionObjects);
       return questionObjects;
     },
   },
@@ -128,6 +127,8 @@ export default {
         this.questionList.push(value);
         //Add new question to current poll
         this.poll.questions.push(value.id);
+
+        this.closeAddQuestionHandler;
       } catch (error) {
         console.log(error);
       }

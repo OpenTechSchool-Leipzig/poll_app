@@ -82,7 +82,6 @@ export default {
     };
   },
   updated() {
-    console.log('updated');
     this.emitObject();
   },
   methods: {

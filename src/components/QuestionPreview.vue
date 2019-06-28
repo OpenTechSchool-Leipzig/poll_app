@@ -28,7 +28,6 @@
         <input
           type="radio"
           :value="n"
-          v-model="test"
           v-for="n in parseInt(question.options.scaleSteps)"
           v-bind:key="n"
         >

@@ -38,10 +38,8 @@ export default {
     toggleItem(key) {
       if (this.expanded.includes(key)) {
         let filteredArray = this.expanded.filter(x => x != key);
-        console.log('delete key, new list: ' + filteredArray);
         this.expanded = filteredArray;
       } else {
-        console.log('add key: ' + key);
         this.expanded.push(key);
       }
     },
