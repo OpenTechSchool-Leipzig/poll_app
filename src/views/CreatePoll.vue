@@ -121,13 +121,13 @@ export default {
       const res = await firebase
         .firestore()
         .collection('test')
-        .doc()
-        .set(value);
+        .add(value);
       try {
-        //It seems that we cannot get the ID from the set action. So we will need to fetch the questionslist again
-        console.log('success');
-        this.fetchQuestions();
-        //this.poll.questions.push(value.id); not working since we can't get the ID
+        value.id = res.id;
+        //Add new question to QuestionLits
+        this.questionList.push(value);
+        //Add new question to current poll
+        this.poll.questions.push(value.id);
       } catch (error) {
         console.log(error);
       }
