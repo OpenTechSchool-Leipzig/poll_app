@@ -1,7 +1,7 @@
 <template>
   <div class="q-preview">
-    <h3>{{question.text}}</h3>
-    <form>
+    <form v-if="question">
+      <input class="q-preview__title" v-model="question.text">
       <textarea v-if="question.type==='open'"/>
       <div class="q-preview__choices" v-if="question.type!=='open'">
         <div v-if="question.options.isYesNo">
@@ -14,16 +14,17 @@
         </div>
         <div class="q-preview__choice" v-for="choice in question.options.choices" :key="choice">
           <input id="choice" type="checkbox">
-          <label for="answer">{{choice}}</label>
+          <label for="choice">{{choice}}</label>
+          <button @click.prevent="removeChoice(question.options.choices.indexOf(choice))">remove</button>
         </div>
         <div v-if="question.options.customAnswer" class="poll-preview__choice">
           <input id="custom-answer" type="checkbox">
           <input type="answer">
         </div>
-        <textarea v-if="question.options.explanation"/>
+        <textarea v-if="question.options.withText"/>
       </div>
       <ul class="q-preview__scale" v-if="question.type==='scale'">
-        <li>{{question.options.startValue}}</li>
+        <input type="text" v-model="question.options.startValue">
         <input
           type="radio"
           :value="n"
@@ -31,7 +32,7 @@
           v-for="n in parseInt(question.options.scaleSteps)"
           v-bind:key="n"
         >
-        <li>{{question.options.endValue}}</li>
+        <input type="text" v-model="question.options.endValue">
       </ul>
     </form>
   </div>
@@ -41,6 +42,11 @@
 export default {
   props: {
     question: Object,
+  },
+  methods: {
+    removeChoice(n) {
+      this.question.options.choices.splice(n, 1);
+    },
   },
 };
 </script>
@@ -61,6 +67,12 @@ export default {
     height: 100px;
     border-radius: 5px;
     resize: none;
+  }
+  &__title {
+    font-size: 1.17em;
+    border: none;
+    background: transparent;
+    width: 90%;
   }
   &__choices {
     display: flex;

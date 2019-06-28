@@ -34,8 +34,19 @@
       </div>
       <div class="form-input">
         <input v-if="!newQuestion.options.isYesNo" type="choices" v-model="answerInput">
-        <button @click.prevent="newQuestion.options.choices.push(answerInput)">add answer</button>
+        <button @click.prevent="addChoice">add answer</button>
       </div>
+      <ul class="choice-list">
+        <li
+          v-for="choice in newQuestion.options.choices"
+          :key="newQuestion.options.choices.indexOf(choice)"
+        >
+          {{choice}}
+          <button
+            @click.prevent="removeChoice(newQuestion.options.choices.indexOf(choice))"
+          >remove</button>
+        </li>
+      </ul>
     </div>
     <div class="form-div" v-if="newQuestion.type === 'scale'">
       <label>Start Value</label>
@@ -113,6 +124,13 @@ export default {
     },
     emitObject() {
       this.$emit('newQuestion', this.newQuestion);
+    },
+    addChoice() {
+      this.newQuestion.options.choices.push(this.answerInput);
+      this.answerInput = '';
+    },
+    removeChoice(n) {
+      this.newQuestion.options.choices.splice(n, 1);
     },
   },
 };
