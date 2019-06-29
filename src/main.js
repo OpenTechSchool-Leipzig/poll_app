@@ -6,7 +6,13 @@ import store from './store';
 import './registerServiceWorker';
 
 firebase.initializeApp({
-  // Add API Data here!!!
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  databaseURL: 'https://ots-poll.firebaseio.com',
+  storageBucket: 'ots-poll.appspot.com',
+  authDomain: 'ots-poll.firebaseapp.com',
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MS_ID,
+  projectId: 'ots-poll',
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
 });
 
 Vue.config.productionTip = false;
