@@ -18,8 +18,26 @@
       </div>
     </div>
     <div class="col-right">
-      <QuestionPreview v-show="newQuestion" :question="newQuestion"/>
-      <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler"/>
+      <div class="poll-preview">
+        <header>
+          <h2>Poll Preview</h2>
+        </header>
+        <form class="poll-preview__title">
+          <input
+            class="poll-preview__input poll-preview__input--title"
+            type="text"
+            v-model="poll.title"
+            placeholder="Poll Title"
+          >
+          <input
+            class="poll-preview__input poll-preview__input--date"
+            type="date"
+            v-model="poll.date"
+          >
+        </form>
+        <QuestionPreview v-show="newQuestion" :question="newQuestion"/>
+        <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler"/>
+      </div>
     </div>
   </div>
 </template>
@@ -166,6 +184,33 @@ export default {
 }
 .col-right {
   width: 64%;
+}
+header {
+  @include section-header;
+}
+.poll-preview {
+  width: 100%;
+  height: 100%;
+  background-color: $primary-dark;
+  &__title {
+    display: flex;
+    justify-content: space-between;
+    background-color: $primary-light;
+    margin: 10px;
+    padding: 20px;
+  }
+  &__input {
+    border: none;
+    background-color: transparent;
+    font-size: 1.17em;
+    color: #2c3e50;
+    &--title {
+      width: 70%;
+    }
+    &--date {
+      text-align: right;
+    }
+  }
 }
 .q-button {
   @include btn-primary;
