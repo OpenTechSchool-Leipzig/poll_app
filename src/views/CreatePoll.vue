@@ -28,15 +28,19 @@
             type="text"
             v-model="poll.title"
             placeholder="Poll Title"
-          >
+          />
           <input
             class="poll-preview__input poll-preview__input--date"
             type="date"
             v-model="poll.date"
-          >
+          />
         </form>
-        <QuestionPreview v-show="newQuestion" :question="newQuestion"/>
-        <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler"/>
+        <QuestionPreview v-show="newQuestion" :question="newQuestion" />
+        <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler" />
+        <div v-show="poll.questions.length > 1" class="q-button__wrapper">
+          <button class="q-button" @click="createPollHandler">Create Poll</button>
+          <button class="q-button">Save Template</button>
+        </div>
       </div>
     </div>
   </div>
@@ -66,49 +70,7 @@ export default {
         date: null,
         questions: [],
       },
-      questionList: [
-        /* {
-          id: 1,
-          text: 'A Simple Open Question: Why do you hate polls?',
-          type: 'open',
-        },
-        {
-          id: 2,
-          text: 'What do you think of Muliple Choice Questions?',
-          type: 'choice',
-          options: {
-            customAnswer: true,
-            isYesNo: false,
-            choices: [
-              'They are boring',
-              'They are good to evaluate',
-              'I like them',
-              'Do they bring beer?',
-            ],
-          },
-        },
-        {
-          id: 3,
-          text:
-            'I am a little longer Question...maybe a little to long! So What do you think?',
-          type: 'scale',
-          options: {
-            startValue: 'Totally Agree',
-            endValue: 'Totally Disagree',
-            scaleSteps: '5',
-          },
-        },
-        {
-          id: 4,
-          text: 'Yes or No?',
-          type: 'choice',
-          options: {
-            customAnswer: false,
-            isYesNo: true,
-            choices: [],
-          },
-        }, */
-      ],
+      questionList: [],
     };
   },
   computed: {
@@ -145,10 +107,30 @@ export default {
         this.questionList.push(value);
         //Add new question to current poll
         this.poll.questions.push(value.id);
-
         this.closeAddQuestionHandler;
       } catch (error) {
         console.log(error);
+      }
+    },
+    async createPollHandler() {
+      const pollData = this.poll;
+      if (pollData.title && pollData.date && pollData.questions) {
+        const res = await firebase
+          .firestore()
+          .collection('polls')
+          .add(pollData);
+        try {
+          console.log('success: saved Poll "' + pollData.title + '"');
+          this.poll = {
+            title: null,
+            date: null,
+            questions: [],
+          };
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.error('enter valid Data!');
       }
     },
     async fetchQuestions() {
