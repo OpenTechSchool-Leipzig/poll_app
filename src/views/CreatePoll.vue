@@ -134,7 +134,7 @@ export default {
       }
     },
     async fetchQuestions() {
-      this.questionList = [];
+      let fetchedQuestions = [];
       const snapshot = await firebase
         .firestore()
         .collection('test')
@@ -142,8 +142,9 @@ export default {
       const fetchedData = snapshot.forEach(doc => {
         let data = doc.data();
         data.id = doc.id;
-        this.questionList.push(data);
+        this.fetchQuestions.push(data);
       });
+      this.questionList = fetchedQuestions
     },
   },
   mounted: function() {
