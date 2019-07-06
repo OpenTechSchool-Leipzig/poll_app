@@ -101,7 +101,7 @@ export default {
     },
     async addQuestionHandler(question) {
       const addedQuestionId = await this.$store.dispatch(
-        'pushQuestion',
+        'addQuestion',
         question
       );
       try {
@@ -116,10 +116,7 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.date && pollData.questions) {
-        const res = await firebase
-          .firestore()
-          .collection('polls')
-          .add(pollData);
+        const res = this.$store.dispatch('addPoll', pollData);
         try {
           console.log('success: saved Poll "' + pollData.title + '"');
           this.poll = {
