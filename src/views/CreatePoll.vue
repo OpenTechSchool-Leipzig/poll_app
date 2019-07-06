@@ -70,7 +70,6 @@ export default {
         date: null,
         questions: [],
       },
-      questionList: [],
     };
   },
   computed: {
@@ -81,7 +80,7 @@ export default {
       return questionObjects;
     },
     storedQuestions() {
-      return this.$store.state.questions;
+      return this.$store.state.questions.questions;
     },
   },
   methods: {
