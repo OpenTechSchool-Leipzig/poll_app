@@ -9,7 +9,7 @@
       />
       <QuestionList
         v-show="!showAddQuestion"
-        :questions="questionList"
+        :questions="storedQuestions"
         :selectedQuestions="poll.questions"
         @selectQuestion="selectQuestionHandler"
       />
@@ -63,7 +63,7 @@ export default {
   },
   data: function() {
     return {
-      newQuestion: null,
+      newQuestion: null, //object for QuestionPreview
       showAddQuestion: false,
       poll: {
         title: null,
@@ -75,10 +75,13 @@ export default {
   },
   computed: {
     selectedQuestions: function() {
-      let questionObjects = this.questionList.filter(x =>
+      let questionObjects = this.storedQuestions.filter((x) =>
         this.poll.questions.includes(x.id)
       );
       return questionObjects;
+    },
+    storedQuestions() {
+      return this.$store.state.questions;
     },
   },
   methods: {
@@ -90,29 +93,27 @@ export default {
     },
     removeQuestionHandler(id) {
       let prevSelection = this.poll.questions;
-      this.poll.questions = prevSelection.filter(x => x !== id);
+      this.poll.questions = prevSelection.filter((x) => x !== id);
     },
     closeAddQuestionHandler() {
       this.showAddQuestion = false;
       this.newQuestion = null;
     },
-    async addQuestionHandler(value) {
-      const res = await firebase
-        .firestore()
-        .collection('test')
-        .add(value);
+    async addQuestionHandler(question) {
+      const addedQuestionId = await this.$store.dispatch(
+        'pushQuestion',
+        question
+      );
       try {
-        value.id = res.id;
-        //Add new question to QuestionLits
-        this.questionList.push(value);
         //Add new question to current poll
-        this.poll.questions.push(value.id);
-        this.closeAddQuestionHandler;
+        this.poll.questions.push(addedQuestionId);
+        this.closeAddQuestionHandler();
       } catch (error) {
         console.log(error);
       }
     },
     async createPollHandler() {
+      //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.date && pollData.questions) {
         const res = await firebase
@@ -133,22 +134,9 @@ export default {
         console.error('enter valid Data!');
       }
     },
-    async fetchQuestions() {
-      let fetchedQuestions = [];
-      const snapshot = await firebase
-        .firestore()
-        .collection('test')
-        .get();
-      const fetchedData = snapshot.forEach(doc => {
-        let data = doc.data();
-        data.id = doc.id;
-        this.fetchQuestions.push(data);
-      });
-      this.questionList = fetchedQuestions
-    },
   },
   mounted: function() {
-    this.fetchQuestions();
+    this.$store.dispatch('fetchQuestions');
   },
 };
 </script>
