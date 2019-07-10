@@ -4,48 +4,42 @@
       <h2>Question List</h2>
     </header>
     <ul>
-      <li
+      <QuestionListItem
         v-for="question in questions"
         v-show="!selectedQuestions.includes(question.id)"
-        class="question"
         :key="question.id"
-      >
-        <div class="question__short" :class="{expanded: expanded.includes(question.id)}">
-          <p @click="toggleItem(question.id)">{{question.text}}</p>
-          <button @click.prevent="emitSelection(question.id)">Add</button>
-        </div>
-        <div v-show="expanded.includes(question.id)" class="question__details">
-          <p>type: {{question.type}}</p>
-          <p>options: {{JSON.stringify(question.options)}}</p>
-        </div>
-      </li>
+        :question="question"
+      />
     </ul>
   </div>
 </template>
 
 <script>
+import QuestionListItem from './QuestionListItem';
+
 export default {
-  data: function() {
+  /*data: function() {
     return {
       expanded: [],
     };
+  },*/
+  components: {
+    QuestionListItem,
   },
   props: {
     questions: Array,
     selectedQuestions: Array,
   },
   methods: {
+    /* Old method for handling accordeon (now handled in child-state)
     toggleItem(key) {
       if (this.expanded.includes(key)) {
-        let filteredArray = this.expanded.filter(x => x != key);
+        let filteredArray = this.expanded.filter((x) => x != key);
         this.expanded = filteredArray;
       } else {
         this.expanded.push(key);
       }
-    },
-    emitSelection(id) {
-      this.$emit('selectQuestion', id);
-    },
+    },*/
   },
 };
 </script>
