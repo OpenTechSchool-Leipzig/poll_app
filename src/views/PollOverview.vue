@@ -1,6 +1,7 @@
 <template>
   <div>
-    <PollList :title="'All Polls'" :polls="populatedPolls" />
+    <PollList v-if="populatedPolls" :title="'All Polls'" :polls="populatedPolls" />
+    <PollList v-if="populatedTemplates" :title="'Templates'" :polls="populatedTemplates" />
   </div>
 </template>
 
@@ -13,23 +14,15 @@ export default {
     PollList,
   },
   computed: {
-    storedPolls() {
-      return this.$store.state.polls.polls;
-    },
-    storedQuestions() {
-      return this.$store.state.questions.questions;
-    },
+    //populate Polls and Templates in store instead?!
     populatedPolls() {
       let polls = this.$store.state.polls.polls;
       let questions = this.$store.state.questions.questions;
       if (polls.length > 0 && questions.length > 0) {
-        console.log('computed Polls: ' + JSON.stringify(polls));
-        console.log('computed Questions: ' + JSON.stringify(questions));
-        polls.forEach((poll) => {
-          let questionObjects = questions.filter((x) =>
+        polls.forEach(poll => {
+          let questionObjects = questions.filter(x =>
             poll.questions.includes(x.id)
           );
-          console.log('selected Questions: ' + JSON.stringify(questionObjects));
           poll.questions = questionObjects;
         });
         return polls;
@@ -37,14 +30,27 @@ export default {
         return null;
       }
     },
+    populatedTemplates() {
+      let templates = this.$store.state.templates.templates;
+      let questions = this.$store.state.questions.questions;
+      if (templates.length > 0 && questions.length > 0) {
+        templates.forEach(template => {
+          let questionObjects = questions.filter(x =>
+            template.questions.includes(x.id)
+          );
+          template.questions = questionObjects;
+        });
+        return templates;
+      } else {
+        return null;
+      }
+    },
   },
   mounted: function() {
-    if (this.storedPolls.length === 0) {
-      this.$store.dispatch('fetchPolls');
-    }
-    if (this.storedQuestions.length === 0) {
-      this.$store.dispatch('fetchQuestions');
-    }
+    // Where to place all the reqeuests?
+    this.$store.dispatch('fetchPolls');
+    this.$store.dispatch('fetchQuestions');
+    this.$store.dispatch('fetchTemplates');
   },
 };
 </script>

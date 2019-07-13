@@ -18,6 +18,7 @@
       </div>
     </div>
     <div class="col-right">
+      <PollList v-if="showTemplates" :polls="templates" />
       <div class="poll-preview">
         <header>
           <h2>Poll Preview</h2>
@@ -39,7 +40,7 @@
         <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler" />
         <div v-show="poll.questions.length > 1" class="q-button__wrapper">
           <button class="q-button" @click="createPollHandler">Create Poll</button>
-          <button class="q-button">Save Template</button>
+          <button class="q-button" @click="createTemplateHandler">Save Template</button>
         </div>
       </div>
     </div>
@@ -65,6 +66,7 @@ export default {
     return {
       newQuestion: null, //object for QuestionPreview
       showAddQuestion: false,
+      showTemplates: false,
       poll: {
         title: null,
         date: null,
@@ -74,13 +76,16 @@ export default {
   },
   computed: {
     selectedQuestions: function() {
-      let questionObjects = this.storedQuestions.filter((x) =>
+      let questionObjects = this.storedQuestions.filter(x =>
         this.poll.questions.includes(x.id)
       );
       return questionObjects;
     },
     storedQuestions() {
       return this.$store.state.questions.questions;
+    },
+    storedTemplates() {
+      return this.$store.state.templates.templates;
     },
   },
   methods: {
@@ -92,11 +97,14 @@ export default {
     },
     removeQuestionHandler(id) {
       let prevSelection = this.poll.questions;
-      this.poll.questions = prevSelection.filter((x) => x !== id);
+      this.poll.questions = prevSelection.filter(x => x !== id);
     },
     closeAddQuestionHandler() {
       this.showAddQuestion = false;
       this.newQuestion = null;
+    },
+    toggleTemplateList() {
+      this.showTemplates = !this.showTemplates;
     },
     async addQuestionHandler(question) {
       const addedQuestionId = await this.$store.dispatch(
@@ -123,6 +131,20 @@ export default {
             date: null,
             questions: [],
           };
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.error('enter valid Data!');
+      }
+    },
+    async createTemplateHandler() {
+      //replace console logs with notifications
+      const pollData = this.poll;
+      if (pollData.title && pollData.questions) {
+        const res = this.$store.dispatch('addTemplate', pollData);
+        try {
+          console.log('success: saved Template "' + pollData.title + '"');
         } catch (error) {
           console.log(error);
         }

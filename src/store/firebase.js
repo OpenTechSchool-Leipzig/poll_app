@@ -35,3 +35,17 @@ export async function AddData(collection, payload) {
 }
 
 // Update specific Data: collection + id -> set
+
+// Remove Data from collection
+export async function DeleteData(collection, id) {
+  await firebase
+    .firestore()
+    .collection(collection)
+    .doc(id)
+    .delete();
+  try {
+    console.log('deleted Poll');
+  } catch (err) {
+    console.log(err);
+  }
+}
