@@ -18,7 +18,7 @@
       </div>
     </div>
     <div class="col-right">
-      <PollList v-if="showTemplates" :polls="templates" />
+      <PollList v-if="showTemplates" :title="'Templates'" :polls="storedTemplates" />
       <div class="poll-preview">
         <header>
           <h2>Poll Preview</h2>
@@ -38,9 +38,18 @@
         </form>
         <QuestionPreview v-show="newQuestion" :question="newQuestion" />
         <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler" />
-        <div v-show="poll.questions.length > 1" class="q-button__wrapper">
-          <button class="q-button" @click="createPollHandler">Create Poll</button>
-          <button class="q-button" @click="createTemplateHandler">Save Template</button>
+        <div class="q-button__wrapper">
+          <button
+            v-show="poll.questions.length > 1"
+            class="q-button"
+            @click="createPollHandler"
+          >Create Poll</button>
+          <button
+            v-show="poll.questions.length > 1"
+            class="q-button"
+            @click="createTemplateHandler"
+          >Save Template</button>
+          <button class="q-button" @click="toggleTemplateList">Load Template</button>
         </div>
       </div>
     </div>
@@ -51,6 +60,7 @@
 import AddQuestion from '@/components/AddQuestion.vue';
 import QuestionList from '@/components/QuestionList.vue';
 import PollPreview from '@/components/PollPreview.vue';
+import PollList from '@/components/PollList.vue';
 import QuestionPreview from '@/components/QuestionPreview.vue';
 import firebase from 'firebase';
 
@@ -60,6 +70,7 @@ export default {
     AddQuestion,
     QuestionList,
     PollPreview,
+    PollList,
     QuestionPreview,
   },
   data: function() {
@@ -85,7 +96,7 @@ export default {
       return this.$store.state.questions.questions;
     },
     storedTemplates() {
-      return this.$store.state.templates.templates;
+      return this.$store.getters.populatedTemplates;
     },
   },
   methods: {
@@ -154,7 +165,12 @@ export default {
     },
   },
   mounted: function() {
-    this.$store.dispatch('fetchQuestions');
+    if (this.$store.state.questions.questions.length < 1) {
+      this.$store.dispatch('fetchQuestions');
+    }
+    if (this.$store.state.templates.templates.length < 1) {
+      this.$store.dispatch('fetchTemplates');
+    }
   },
 };
 </script>

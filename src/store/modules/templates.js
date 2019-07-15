@@ -4,6 +4,20 @@ const templateStore = {
   state: {
     templates: [],
   },
+  getters: {
+    populatedTemplates: (state, getters, rootState) => {
+      const { templates } = state;
+      const { questions } = rootState.questions;
+      if (templates.length > 0 && questions.length > 0) {
+        templates.forEach(template => {
+          const questionObjects = questions.filter(x => template.questions.includes(x.id));
+          template.questions = questionObjects;
+        });
+        return templates;
+      }
+      return null;
+    },
+  },
   mutations: {
     updateTemplates(state, pollList) {
       state.templates = pollList;

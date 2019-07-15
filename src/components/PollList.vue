@@ -10,7 +10,11 @@
           <p>{{poll.questions.length}} Questions</p>
           <button @click.prevent="emitSelection(poll.id)">Select</button>
         </div>
-        <ul v-if="poll.questions[0].id" v-show="expanded.includes(poll.id)" class="poll__questions">
+        <ul
+          v-if="poll.questions && poll.questions[0].id"
+          v-show="expanded.includes(poll.id)"
+          class="poll__questions"
+        >
           <QuestionListItem
             v-for="question in poll.questions"
             :key="question.id"
@@ -42,7 +46,7 @@ export default {
   methods: {
     toggleItem(key) {
       if (this.expanded.includes(key)) {
-        let filteredArray = this.expanded.filter((x) => x != key);
+        let filteredArray = this.expanded.filter(x => x != key);
         this.expanded = filteredArray;
       } else {
         this.expanded.push(key);

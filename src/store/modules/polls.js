@@ -7,6 +7,21 @@ const pollStore = {
     // (e.g: navigating from Overview to CreatePoll View after selection)
     // activePoll: {}
   },
+  getters: {
+    populatedPolls: (state, getters, rootState) => {
+      const { polls } = state;
+      const { questions } = rootState.questions;
+
+      if (polls.length > 0 && questions.length > 0) {
+        polls.forEach(poll => {
+          const questionObjects = questions.filter(x => poll.questions.includes(x.id));
+          poll.questions = questionObjects;
+        });
+        return polls;
+      }
+      return null;
+    },
+  },
   mutations: {
     updatePolls(state, pollList) {
       state.polls = pollList;
