@@ -18,7 +18,12 @@
       </div>
     </div>
     <div class="col-right">
-      <PollList v-if="showTemplates" :title="'Templates'" :polls="storedTemplates" />
+      <PollList
+        v-if="showTemplates"
+        :title="'Templates'"
+        :polls="storedTemplates"
+        @selectPoll="loadTemplateHandler"
+      />
       <div class="poll-preview">
         <header>
           <h2>Poll Preview</h2>
@@ -87,9 +92,7 @@ export default {
   },
   computed: {
     selectedQuestions: function() {
-      let questionObjects = this.storedQuestions.filter(x =>
-        this.poll.questions.includes(x.id)
-      );
+      let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
       return questionObjects;
     },
     storedQuestions() {
@@ -97,6 +100,9 @@ export default {
     },
     storedTemplates() {
       return this.$store.getters.populatedTemplates;
+    },
+    templatesIdOnly() {
+      return this.$store.state.templates.templates;
     },
   },
   methods: {
@@ -118,10 +124,7 @@ export default {
       this.showTemplates = !this.showTemplates;
     },
     async addQuestionHandler(question) {
-      const addedQuestionId = await this.$store.dispatch(
-        'addQuestion',
-        question
-      );
+      const addedQuestionId = await this.$store.dispatch('addQuestion', question);
       try {
         //Add new question to current poll
         this.poll.questions.push(addedQuestionId);
@@ -162,6 +165,11 @@ export default {
       } else {
         console.error('enter valid Data!');
       }
+    },
+    loadTemplateHandler(id) {
+      console.log(id);
+      const selectedTemplate = this.templatesIdOnly.find(x => x.id === id);
+      this.poll = selectedTemplate;
     },
   },
   mounted: function() {
