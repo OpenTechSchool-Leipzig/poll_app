@@ -8,12 +8,13 @@ const templateStore = {
     populatedTemplates: (state, getters, rootState) => {
       const { templates } = state;
       const { questions } = rootState.questions;
-      if (templates.length > 0 && questions.length > 0) {
-        templates.forEach(template => {
+      let popTemplates = JSON.parse(JSON.stringify(templates));
+      if (popTemplates.length > 0 && questions.length > 0) {
+        popTemplates.forEach(template => {
           const questionObjects = questions.filter(x => template.questions.includes(x.id));
           template.questions = questionObjects;
         });
-        return templates;
+        return popTemplates;
       }
       return null;
     },
@@ -33,9 +34,9 @@ const templateStore = {
   },
   actions: {
     async fetchTemplates({ commit }) {
-      const fetchedtemplates = await fetchCollection('templates');
+      const fetchedTemplates = await fetchCollection('templates');
       try {
-        commit('updateTemplates', fetchedtemplates);
+        commit('updateTemplates', fetchedTemplates);
       } catch (err) {
         throw err;
       }

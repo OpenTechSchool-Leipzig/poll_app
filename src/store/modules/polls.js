@@ -12,12 +12,14 @@ const pollStore = {
       const { polls } = state;
       const { questions } = rootState.questions;
 
-      if (polls.length > 0 && questions.length > 0) {
-        polls.forEach(poll => {
+      let popPolls = JSON.parse(JSON.stringify(polls));
+
+      if (popPolls.length > 0 && questions.length > 0) {
+        popPolls.forEach(poll => {
           const questionObjects = questions.filter(x => poll.questions.includes(x.id));
           poll.questions = questionObjects;
         });
-        return polls;
+        return popPolls;
       }
       return null;
     },

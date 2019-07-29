@@ -8,13 +8,12 @@ export async function fetchCollection(collection) {
     .firestore()
     .collection(collection)
     .get();
-  snapshot.forEach((doc) => {
+  snapshot.forEach(doc => {
     const data = doc.data();
     data.id = doc.id;
     fetchedData.push(data);
   });
   try {
-    console.log(fetchedData);
     return fetchedData;
   } catch (err) {
     throw err;
