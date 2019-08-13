@@ -19,43 +19,54 @@
     </div>
     <div class="col-right">
       <PollList
-        v-if="showTemplates"
+        v-show="showTemplates"
         :title="'Templates'"
         :polls="storedTemplates"
         @selectPoll="loadTemplateHandler"
       />
-      <div class="poll-preview">
+      <div v-show="!showTemplates" class="poll-preview">
         <header>
           <h2>Poll Preview</h2>
         </header>
         <form class="poll-preview__title">
           <input
             class="poll-preview__input poll-preview__input--title"
+            :class="{'poll-preview__input--highlight': isTemplateLoaded}"
             type="text"
             v-model="poll.title"
             placeholder="Poll Title"
           />
           <input
             class="poll-preview__input poll-preview__input--date"
+            :class="{'poll-preview__input--highlight': isTemplateLoaded}"
             type="date"
             v-model="poll.date"
           />
         </form>
         <QuestionPreview v-show="newQuestion" :question="newQuestion" />
         <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler" />
-        <div class="q-button__wrapper">
-          <button
-            v-show="poll.questions.length > 1"
-            class="q-button"
-            @click="createPollHandler"
-          >Create Poll</button>
-          <button
-            v-show="poll.questions.length > 1"
-            class="q-button"
-            @click="createTemplateHandler"
-          >Save Template</button>
-          <button class="q-button" @click="toggleTemplateList">Load Template</button>
-        </div>
+      </div>
+      <div class="q-button__wrapper">
+        <button
+          v-show="poll.questions.length > 1"
+          class="q-button"
+          @click="createPollHandler"
+        >Create Poll</button>
+        <button
+          v-show="poll.questions.length > 1"
+          class="q-button"
+          @click="createTemplateHandler"
+        >Save New Template</button>
+        <button
+          v-show="!isTemplateLoaded"
+          class="q-button"
+          @click="toggleTemplateList"
+        >Load Template</button>
+        <button
+          v-show="isTemplateLoaded"
+          class="q-button"
+          @click="updateTemplateHandler"
+        >Update Template</button>
       </div>
     </div>
   </div>
@@ -83,6 +94,7 @@ export default {
       newQuestion: null, //object for QuestionPreview
       showAddQuestion: false,
       showTemplates: false,
+      isTemplateLoaded: false,
       poll: {
         title: null,
         date: null,
@@ -167,9 +179,19 @@ export default {
       }
     },
     loadTemplateHandler(id) {
-      console.log(id);
       const selectedTemplate = this.templatesIdOnly.find(x => x.id === id);
       this.poll = selectedTemplate;
+      this.isTemplateLoaded = true;
+      this.showTemplates = false;
+    },
+    updateTemplateHandler() {
+      //check if changes are made
+      const res = this.$store.dispatch('editTemplate', this.poll);
+      try {
+        console.log('success: update Template "' + this.poll.title + '"');
+      } catch (error) {
+        console.log(error);
+      }
     },
   },
   mounted: function() {
@@ -222,6 +244,9 @@ header {
     }
     &--date {
       text-align: right;
+    }
+    &--highlight {
+      background-color: rgba(yellow, 0.7);
     }
   }
 }

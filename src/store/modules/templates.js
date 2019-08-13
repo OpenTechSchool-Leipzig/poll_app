@@ -1,4 +1,4 @@
-import { fetchCollection, AddData, DeleteData } from '../firebase';
+import { fetchCollection, AddData, DeleteData, UpdateData } from '../firebase';
 
 const templateStore = {
   state: {
@@ -9,6 +9,7 @@ const templateStore = {
       const { templates } = state;
       const { questions } = rootState.questions;
       let popTemplates = JSON.parse(JSON.stringify(templates));
+
       if (popTemplates.length > 0 && questions.length > 0) {
         popTemplates.forEach(template => {
           const questionObjects = questions.filter(x => template.questions.includes(x.id));
@@ -22,6 +23,13 @@ const templateStore = {
   mutations: {
     updateTemplates(state, pollList) {
       state.templates = pollList;
+    },
+    updateSingleTemplate(state, template) {
+      let updatedTemplates = state.templates.map(x => (x === template.id ? (x = template) : x));
+
+      console.log('updated template with id: ' + template.id);
+      console.log(updatedTemplates);
+      state.templates = updatedTemplates;
     },
     pushTemplate(state, template) {
       const pollList = [...state.templates, template];
@@ -48,6 +56,14 @@ const templateStore = {
         commit('pushTemplate', template);
       } catch (error) {
         console.log(error);
+      }
+    },
+    async editTemplate({ commit }, template) {
+      await UpdateData('templates', template.id, template);
+      try {
+        commit('updateSingleTemplate', template);
+      } catch (err) {
+        console.log(err);
       }
     },
     async deleteTemplate({ commit }, pollId) {
