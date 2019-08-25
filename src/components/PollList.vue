@@ -8,7 +8,13 @@
         <div class="poll__short" :class="{expanded: expanded.includes(poll.id)}">
           <p @click="toggleItem(poll.id)">{{poll.title}}</p>
           <p>{{poll.questions.length}} Questions</p>
-          <button @click.prevent="emitSelection(poll.id)">Select</button>
+          <div class="buttons" v-if="buttons.length > 0">
+            <button
+              v-for="(button, index) in buttons"
+              :key="index"
+              @click.prevent="emitButton(button, poll.id)"
+            >{{button}}</button>
+          </div>
         </div>
         <ul
           v-if="poll.questions && poll.questions[0].id"
@@ -42,6 +48,7 @@ export default {
   props: {
     title: String,
     polls: Array,
+    buttons: Array,
   },
   methods: {
     toggleItem(key) {
@@ -52,9 +59,9 @@ export default {
         this.expanded.push(key);
       }
     },
-    // the action with the emitted ID should be carried out by the parant component (=> change active poll )
-    emitSelection(id) {
-      this.$emit('selectPoll', id);
+    // emit event according to button-name
+    emitButton(button, id) {
+      this.$emit(button.split(' ').join(''), id);
     },
   },
 };

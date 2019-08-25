@@ -22,7 +22,8 @@
         v-show="showTemplates"
         :title="'Templates'"
         :polls="storedTemplates"
-        @selectPoll="loadTemplateHandler"
+        :buttons="['select Template']"
+        @selectTemplate="loadTemplateHandler"
       />
       <div v-show="!showTemplates" class="poll-preview">
         <header>
