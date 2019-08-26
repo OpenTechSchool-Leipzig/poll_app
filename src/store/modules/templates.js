@@ -25,10 +25,7 @@ const templateStore = {
       state.templates = pollList;
     },
     updateSingleTemplate(state, template) {
-      let updatedTemplates = state.templates.map(x => (x === template.id ? (x = template) : x));
-
-      console.log('updated template with id: ' + template.id);
-      console.log(updatedTemplates);
+      let updatedTemplates = state.templates.map(x => (x.id === template.id ? (x = template) : x));
       state.templates = updatedTemplates;
     },
     pushTemplate(state, template) {

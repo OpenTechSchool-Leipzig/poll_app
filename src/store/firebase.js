@@ -32,14 +32,29 @@ export async function AddData(collection, payload) {
     throw err;
   }
 }
-
-// Update specific Data: collection + id -> set
-export async function UpdateData(collection, document, payload) {
+/*
+// Override specific Data: collection + id -> set
+export async function OverrideData(collection, document, payload) {
   await firebase
     .firestore()
     .collection(collection)
     .doc(document)
     .set(payload);
+  try {
+    console.log('Successfully updated: ' + payload.title);
+  } catch (err) {
+    throw err;
+  }
+}
+*/
+// Update specific Data: collection + id -> update
+export async function UpdateData(collection, document, payload) {
+  console.log(payload);
+  await firebase
+    .firestore()
+    .collection(collection)
+    .doc(document)
+    .update(payload);
   try {
     console.log('Successfully updated: ' + payload.title);
   } catch (err) {

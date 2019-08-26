@@ -74,11 +74,11 @@
 </template>
 
 <script>
-import AddQuestion from '@/components/AddQuestion.vue';
-import QuestionList from '@/components/QuestionList.vue';
-import PollPreview from '@/components/PollPreview.vue';
-import PollList from '@/components/PollList.vue';
-import QuestionPreview from '@/components/QuestionPreview.vue';
+import AddQuestion from '@/components/questions/AddQuestion.vue';
+import QuestionList from '@/components/questions/QuestionList.vue';
+import PollPreview from '@/components/polls/PollPreview.vue';
+import PollList from '@/components/polls/PollList.vue';
+import QuestionPreview from '@/components/questions/QuestionPreview.vue';
 import firebase from 'firebase';
 
 export default {
@@ -150,6 +150,7 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.date && pollData.questions) {
+        pollData.state = "draft";
         const res = this.$store.dispatch('addPoll', pollData);
         try {
           console.log('success: saved Poll "' + pollData.title + '"');
@@ -185,9 +186,9 @@ export default {
       this.isTemplateLoaded = true;
       this.showTemplates = false;
     },
-    updateTemplateHandler() {
+    async updateTemplateHandler() {
       //check if changes are made
-      const res = this.$store.dispatch('editTemplate', this.poll);
+      await this.$store.dispatch('editTemplate', this.poll);
       try {
         console.log('success: update Template "' + this.poll.title + '"');
       } catch (error) {

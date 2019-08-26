@@ -6,14 +6,18 @@
     <ul>
       <li v-for="poll in polls" class="poll" :key="poll.id">
         <div class="poll__short" :class="{expanded: expanded.includes(poll.id)}">
-          <p @click="toggleItem(poll.id)">{{poll.title}}</p>
-          <p>{{poll.questions.length}} Questions</p>
-          <div class="buttons" v-if="buttons.length > 0">
+          <div class="poll__info" @click="toggleItem(poll.id)">
+            <div>{{poll.title}}</div>
+            <div>{{poll.questions.length}} Questions</div>
+            <div v-if="poll.state">state: {{poll.state}}</div>
+          </div>
+
+          <div class="poll__buttons" v-if="buttons && buttons.length > 0">
             <button
               v-for="(button, index) in buttons"
               :key="index"
               @click.prevent="emitButton(button, poll.id)"
-            >{{button}}</button>
+            >{{ button }}</button>
           </div>
         </div>
         <ul
@@ -34,8 +38,11 @@
 </template>
 
 <script>
-// This Component should work for List of Polls and Templates
-import QuestionListItem from './QuestionListItem.vue';
+// This Component should work for Lists of Polls and Templates
+// A better solution for the button part might be using <slot></slot>
+
+import QuestionListItem from '../questions/QuestionListItem.vue';
+
 export default {
   data: function() {
     return {
@@ -59,7 +66,7 @@ export default {
         this.expanded.push(key);
       }
     },
-    // emit event according to button-name
+    // emit event according to button-name and pollId => actions are defined in parent Components
     emitButton(button, id) {
       this.$emit(button.split(' ').join(''), id);
     },
@@ -120,10 +127,17 @@ ul {
       cursor: pointer;
     }
   }
+  &__info {
+    flex: 1 1 70%;
+    display: flex;
+    justify-content: space-between;
+  }
+  &__buttons {
+    flex: 1 1 30%;
+  }
 }
 .expanded {
   background-color: $primary;
   @include shadow1;
 }
 </style>
-

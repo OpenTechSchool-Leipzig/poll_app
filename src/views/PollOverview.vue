@@ -1,17 +1,45 @@
 <template>
   <div>
-    <PollList v-if="!!populatedPolls" :title="'All Polls'" :polls="populatedPolls" />
-    <PollList v-if="!!populatedTemplates" :title="'Templates'" :polls="populatedTemplates" />
+    <PollList
+      v-if="!!populatedPolls"
+      :title="'All Polls'"
+      :polls="populatedPolls"
+      :buttons="['Change State']"
+      @ChangeState="handleStateSelection"
+    />
+    <PollList
+      v-if="!!populatedTemplates"
+      :title="'Templates'"
+      :polls="populatedTemplates"
+      :buttons="['Delete Template']"
+      @DeleteTemplate="deleteTemplate"
+    />
+    <SelectPollState
+      v-if="pollToUpdate.id"
+      :pollId="pollToUpdate.id"
+      :initialState="pollToUpdate.initialState"
+      @clearState="clearStateSelection"
+    />
   </div>
 </template>
 
 <script>
-import PollList from '@/components/PollList.vue';
+import PollList from '@/components/polls/PollList.vue';
+import SelectPollState from '@/components/polls/SelectPollState.vue';
 
 export default {
   name: 'PollOverview',
   components: {
     PollList,
+    SelectPollState,
+  },
+  data() {
+    return {
+      pollToUpdate: {
+        id: null,
+        initialState: null,
+      },
+    };
   },
   computed: {
     populatedPolls() {
@@ -19,6 +47,20 @@ export default {
     },
     populatedTemplates() {
       return this.$store.getters.populatedTemplates;
+    },
+  },
+  methods: {
+    deleteTemplate(id) {
+      this.$store.dispatch('deleteTemplate', id);
+    },
+    handleStateSelection(id) {
+      this.pollToUpdate.id = id;
+      this.pollToUpdate.initialState = this.populatedPolls.find(x => x.id === id).state;
+    },
+    clearStateSelection() {
+      console.log('clearState');
+      this.pollToUpdate.id = null;
+      this.pollToUpdate.initialState = null;
     },
   },
   mounted: function() {

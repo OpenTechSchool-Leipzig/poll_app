@@ -1,4 +1,4 @@
-import { fetchCollection, AddData } from '../firebase';
+import { fetchCollection, AddData, UpdateData } from '../firebase';
 
 const pollStore = {
   state: {
@@ -32,6 +32,12 @@ const pollStore = {
       const pollList = [...state.polls, poll];
       state.polls = pollList;
     },
+    updateSinglePollState(state, { pollId, newState }) {
+      let updatedPolls = state.polls.map(x =>
+        x.id === pollId ? (x = { ...x, state: newState }) : x
+      );
+      state.polls = updatedPolls;
+    },
   },
   actions: {
     async fetchPolls({ commit }) {
@@ -49,6 +55,14 @@ const pollStore = {
         commit('pushPoll', poll);
       } catch (error) {
         console.log(error);
+      }
+    },
+    async updatePollState({ commit }, { pollId, newState }) {
+      await UpdateData('polls', pollId, { state: newState });
+      try {
+        commit('updateSinglePollState', { pollId, newState });
+      } catch (err) {
+        console.log(err);
       }
     },
   },
