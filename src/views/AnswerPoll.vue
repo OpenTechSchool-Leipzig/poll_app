@@ -67,8 +67,10 @@ export default {
     },
   },
   async mounted() {
-    await this.$store.dispatch('fetchQuestions');
-    await this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+    if (!this.populatedPolls.find(x => x.id === this.$route.params.pollId)) {
+      await this.$store.dispatch('fetchQuestions');
+      await this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+    }
     this.populateAnswers();
     this.isLoading = false;
   },

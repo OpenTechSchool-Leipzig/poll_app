@@ -4,8 +4,9 @@
       v-if="!!populatedPolls"
       :title="'All Polls'"
       :polls="populatedPolls"
-      :buttons="['Change State']"
+      :buttons="['Change State', 'Visit Poll']"
       @ChangeState="handleStateSelection"
+      @VisitPoll="visitPollHandler"
     />
     <PollList
       v-if="!!populatedTemplates"
@@ -56,6 +57,9 @@ export default {
     handleStateSelection(id) {
       this.pollToUpdate.id = id;
       this.pollToUpdate.initialState = this.populatedPolls.find(x => x.id === id).state;
+    },
+    visitPollHandler(id) {
+      this.$router.push({ path: `/poll/${id}` });
     },
     clearStateSelection() {
       console.log('clearState');
