@@ -25,28 +25,18 @@
         :buttons="['select Template']"
         @selectTemplate="loadTemplateHandler"
       />
-      <div v-show="!showTemplates" class="poll-preview">
-        <header>
-          <h2>Poll Preview</h2>
-        </header>
-        <form class="poll-preview__title">
-          <input
-            class="poll-preview__input poll-preview__input--title"
-            :class="{'poll-preview__input--highlight': isTemplateLoaded}"
-            type="text"
-            v-model="poll.title"
-            placeholder="Poll Title"
-          />
-          <input
-            class="poll-preview__input poll-preview__input--date"
-            :class="{'poll-preview__input--highlight': isTemplateLoaded}"
-            type="date"
-            v-model="poll.date"
-          />
-        </form>
+
+      <PollPreview
+        v-show="!showTemplates"
+        v-model="poll"
+        :questions="selectedQuestions"
+        :isPreview="true"
+        :isTemplateLoaded="isTemplateLoaded"
+        @removeQuestion="removeQuestionHandler"
+      >
         <QuestionPreview v-show="newQuestion" :question="newQuestion" />
-        <PollPreview :questions="selectedQuestions" @removeQuestion="removeQuestionHandler" />
-      </div>
+      </PollPreview>
+
       <div class="q-button__wrapper">
         <button
           v-show="poll.questions.length > 1"
@@ -79,7 +69,6 @@ import QuestionList from '@/components/questions/QuestionList.vue';
 import PollPreview from '@/components/polls/PollPreview.vue';
 import PollList from '@/components/polls/PollList.vue';
 import QuestionPreview from '@/components/questions/QuestionPreview.vue';
-import firebase from 'firebase';
 
 export default {
   name: 'createPoll',
@@ -150,7 +139,7 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.date && pollData.questions) {
-        pollData.state = "draft";
+        pollData.state = 'draft';
         const res = this.$store.dispatch('addPoll', pollData);
         try {
           console.log('success: saved Poll "' + pollData.title + '"');
@@ -224,33 +213,6 @@ export default {
 }
 header {
   @include section-header;
-}
-.poll-preview {
-  width: 100%;
-  height: 100%;
-  background-color: $primary-dark;
-  &__title {
-    display: flex;
-    justify-content: space-between;
-    background-color: $primary-light;
-    margin: 10px;
-    padding: 20px;
-  }
-  &__input {
-    border: none;
-    background-color: transparent;
-    font-size: 1.17em;
-    color: #2c3e50;
-    &--title {
-      width: 70%;
-    }
-    &--date {
-      text-align: right;
-    }
-    &--highlight {
-      background-color: rgba(yellow, 0.7);
-    }
-  }
 }
 .q-button {
   @include btn-primary;
