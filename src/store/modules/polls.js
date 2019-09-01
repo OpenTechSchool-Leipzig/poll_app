@@ -1,4 +1,4 @@
-import { fetchCollection, AddData, UpdateData } from '../firebase';
+import { fetchCollection, fetchDocument, AddData, UpdateData } from '../firebase';
 
 const pollStore = {
   state: {
@@ -44,6 +44,14 @@ const pollStore = {
       const fetchedPolls = await fetchCollection('polls');
       try {
         commit('updatePolls', fetchedPolls);
+      } catch (err) {
+        throw err;
+      }
+    },
+    async fetchSinglePoll({ commit }, pollId) {
+      const fetchedPoll = await fetchDocument('polls', pollId);
+      try {
+        commit('pushPoll', fetchedPoll);
       } catch (err) {
         throw err;
       }

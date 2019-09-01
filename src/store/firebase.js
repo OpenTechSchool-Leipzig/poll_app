@@ -19,6 +19,22 @@ export async function fetchCollection(collection) {
     throw err;
   }
 }
+// get Document
+export async function fetchDocument(collection, document) {
+  const snapshot = await firebase
+    .firestore()
+    .collection(collection)
+    .doc(document)
+    .get();
+  const data = snapshot.data();
+  data.id = snapshot.id;
+  console.log(data);
+  try {
+    return data;
+  } catch (err) {
+    throw err;
+  }
+}
 
 // Add Data to collection
 export async function AddData(collection, payload) {
@@ -32,21 +48,7 @@ export async function AddData(collection, payload) {
     throw err;
   }
 }
-/*
-// Override specific Data: collection + id -> set
-export async function OverrideData(collection, document, payload) {
-  await firebase
-    .firestore()
-    .collection(collection)
-    .doc(document)
-    .set(payload);
-  try {
-    console.log('Successfully updated: ' + payload.title);
-  } catch (err) {
-    throw err;
-  }
-}
-*/
+
 // Update specific Data: collection + id -> update
 export async function UpdateData(collection, document, payload) {
   console.log(payload);
@@ -75,3 +77,37 @@ export async function DeleteData(collection, id) {
     console.log(err);
   }
 }
+// Add Data to Array and create ne document if not allready existing
+export async function AddToArray(collection, id, array, value) {
+  await firebase
+    .firestore()
+    .collection(collection)
+    .doc(id)
+    .set(
+      {
+        [array]: firebase.firestore.FieldValue.arrayUnion(value),
+      },
+      { merge: true }
+    );
+  try {
+    console.log('added ' + value + ' to array:' + array);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/*
+// Override specific Data: collection + id -> set
+export async function OverrideData(collection, document, payload) {
+  await firebase
+    .firestore()
+    .collection(collection)
+    .doc(document)
+    .set(payload);
+  try {
+    console.log('Successfully updated: ' + payload.title);
+  } catch (err) {
+    throw err;
+  }
+}
+*/
