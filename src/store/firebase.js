@@ -1,6 +1,18 @@
 // helper functions that handle firebase connection
 import firebase from 'firebase';
 
+firebase.initializeApp({
+  apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+  databaseURL: 'https://ots-poll.firebaseio.com',
+  storageBucket: 'ots-poll.appspot.com',
+  authDomain: 'ots-poll.firebaseapp.com',
+  messagingSenderId: process.env.VUE_APP_FIREBASE_MS_ID,
+  projectId: 'ots-poll',
+  appId: process.env.VUE_APP_FIREBASE_APP_ID,
+});
+
+export const auth = firebase.auth();
+
 // get collection
 export async function fetchCollection(collection) {
   const fetchedData = [];
