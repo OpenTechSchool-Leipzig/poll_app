@@ -21,12 +21,15 @@ export default {
       console.log('observer triggered');
       if (!user) {
         this.$store.commit('setUser', null);
-        this.$router.push({ path: '/auth' });
+        if (this.$route.meta.admin || this.$route.meta.auth) this.$router.push({ path: '/auth' });
       } else {
         user.getIdTokenResult().then(tokenResult => {
+          console.log(tokenResult.claims);
           user.admin = tokenResult.claims.admin;
           this.$store.commit('setUser', user);
-          this.$router.push({ path: '/' });
+          if (this.$route.meta.guest) {
+            this.$router.push({ path: '/' });
+          }
         });
       }
     });

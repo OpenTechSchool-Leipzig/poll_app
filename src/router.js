@@ -5,6 +5,8 @@ import CreatePoll from './views/CreatePoll.vue';
 import PollOverview from './views/PollOverview.vue';
 import AnswerPoll from './views/AnswerPoll.vue';
 import Auth from './views/Auth.vue';
+import NotFound from './views/static/404.vue';
+import NoPermission from './views/static/402.vue';
 
 Vue.use(Router);
 
@@ -34,7 +36,7 @@ const router = new Router({
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue'),
+      component: () => import(/* webpackChunkName: "about" */ './views/static/About'),
     },
     {
       path: '/auth',
@@ -44,11 +46,24 @@ const router = new Router({
         guest: true,
       },
     },
+    {
+      path: '/402',
+      name: '402',
+      component: NoPermission,
+      meta: {
+        auth: true,
+      },
+    },
     // dynamic path to poll
     {
       path: '/poll/:pollId',
       name: 'answerPoll',
       component: AnswerPoll,
+    },
+    {
+      path: '*',
+      name: '404',
+      component: NotFound,
     },
   ],
 });
@@ -59,6 +74,11 @@ router.beforeEach((to, from, next) => {
     // check for custom claim admin
     console.log(store.state.user.admin);
     if (store.state.user.admin) next();
+    else {
+      next({ path: '/402' });
+    }
+  } else if (to.matched.some(route => route.meta.auth)) {
+    if (store.state.user.uid) next();
     else {
       next({ path: '/auth' });
     }
