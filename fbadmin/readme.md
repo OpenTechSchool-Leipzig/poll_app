@@ -12,7 +12,7 @@ Right now, the Admin SDK supports the following npm / node scripts to read or mo
 
 copy the userId from the firebase console and type: `npm rum promote <userId>` to the console. (make sure you navigated to the \fbadmin folder)
 
-### userList | console log of all users
+### userList `<details>` | console log of all users
 
 `npm rum userlist` => short info (id, email, displayName, customClaims)
 `npm rum userlist all` => all user Information
