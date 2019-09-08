@@ -8,11 +8,11 @@ to use it, you'll have to store your projects Admin SDK under the name ServiceAc
 
 Right now, the Admin SDK supports the following npm / node scripts to read or modify user data.
 
-### promote <userId> | grant user admin rights
+### promote `<userId>` | grant user admin rights
 
-copy the userId from the firebase console and type: "npm rum promote <userId>" to the console. (make sure you navigated to the \fbadmin folder)
+copy the userId from the firebase console and type: `npm rum promote <userId>` to the console. (make sure you navigated to the \fbadmin folder)
 
 ### userList | console log of all users
 
-"npm rum userlist" => short info (id, email, displayName, customClaims)
-"npm rum userlist all" => all user Information
+`npm rum userlist` => short info (id, email, displayName, customClaims)
+`npm rum userlist all` => all user Information
