@@ -60,6 +60,7 @@ const router = new Router({
       name: 'answerPoll',
       component: AnswerPoll,
     },
+    // wildcard route for 404
     {
       path: '*',
       name: '404',
@@ -71,13 +72,14 @@ const router = new Router({
 // navigation guard
 router.beforeEach((to, from, next) => {
   if (to.matched.some(route => route.meta.admin)) {
-    // check for custom claim admin
-    console.log(store.state.user.admin);
+    // check for custom admin claim
     if (store.state.user.admin) next();
     else {
+      // redirect to no permission page
       next({ path: '/402' });
     }
   } else if (to.matched.some(route => route.meta.auth)) {
+    // if user is not logged in, allways redirect to auth page
     if (store.state.user.uid) next();
     else {
       next({ path: '/auth' });
