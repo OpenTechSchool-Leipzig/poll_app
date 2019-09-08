@@ -11,7 +11,7 @@ const userStore = {
         state.uid = newUser.uid;
         state.displayName = newUser.displayName;
         state.email = newUser.email;
-        state.admin = newUser.customClaims;
+        state.admin = newUser.admin;
       } else {
         state.uid = null;
         state.displayName = null;
