@@ -11,7 +11,11 @@ Vue.config.productionTip = false;
 this is neccassary for the router to work properly. The observer returns it unsubscribe method,
 which is called after initializsation */
 const unsubscribe = auth.onAuthStateChanged(firebaseUser => {
-  store.commit('setUser', firebaseUser);
+  if (firebaseUser)
+    firebaseUser.getIdTokenResult().then(tokenResult => {
+      firebaseUser.admin = tokenResult.claims.admin;
+      store.commit('setUser', firebaseUser);
+    });
   new Vue({
     el: '#app',
     router,

@@ -23,7 +23,11 @@ export default {
         this.$store.commit('setUser', null);
         this.$router.push({ path: '/auth' });
       } else {
-        this.$store.commit('setUser', { id: user.uid, mail: user.email });
+        user.getIdTokenResult().then(tokenResult => {
+          user.admin = tokenResult.claims.admin;
+          this.$store.commit('setUser', user);
+          this.$router.push({ path: '/' });
+        });
       }
     });
   },

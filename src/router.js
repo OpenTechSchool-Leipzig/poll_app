@@ -17,7 +17,7 @@ const router = new Router({
       name: 'newPoll',
       component: CreatePoll,
       meta: {
-        auth: true,
+        admin: true,
       },
     },
     {
@@ -25,7 +25,7 @@ const router = new Router({
       name: 'polloverview',
       component: PollOverview,
       meta: {
-        auth: true,
+        admin: true,
       },
     },
     {
@@ -52,17 +52,19 @@ const router = new Router({
     },
   ],
 });
+
+// navigation guard
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.auth)) {
-    // todo: check for custom claim
-    console.log(store.state.user.user);
-    if (store.state.user.user) next();
+  if (to.matched.some(route => route.meta.admin)) {
+    // check for custom claim admin
+    console.log(store.state.user.admin);
+    if (store.state.user.admin) next();
     else {
       next({ path: '/auth' });
     }
   } else if (to.matched.some(route => route.meta.guest)) {
-    // todo: check for custom claim
-    if (!store.state.user.user) next();
+    // check if user is logged in
+    if (!store.state.user.uid) next();
     else {
       next({ path: '/' });
     }
