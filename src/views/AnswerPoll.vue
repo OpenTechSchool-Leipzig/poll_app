@@ -15,7 +15,7 @@
           :question="question"
           :qIndex="index"
           v-model="userAnswer"
-          :isPreview="true"
+          :isPreview="false"
         />
       </ul>
       <button v-if="activePoll.state === 'active'" @click="sendAnswerHandler">Send Answers</button>
@@ -83,10 +83,22 @@ export default {
   max-width: 1200px;
   height: 100%;
   background-color: $primary-dark;
+  margin: auto;
   &__list {
     list-style: none;
     margin: 10px 0;
     padding: 0;
+  }
+  &__badge {
+    padding: 20px;
+    &--warn {
+      background-color: $warn;
+      border: 2px solid darken($warn, 20%);
+    }
+    &--danger {
+      background-color: $danger;
+      border: 2px solid darken($danger, 20%);
+    }
   }
 }
 header {

@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
+
+// views
 import CreatePoll from './views/CreatePoll.vue';
 import PollOverview from './views/PollOverview.vue';
 import AnswerPoll from './views/AnswerPoll.vue';
