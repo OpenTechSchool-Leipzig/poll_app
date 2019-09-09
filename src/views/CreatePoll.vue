@@ -132,7 +132,7 @@ export default {
       const pollData = this.poll;
       if (pollData.title && pollData.date && pollData.questions) {
         pollData.state = 'draft';
-        const res = this.$store.dispatch('addPoll', pollData);
+        this.$store.dispatch('addPoll', pollData);
         try {
           console.log('success: saved Poll "' + pollData.title + '"');
           this.poll = {
@@ -151,7 +151,7 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.questions) {
-        const res = this.$store.dispatch('addTemplate', pollData);
+        this.$store.dispatch('addTemplate', pollData);
         try {
           console.log('success: saved Template "' + pollData.title + '"');
         } catch (error) {

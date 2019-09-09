@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import QuestionListItem from './QuestionListItem';
+import QuestionListItem from './QuestionListItem.vue';
 
 export default {
   /*data: function() {
