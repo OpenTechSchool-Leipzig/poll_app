@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "format": "prettier --write '**/*.{js,vue,json}'"
+    "format": "prettier --write \"**/*.{js,vue,json}\""
   },
   "dependencies": {
     "@vue/eslint-config-prettier": "^5.0.0",
