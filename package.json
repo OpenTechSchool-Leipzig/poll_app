@@ -34,5 +34,15 @@
     "node-sass": "^4.9.0",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.21"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "prettier --write '**/*.{js,vue,json}'",
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }
