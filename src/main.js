@@ -8,8 +8,8 @@ import './registerServiceWorker';
 Vue.config.productionTip = false;
 
 /* using "onAuthStateChanged" Observer from firebase to check stored user token and update user in store
-this is neccassary for the router to work properly. The observer returns it unsubscribe method,
-which is called after initializsation */
+this is neccassary for the router to work properly. The observer returns it's unsubscribe method,
+which is called after initialization */
 const unsubscribe = auth.onAuthStateChanged(firebaseUser => {
   if (firebaseUser)
     firebaseUser.getIdTokenResult().then(tokenResult => {
