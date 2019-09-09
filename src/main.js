@@ -4,6 +4,7 @@ import router from './router';
 import store from './store/store';
 import { auth } from './store/firebase';
 import './registerServiceWorker';
+import '../node_modules/bulma/css/bulma.css';
 
 Vue.config.productionTip = false;
 
