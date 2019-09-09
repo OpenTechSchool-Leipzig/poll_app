@@ -14,7 +14,7 @@
         @selectQuestion="selectQuestionHandler"
       />
       <div v-show="!showAddQuestion" class="q-button__wrapper">
-        <button class="q-button" @click="showAddQuestion=true">New Question</button>
+        <button class="q-button" @click="showAddQuestion = true">New Question</button>
       </div>
     </div>
     <div class="col-right">
@@ -38,26 +38,18 @@
       </PollPreview>
 
       <div class="q-button__wrapper">
-        <button
-          v-show="poll.questions.length > 1"
-          class="q-button"
-          @click="createPollHandler"
-        >Create Poll</button>
-        <button
-          v-show="poll.questions.length > 1"
-          class="q-button"
-          @click="createTemplateHandler"
-        >Save New Template</button>
-        <button
-          v-show="!isTemplateLoaded"
-          class="q-button"
-          @click="toggleTemplateList"
-        >Load Template</button>
-        <button
-          v-show="isTemplateLoaded"
-          class="q-button"
-          @click="updateTemplateHandler"
-        >Update Template</button>
+        <button v-show="poll.questions.length > 1" class="q-button" @click="createPollHandler">
+          Create Poll
+        </button>
+        <button v-show="poll.questions.length > 1" class="q-button" @click="createTemplateHandler">
+          Save New Template
+        </button>
+        <button v-show="!isTemplateLoaded" class="q-button" @click="toggleTemplateList">
+          Load Template
+        </button>
+        <button v-show="isTemplateLoaded" class="q-button" @click="updateTemplateHandler">
+          Update Template
+        </button>
       </div>
     </div>
   </div>

@@ -1,12 +1,12 @@
 <template>
   <li class="question">
-    <div class="question__short" :class="{expanded: expanded}">
-      <p @click="toggleExpansion">{{question.text}}</p>
+    <div class="question__short" :class="{ expanded: expanded }">
+      <p @click="toggleExpansion">{{ question.text }}</p>
       <button v-if="!hideButtons" @click.prevent="emitSelection(question.id)">Add</button>
     </div>
     <div v-show="expanded" class="question__details">
-      <p>type: {{question.type}}</p>
-      <p>options: {{JSON.stringify(question.options)}}</p>
+      <p>type: {{ question.type }}</p>
+      <p>options: {{ JSON.stringify(question.options) }}</p>
     </div>
   </li>
 </template>

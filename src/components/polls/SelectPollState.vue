@@ -1,7 +1,7 @@
 <template>
   <div>
-    <p>Selected Poll ID = {{pollId}}</p>
-    <p>New State = {{selection}}</p>
+    <p>Selected Poll ID = {{ pollId }}</p>
+    <p>New State = {{ selection }}</p>
     <form @submit.prevent="updateState">
       <div class="radio-group">
         <input v-model="selection" id="draft" type="radio" :value="'draft'" />

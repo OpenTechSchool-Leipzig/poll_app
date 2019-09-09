@@ -3,8 +3,7 @@
     <div id="nav">
       <router-link to="/">Poll Overview</router-link>|
       <router-link to="/newpoll">Create Poll</router-link>|
-      <router-link to="/about">About</router-link>|
-      <router-link to="/auth">Auth</router-link>|
+      <router-link to="/about">About</router-link>| <router-link to="/auth">Auth</router-link>|
       <a @click.prevent="logOut">LogOut</a>
     </div>
     <router-view />

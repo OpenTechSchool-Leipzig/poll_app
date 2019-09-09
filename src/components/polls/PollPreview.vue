@@ -7,14 +7,14 @@
     <form class="poll-preview__title">
       <input
         class="poll-preview__input poll-preview__input--title"
-        :class="{'poll-preview__input--highlight': isTemplateLoaded}"
+        :class="{ 'poll-preview__input--highlight': isTemplateLoaded }"
         type="text"
         v-model="value.title"
         placeholder="Poll Title"
       />
       <input
         class="poll-preview__input poll-preview__input--date"
-        :class="{'poll-preview__input--highlight': isTemplateLoaded}"
+        :class="{ 'poll-preview__input--highlight': isTemplateLoaded }"
         type="date"
         v-model="value.date"
       />

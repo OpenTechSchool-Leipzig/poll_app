@@ -1,10 +1,10 @@
 <template>
   <li class="question__container">
-    <h3>{{question.text}}</h3>
+    <h3>{{ question.text }}</h3>
     <button v-if="isPreview" @click="removeQuestion">REMOVE</button>
     <form>
-      <textarea v-if="question.type==='open'" />
-      <div class="question__choices" v-if="question.type!=='open'">
+      <textarea v-if="question.type === 'open'" />
+      <div class="question__choices" v-if="question.type !== 'open'">
         <div v-if="question.options.isYesNo">
           <div class="question__yesno">
             <input id="yes" type="radio" :value="true" v-model="value[qIndex].answer" />
@@ -19,7 +19,7 @@
           :key="index"
         >
           <input :id="choice" type="checkbox" :value="choice" v-model="value[qIndex].answer" />
-          <label :for="choice">{{choice}}</label>
+          <label :for="choice">{{ choice }}</label>
         </div>
         <div v-if="question.options.customAnswer" class="question__choice">
           <input id="custom-answer" type="checkbox" :checked="value[qIndex].customAnswer" />
@@ -27,8 +27,8 @@
         </div>
         <textarea v-if="question.options.withText" v-model="value[qIndex].text" />
       </div>
-      <ul class="question__scale" v-if="question.type==='scale'">
-        <li>{{question.options.startValue}}</li>
+      <ul class="question__scale" v-if="question.type === 'scale'">
+        <li>{{ question.options.startValue }}</li>
         <input
           type="radio"
           :value="n"
@@ -36,7 +36,7 @@
           v-for="n in parseInt(question.options.scaleSteps)"
           :key="n"
         />
-        <li>{{question.options.endValue}}</li>
+        <li>{{ question.options.endValue }}</li>
       </ul>
     </form>
   </li>

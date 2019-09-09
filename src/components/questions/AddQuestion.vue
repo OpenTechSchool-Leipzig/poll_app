@@ -6,7 +6,7 @@
     </header>
     <div class="form-input">
       <label>Question Text</label>
-      <input type="text" v-model="newQuestion.text">
+      <input type="text" v-model="newQuestion.text" />
     </div>
     <div class="form-input">
       <label>Question Type</label>
@@ -20,20 +20,20 @@
     <div class="form-div" v-if="newQuestion.type === 'choice'">
       <div class="form-checkboxes">
         <div class="form-check">
-          <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo">
+          <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo" />
           <label for="yesno">Yes/No Question</label>
         </div>
         <div class="form-check">
-          <input type="checkbox" id="explanation" v-model="newQuestion.options.withText">
+          <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
           <label for="explanation">add textfield for explanation</label>
         </div>
         <div class="form-check" v-if="!newQuestion.options.isYesNo">
-          <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer">
+          <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer" />
           <label for="customanswer">allow user to add answer</label>
         </div>
       </div>
       <div class="form-input">
-        <input v-if="!newQuestion.options.isYesNo" type="choices" v-model="answerInput">
+        <input v-if="!newQuestion.options.isYesNo" type="choices" v-model="answerInput" />
         <button @click.prevent="addChoice">add answer</button>
       </div>
       <ul class="choice-list">
@@ -41,20 +41,20 @@
           v-for="choice in newQuestion.options.choices"
           :key="newQuestion.options.choices.indexOf(choice)"
         >
-          {{choice}}
-          <button
-            @click.prevent="removeChoice(newQuestion.options.choices.indexOf(choice))"
-          >remove</button>
+          {{ choice }}
+          <button @click.prevent="removeChoice(newQuestion.options.choices.indexOf(choice))">
+            remove
+          </button>
         </li>
       </ul>
     </div>
     <div class="form-div" v-if="newQuestion.type === 'scale'">
       <label>Start Value</label>
-      <input type="text" v-model="newQuestion.options.startValue">
+      <input type="text" v-model="newQuestion.options.startValue" />
       <label>End Value</label>
-      <input type="text" v-model="newQuestion.options.endValue">
+      <input type="text" v-model="newQuestion.options.endValue" />
       <label>Number of Steps</label>
-      <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps">
+      <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
     </div>
     <button class="submit-btn" @click.prevent="emitQuestion">Add Question</button>
   </form>

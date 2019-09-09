@@ -1,37 +1,39 @@
 <template>
   <div class="q-preview">
     <form v-if="question">
-      <input class="q-preview__title" v-model="question.text">
-      <textarea v-if="question.type==='open'"/>
-      <div class="q-preview__choices" v-if="question.type!=='open'">
+      <input class="q-preview__title" v-model="question.text" />
+      <textarea v-if="question.type === 'open'" />
+      <div class="q-preview__choices" v-if="question.type !== 'open'">
         <div v-if="question.options.isYesNo">
           <div class="q-preview__yesno">
-            <input id="yes" type="radio" value="true">
+            <input id="yes" type="radio" value="true" />
             <label for="yes">Yes</label>
-            <input id="no" type="radio" value="false">
+            <input id="no" type="radio" value="false" />
             <label for="no">No</label>
           </div>
         </div>
         <div class="q-preview__choice" v-for="choice in question.options.choices" :key="choice">
-          <input id="choice" type="checkbox">
-          <label for="choice">{{choice}}</label>
-          <button @click.prevent="removeChoice(question.options.choices.indexOf(choice))">remove</button>
+          <input id="choice" type="checkbox" />
+          <label for="choice">{{ choice }}</label>
+          <button @click.prevent="removeChoice(question.options.choices.indexOf(choice))">
+            remove
+          </button>
         </div>
         <div v-if="question.options.customAnswer" class="poll-preview__choice">
-          <input id="custom-answer" type="checkbox">
-          <input type="answer">
+          <input id="custom-answer" type="checkbox" />
+          <input type="answer" />
         </div>
-        <textarea v-if="question.options.withText"/>
+        <textarea v-if="question.options.withText" />
       </div>
-      <ul class="q-preview__scale" v-if="question.type==='scale'">
-        <input type="text" v-model="question.options.startValue">
+      <ul class="q-preview__scale" v-if="question.type === 'scale'">
+        <input type="text" v-model="question.options.startValue" />
         <input
           type="radio"
           :value="n"
           v-for="n in parseInt(question.options.scaleSteps)"
           v-bind:key="n"
-        >
-        <input type="text" v-model="question.options.endValue">
+        />
+        <input type="text" v-model="question.options.endValue" />
       </ul>
     </form>
   </div>
@@ -92,4 +94,3 @@ export default {
   }
 }
 </style>
-

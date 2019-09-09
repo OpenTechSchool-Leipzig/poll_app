@@ -1,12 +1,14 @@
 <template lang="html">
-<div>
-  <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css" />
-  <h2>Login to continue...</h2>
-  <div id="firebaseui-auth-container"></div>
-</div>
-  
+  <div>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="https://cdn.firebase.com/libs/firebaseui/4.2.0/firebaseui.css"
+    />
+    <h2>Login to continue...</h2>
+    <div id="firebaseui-auth-container"></div>
+  </div>
 </template>
-
 
 <script>
 import * as firebaseui from 'firebaseui';

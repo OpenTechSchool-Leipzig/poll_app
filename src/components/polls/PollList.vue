@@ -1,15 +1,15 @@
 <template>
   <div class="container">
     <header>
-      <h2>{{title}}</h2>
+      <h2>{{ title }}</h2>
     </header>
     <ul>
       <li v-for="poll in polls" class="poll" :key="poll.id">
-        <div class="poll__short" :class="{expanded: expanded.includes(poll.id)}">
+        <div class="poll__short" :class="{ expanded: expanded.includes(poll.id) }">
           <div class="poll__info" @click="toggleItem(poll.id)">
-            <div>{{poll.title}}</div>
-            <div>{{poll.questions.length}} Questions</div>
-            <div v-if="poll.state">state: {{poll.state}}</div>
+            <div>{{ poll.title }}</div>
+            <div>{{ poll.questions.length }} Questions</div>
+            <div v-if="poll.state">state: {{ poll.state }}</div>
           </div>
 
           <div class="poll__buttons" v-if="buttons && buttons.length > 0">
@@ -17,7 +17,9 @@
               v-for="(button, index) in buttons"
               :key="index"
               @click.prevent="emitButton(button, poll.id)"
-            >{{ button }}</button>
+            >
+              {{ button }}
+            </button>
           </div>
         </div>
         <ul
@@ -79,7 +81,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: $primary-dark;
-  margin-bottom: 10px
+  margin-bottom: 10px;
 }
 header {
   @include section-header;

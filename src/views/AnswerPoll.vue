@@ -3,10 +3,12 @@
     <div v-if="isLoading">is loading...</div>
     <div v-if="!isLoading">
       <div class="poll__badge poll__badge--warn" v-if="activePoll.state === 'draft'">!DRAFT!</div>
-      <div class="poll__badge poll__badge--danger" v-if="activePoll.state === 'closed'">!CLOSED!</div>
+      <div class="poll__badge poll__badge--danger" v-if="activePoll.state === 'closed'">
+        !CLOSED!
+      </div>
       <header>
-        <h2>{{activePoll.title}}</h2>
-        <h4>on {{activePoll.date}}</h4>
+        <h2>{{ activePoll.title }}</h2>
+        <h4>on {{ activePoll.date }}</h4>
       </header>
       <ul class="poll__list" v-if="activePoll">
         <PollQuestion
