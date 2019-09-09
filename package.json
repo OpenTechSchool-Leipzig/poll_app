@@ -40,7 +40,7 @@
   },
   "lint-staged": {
     "*.{js,vue}": [
-      "prettier --write '**/*.{js,vue,json}'",
+      "prettier --write \"**/*.{js,vue,json}\"",
       "vue-cli-service lint",
       "git add"
     ]
