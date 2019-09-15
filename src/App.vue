@@ -66,5 +66,10 @@ export default {
 }
 button {
   cursor: pointer;
+  padding: 5px 40px;
+  text-transform: uppercase;
+}
+label {
+  text-align: left;
 }
 </style>

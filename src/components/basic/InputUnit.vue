@@ -1,7 +1,9 @@
 <template>
-  <div class="input-unit">
-    <label for="id">{{ name }}</label>
-    <input :type="type" v-model="value" :id="id" />
+  <div class="field">
+    <label class="label" :for="inputId">{{ name }}</label>
+    <div class="control">
+      <input class="input" :type="type" v-model="localValue" :id="inputId" />
+    </div>
   </div>
 </template>
 
@@ -13,14 +15,23 @@ export default {
     name: String,
   },
   computed: {
-    id() {
-      return name.split(' ').join('');
+    inputId() {
+      return this.name.split(' ').join('');
     },
-  },
-  watch: {
-    value() {
-      this.$emit('input', this.value);
+    localValue: {
+      get() {
+        return this.value;
+      },
+      set(localValue) {
+        this.$emit('input', localValue);
+      },
     },
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.input:invalid {
+  @extend .is-danger;
+}
+</style>

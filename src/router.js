@@ -8,6 +8,7 @@ import PollOverview from './views/PollOverview.vue';
 import AnswerPoll from './views/AnswerPoll.vue';
 import Auth from './views/Auth.vue';
 import Login from './views/Login.vue';
+import Register from './views/Register.vue';
 import NotFound from './views/static/404.vue';
 import NoPermission from './views/static/402.vue';
 
@@ -53,6 +54,14 @@ const router = new Router({
       path: '/login',
       name: 'login',
       component: Login,
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: Register,
     },
     {
       path: '/402',
