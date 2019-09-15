@@ -94,8 +94,8 @@ export default {
   &__badge {
     padding: 20px;
     &--warn {
-      background-color: $warn;
-      border: 2px solid darken($warn, 20%);
+      background-color: $warning;
+      border: 2px solid darken($warning, 20%);
     }
     &--danger {
       background-color: $danger;
