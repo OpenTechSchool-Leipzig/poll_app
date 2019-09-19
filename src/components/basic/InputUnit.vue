@@ -2,7 +2,13 @@
   <div class="field">
     <label class="label" :for="inputId">{{ name }}</label>
     <div class="control">
-      <input class="input" :type="type" v-model="localValue" :id="inputId" />
+      <input
+        class="input"
+        :class="validationClass"
+        :type="type"
+        v-model="localValue"
+        :id="inputId"
+      />
     </div>
   </div>
 </template>
@@ -13,10 +19,17 @@ export default {
     type: String,
     value: [String, Number],
     name: String,
+    validation: String,
   },
   computed: {
     inputId() {
       return this.name.split(' ').join('');
+    },
+    validationClass() {
+      return {
+        'is-danger': this.validation === 'valid' || !this.validation ? false : true,
+        'is-success': this.validation === 'valid',
+      };
     },
     localValue: {
       get() {

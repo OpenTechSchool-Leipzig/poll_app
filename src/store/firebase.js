@@ -108,18 +108,15 @@ export async function AddToArray(collection, id, array, value) {
   }
 }
 
-/*
-// Override specific Data: collection + id -> set
-export async function OverrideData(collection, document, payload) {
+export async function addDataWithId(collection, document, payload) {
   await firebase
     .firestore()
     .collection(collection)
     .doc(document)
     .set(payload);
   try {
-    console.log('Successfully updated: ' + payload.title);
+    console.log('added to ' + collection + ' with id: ' + document);
   } catch (err) {
     throw err;
   }
 }
-*/

@@ -1,3 +1,5 @@
+import { addDataWithId } from '../firebase';
+
 const userStore = {
   state: {
     uid: null,
@@ -18,6 +20,16 @@ const userStore = {
         state.email = null;
         state.admin = null;
       }
+    },
+    newUser(state, uId) {
+      state.newUser = uId;
+    },
+  },
+  actions: {
+    // eslint-disable-next-line no-unused-vars
+    async createUser({ commit }, userData) {
+      console.log('create user in DB: dispatched');
+      await addDataWithId('users', userData.id, userData.info);
     },
   },
 };
