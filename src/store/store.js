@@ -17,6 +17,4 @@ export default new Vuex.Store({
     answers: answerStore,
     user: userStore,
   },
-  // add state for templates and login and separate in modules later on.
-  // add global notifications / error messages?
 });

@@ -62,6 +62,9 @@ const router = new Router({
       path: '/signup',
       name: 'signup',
       component: Register,
+      meta: {
+        guest: true,
+      },
     },
     {
       path: '/402',
@@ -99,7 +102,7 @@ router.beforeEach((to, from, next) => {
     // if user is not logged in, allways redirect to auth page
     if (store.state.user.uid) next();
     else {
-      next({ path: '/auth' });
+      next({ path: '/login' });
     }
   } else if (to.matched.some(route => route.meta.guest)) {
     // check if user is logged in

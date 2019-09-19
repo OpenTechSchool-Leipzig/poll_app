@@ -1,38 +1,45 @@
 <template>
-  <div>
-    <PollList
-      v-if="!!populatedPolls"
-      :title="'All Polls'"
-      :polls="populatedPolls"
-      :buttons="['Change State', 'Visit Poll']"
-      @ChangeState="handleStateSelection"
-      @VisitPoll="visitPollHandler"
-    />
-    <PollList
-      v-if="!!populatedTemplates"
-      :title="'Templates'"
-      :polls="populatedTemplates"
-      :buttons="['Delete Template']"
-      @DeleteTemplate="deleteTemplate"
-    />
-    <SelectPollState
-      v-if="pollToUpdate.id"
-      :pollId="pollToUpdate.id"
-      :initialState="pollToUpdate.initialState"
-      @clearState="clearStateSelection"
-    />
+  <div class="columns">
+    <div class="column is-three-fiths-desktop">
+      <PollList
+        v-if="!!populatedPolls"
+        :title="'All Polls'"
+        :polls="populatedPolls"
+        :buttons="['Change State', 'Visit Poll']"
+        @ChangeState="handleStateSelection"
+        @VisitPoll="visitPollHandler"
+      />
+      <PollList
+        v-if="!!populatedTemplates"
+        :title="'Templates'"
+        :polls="populatedTemplates"
+        :buttons="['Delete Template']"
+        @DeleteTemplate="deleteTemplate"
+      />
+      <SelectPollState
+        v-if="pollToUpdate.id"
+        :pollId="pollToUpdate.id"
+        :initialState="pollToUpdate.initialState"
+        @clearState="clearStateSelection"
+      />
+    </div>
+    <div class="column is-two-fiths-desktop">
+      <UserList :users="userList"></UserList>
+    </div>
   </div>
 </template>
 
 <script>
 import PollList from '@/components/polls/PollList.vue';
 import SelectPollState from '@/components/polls/SelectPollState.vue';
+import UserList from '@/components/users/UserList.vue';
 
 export default {
   name: 'PollOverview',
   components: {
     PollList,
     SelectPollState,
+    UserList,
   },
   data() {
     return {
@@ -48,6 +55,9 @@ export default {
     },
     populatedTemplates() {
       return this.$store.getters.populatedTemplates;
+    },
+    userList() {
+      return this.$store.state.user.userList;
     },
   },
   methods: {
@@ -77,6 +87,9 @@ export default {
     }
     if (this.$store.state.templates.templates.length < 1) {
       this.$store.dispatch('fetchTemplates');
+    }
+    if (this.$store.state.user.userList.length < 1) {
+      this.$store.dispatch('fetchUsers');
     }
   },
 };

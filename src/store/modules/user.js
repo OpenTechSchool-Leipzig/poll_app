@@ -1,4 +1,4 @@
-import { addDataWithId } from '../firebase';
+import { addDataWithId, fetchCollection } from '../firebase';
 
 const userStore = {
   state: {
@@ -6,6 +6,7 @@ const userStore = {
     displayName: null,
     email: null,
     admin: null,
+    userList: [],
   },
   mutations: {
     setUser(state, newUser) {
@@ -21,15 +22,22 @@ const userStore = {
         state.admin = null;
       }
     },
-    newUser(state, uId) {
-      state.newUser = uId;
+    setUserList(state, userList) {
+      state.userList = userList;
     },
   },
   actions: {
     // eslint-disable-next-line no-unused-vars
     async createUser({ commit }, userData) {
-      console.log('create user in DB: dispatched');
       await addDataWithId('users', userData.id, userData.info);
+    },
+    async fetchUsers({ commit }) {
+      const userList = await fetchCollection('users');
+      try {
+        commit('setUserList', userList);
+      } catch (err) {
+        throw err;
+      }
     },
   },
 };
