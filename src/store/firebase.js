@@ -51,10 +51,13 @@ export async function fetchDocument(collection, document) {
 
 // Add Data to collection
 export async function AddData(collection, payload) {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  const userId = firebase.auth().currentUser.uid;
+
   const res = await firebase
     .firestore()
     .collection(collection)
-    .add(payload);
+    .add({ ...payload, createdAt: timestamp, createdBy: userId });
   try {
     return res.id;
   } catch (err) {
@@ -64,12 +67,13 @@ export async function AddData(collection, payload) {
 
 // Update specific Data: collection + id -> update
 export async function UpdateData(collection, document, payload) {
-  console.log(payload);
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  const userId = firebase.auth().currentUser.uid;
   await firebase
     .firestore()
     .collection(collection)
     .doc(document)
-    .update(payload);
+    .update({ ...payload, updatedAt: timestamp, updatedBy: userId });
   try {
     console.log('Successfully updated: ' + payload.title);
   } catch (err) {
@@ -90,8 +94,9 @@ export async function DeleteData(collection, id) {
     console.log(err);
   }
 }
-// Add Data to Array and create ne document if not allready existing
+// Add Data to Array and create new document if not allready existing
 export async function AddToArray(collection, id, array, value) {
+  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
   await firebase
     .firestore()
     .collection(collection)
@@ -99,6 +104,7 @@ export async function AddToArray(collection, id, array, value) {
     .set(
       {
         [array]: firebase.firestore.FieldValue.arrayUnion(value),
+        updatedAt: timestamp,
       },
       { merge: true }
     );
