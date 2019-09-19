@@ -11,6 +11,22 @@ if (process.argv.length !== 3) {
 }
 const userId = process.argv[2];
 
+function updateUserDoc(uid) {
+  // somehow I cannot perform any action on the firestore database
+  admin
+    .firestore()
+    .collection('users')
+    .doc(uid)
+    .set({ admin: true }, { merge: true })
+    .then(() => {
+      console.log('updated firestore user document');
+      process.exit(0);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+}
+
 admin
   .auth()
   .setCustomUserClaims(userId, {
@@ -18,7 +34,7 @@ admin
   })
   .then(() => {
     console.log(`User ${userId} has been given admin role`);
-    process.exit(0);
+    updateUserDoc(userId);
   })
   .catch(err => {
     console.log('Failed to grant user admin role: ' + err);

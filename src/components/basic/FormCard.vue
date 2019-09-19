@@ -2,7 +2,7 @@
   <div class="form-card">
     <form>
       <header class="form-card__header">
-        <h2>{{ title }}</h2>
+        <h2 class="title is-1">{{ title }}</h2>
       </header>
       <div class="form-card__container">
         <slot name="body"></slot>

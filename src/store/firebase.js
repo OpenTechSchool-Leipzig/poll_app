@@ -12,6 +12,7 @@ firebase.initializeApp({
 });
 
 export const auth = firebase.auth();
+export const functions = firebase.functions();
 
 // get collection
 export async function fetchCollection(collection) {
