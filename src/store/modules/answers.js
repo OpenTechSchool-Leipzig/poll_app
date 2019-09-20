@@ -1,4 +1,4 @@
-import { fetchCollection, AddToArray } from '../firebase';
+import { fetchCollection, addToArray } from '../firebase';
 
 const answerStore = {
   state: {
@@ -21,9 +21,9 @@ const answerStore = {
     },
 
     // eslint-disable-next-line no-unused-vars
-    async AddAnswer({ commit }, { pollId, answers }) {
+    async addAnswer({ commit }, { pollId, answers }) {
       console.log('id: ' + pollId + 'add Answer: ' + answers);
-      await AddToArray('answers', pollId, 'userAnswers', answers);
+      await addToArray('answers', pollId, 'userAnswers', answers);
       try {
         console.log('answers added');
       } catch (err) {

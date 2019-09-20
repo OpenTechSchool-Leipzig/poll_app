@@ -14,6 +14,15 @@ firebase.initializeApp({
 export const auth = firebase.auth();
 export const functions = firebase.functions();
 
+export const serverTimestamp = firebase.firestore.FieldValue.serverTimestamp();
+export const getTimestamp = date => {
+  return firebase.firestore.Timestamp.fromMillis(date);
+};
+
+export const getUserId = () => {
+  return auth.currentUser.uid;
+};
+
 // get collection
 export async function fetchCollection(collection) {
   const fetchedData = [];
@@ -50,14 +59,13 @@ export async function fetchDocument(collection, document) {
 }
 
 // Add Data to collection
-export async function AddData(collection, payload) {
-  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-  const userId = firebase.auth().currentUser.uid;
+export async function addData(collection, payload) {
+  // override local timestamp
 
   const res = await firebase
     .firestore()
     .collection(collection)
-    .add({ ...payload, createdAt: timestamp, createdBy: userId });
+    .add({ ...payload, createdAt: serverTimestamp });
   try {
     return res.id;
   } catch (err) {
@@ -66,14 +74,14 @@ export async function AddData(collection, payload) {
 }
 
 // Update specific Data: collection + id -> update
-export async function UpdateData(collection, document, payload) {
-  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-  const userId = firebase.auth().currentUser.uid;
+export async function updateData(collection, document, payload) {
+  // const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  // const userId = firebase.auth().currentUser.uid;
   await firebase
     .firestore()
     .collection(collection)
     .doc(document)
-    .update({ ...payload, updatedAt: timestamp, updatedBy: userId });
+    .update({ ...payload, UpdatedAt: serverTimestamp });
   try {
     console.log('Successfully updated: ' + payload.title);
   } catch (err) {
@@ -82,7 +90,7 @@ export async function UpdateData(collection, document, payload) {
 }
 
 // Remove Data from collection
-export async function DeleteData(collection, id) {
+export async function deleteData(collection, id) {
   await firebase
     .firestore()
     .collection(collection)
@@ -95,8 +103,8 @@ export async function DeleteData(collection, id) {
   }
 }
 // Add Data to Array and create new document if not allready existing
-export async function AddToArray(collection, id, array, value) {
-  const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+export async function addToArray(collection, id, array, value) {
+  // as it is only used for user input the timestamp doesn't need to be set in the vuex store
   await firebase
     .firestore()
     .collection(collection)
@@ -104,7 +112,7 @@ export async function AddToArray(collection, id, array, value) {
     .set(
       {
         [array]: firebase.firestore.FieldValue.arrayUnion(value),
-        updatedAt: timestamp,
+        updatedAt: serverTimestamp,
       },
       { merge: true }
     );
@@ -116,11 +124,12 @@ export async function AddToArray(collection, id, array, value) {
 }
 
 export async function addDataWithId(collection, document, payload) {
+  // as it is only used for user creation the timestamp doesn't need to be set in the vuex store
   await firebase
     .firestore()
     .collection(collection)
     .doc(document)
-    .set(payload);
+    .set({ ...payload, createdAt: serverTimestamp });
   try {
     console.log('added to ' + collection + ' with id: ' + document);
   } catch (err) {

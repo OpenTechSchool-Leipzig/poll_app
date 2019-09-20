@@ -1,4 +1,11 @@
-import { fetchCollection, AddData, DeleteData, UpdateData } from '../firebase';
+import {
+  fetchCollection,
+  addData,
+  deleteData,
+  updateData,
+  getUserId,
+  getTimestamp,
+} from '../firebase';
 
 const templateStore = {
   state: {
@@ -47,24 +54,34 @@ const templateStore = {
       }
     },
     async addTemplate({ commit }, template) {
-      const pollId = await AddData('templates', template);
+      const templateData = {
+        ...template,
+        createdAt: getTimestamp(Date.now()),
+        createdBy: getUserId(),
+      };
+      const pollId = await addData('templates', templateData);
       try {
-        template.id = pollId;
-        commit('pushTemplate', template);
+        templateData.id = pollId;
+        commit('pushTemplate', templateData);
       } catch (error) {
         console.log(error);
       }
     },
     async editTemplate({ commit }, template) {
-      await UpdateData('templates', template.id, template);
+      const templateData = {
+        ...template,
+        updatedAt: getTimestamp(Date.now()),
+        updatedBy: getUserId(),
+      };
+      await updateData('templates', template.id, templateData);
       try {
-        commit('updateSingleTemplate', template);
+        commit('updateSingleTemplate', templateData);
       } catch (err) {
         console.log(err);
       }
     },
     async deleteTemplate({ commit }, pollId) {
-      await DeleteData('templates', pollId);
+      await deleteData('templates', pollId);
       try {
         commit('dropTemplate', pollId);
       } catch {

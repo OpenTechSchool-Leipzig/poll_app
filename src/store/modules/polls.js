@@ -1,4 +1,12 @@
-import { fetchCollection, fetchDocument, AddData, UpdateData } from '../firebase';
+import {
+  fetchCollection,
+  fetchDocument,
+  addData,
+  updateData,
+  serverTimestamp,
+  getUserId,
+  getTimestamp,
+} from '../firebase';
 
 const pollStore = {
   state: {
@@ -32,9 +40,9 @@ const pollStore = {
       const pollList = [...state.polls, poll];
       state.polls = pollList;
     },
-    updateSinglePollState(state, { pollId, newState }) {
+    updateSinglePollState(state, { pollId, activationInfo }) {
       let updatedPolls = state.polls.map(x =>
-        x.id === pollId ? (x = { ...x, state: newState }) : x
+        x.id === pollId ? (x = { ...x, ...activationInfo }) : x
       );
       state.polls = updatedPolls;
     },
@@ -57,18 +65,53 @@ const pollStore = {
       }
     },
     async addPoll({ commit }, poll) {
-      const pollId = await AddData('polls', poll);
+      const pollData = {
+        ...poll,
+        createdAt: getTimestamp(Date.now()),
+        createdBy: getUserId(),
+      };
+      const pollId = await addData('polls', pollData);
       try {
-        poll.id = pollId;
-        commit('pushPoll', poll);
+        pollData.id = pollId;
+        commit('pushPoll', pollData);
       } catch (error) {
         console.log(error);
       }
     },
     async updatePollState({ commit }, { pollId, newState }) {
-      await UpdateData('polls', pollId, { state: newState });
+      let activationInfo;
+      switch (newState) {
+        case 'active':
+          activationInfo = {
+            state: newState,
+            activatedAt: serverTimestamp,
+            activatedBy: getUserId(),
+          };
+          break;
+        case 'closed':
+          activationInfo = {
+            state: newState,
+            closedAt: serverTimestamp,
+            closedBy: getUserId(),
+          };
+          break;
+        default:
+          activationInfo = {
+            state: newState,
+          };
+          break;
+      }
+
+      await updateData('polls', pollId, { ...activationInfo });
       try {
-        commit('updateSinglePollState', { pollId, newState });
+        const timestamp = getTimestamp(Date.now());
+        if (activationInfo.closedAt) {
+          activationInfo = { ...activationInfo, closedAt: timestamp };
+        } else if (activationInfo.activatedAt) {
+          activationInfo = { ...activationInfo, activatedAt: timestamp };
+        }
+        console.log(activationInfo);
+        commit('updateSinglePollState', { pollId, activationInfo });
       } catch (err) {
         console.log(err);
       }

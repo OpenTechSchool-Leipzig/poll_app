@@ -1,4 +1,4 @@
-import { fetchCollection, AddData } from '../firebase';
+import { fetchCollection, addData, getUserId, getTimestamp } from '../firebase';
 
 const questionStore = {
   state: {
@@ -23,10 +23,15 @@ const questionStore = {
       }
     },
     async addQuestion({ commit }, question) {
-      const questionId = await AddData('questions', question);
+      const questionData = {
+        ...question,
+        createdAt: getTimestamp(Date.now()),
+        createdBy: getUserId(),
+      };
+      const questionId = await addData('questions', questionData);
       try {
-        question.id = questionId;
-        commit('pushQuestion', question);
+        questionData.id = questionId;
+        commit('pushQuestion', questionData);
         return questionId;
       } catch (error) {
         console.log(error);
