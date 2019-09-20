@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="q-preview__choice" v-for="choice in question.options.choices" :key="choice">
-          <input id="choice" type="checkbox" />
+          <input id="choice" :type="[question.options.oneAnswerOnly ? 'radio' : 'checkbox']" />
           <label for="choice">{{ choice }}</label>
           <button @click.prevent="removeChoice(question.options.choices.indexOf(choice))">
             remove

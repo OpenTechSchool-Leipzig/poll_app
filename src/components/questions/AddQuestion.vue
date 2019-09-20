@@ -24,6 +24,10 @@
           <label for="yesno">Yes/No Question</label>
         </div>
         <div class="form-check">
+          <input type="checkbox" id="oneansweronly" v-model="newQuestion.options.oneAnswerOnly" />
+          <label for="oneansweronly">Allow only one answer</label>
+        </div>
+        <div class="form-check">
           <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
           <label for="explanation">add textfield for explanation</label>
         </div>
@@ -72,6 +76,7 @@ export default {
           withText: false,
           customAnswer: false,
           isYesNo: false,
+          oneAnswerOnly: false,
           choices: [],
           startValue: 'Totally Agree',
           endValue: 'Totally Disagree',
@@ -103,6 +108,7 @@ export default {
           delete value.options.customAnswer;
           delete value.options.isYesNo;
           delete value.options.choices;
+          delete value.options.oneAnswerOnly;
           break;
       }
       this.$emit('addQuestion', value);

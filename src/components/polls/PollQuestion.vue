@@ -18,7 +18,20 @@
           v-for="(choice, index) in question.options.choices"
           :key="index"
         >
-          <input :id="choice" type="checkbox" :value="choice" v-model="value[qIndex].answer" />
+          <input
+            v-if="question.options.oneAnswerOnly"
+            :id="choice"
+            type="radio"
+            :value="choice"
+            v-model="value.answer"
+          />
+          <input
+            v-else
+            :id="choice"
+            type="checkbox"
+            :value="choice"
+            v-model="value[qIndex].answer"
+          />
           <label :for="choice">{{ choice }}</label>
         </div>
         <div v-if="question.options.customAnswer" class="question__choice">
