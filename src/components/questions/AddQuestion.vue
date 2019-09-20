@@ -23,7 +23,7 @@
           <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo" />
           <label for="yesno">Yes/No Question</label>
         </div>
-        <div class="form-check">
+        <div class="form-check" v-if="!newQuestion.options.isYesNo">
           <input type="checkbox" id="oneansweronly" v-model="newQuestion.options.oneAnswerOnly" />
           <label for="oneansweronly">Allow only one answer</label>
         </div>
@@ -36,8 +36,8 @@
           <label for="customanswer">allow user to add answer</label>
         </div>
       </div>
-      <div class="form-input">
-        <input v-if="!newQuestion.options.isYesNo" type="choices" v-model="answerInput" />
+      <div v-if="!newQuestion.options.isYesNo" class="form-input">
+        <input type="choices" v-model="answerInput" />
         <button @click.prevent="addChoice">add answer</button>
       </div>
       <ul class="choice-list">

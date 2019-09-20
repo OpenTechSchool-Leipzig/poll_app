@@ -23,7 +23,6 @@ export default {
         if (this.$route.meta.admin || this.$route.meta.auth) this.$router.push({ path: '/login' });
       } else {
         user.getIdTokenResult().then(tokenResult => {
-          console.log(tokenResult.claims);
           user.admin = tokenResult.claims.admin;
           this.$store.commit('setUser', user);
           if (this.$route.meta.guest) {
