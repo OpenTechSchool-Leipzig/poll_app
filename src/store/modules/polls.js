@@ -19,13 +19,17 @@ const pollStore = {
     populatedPolls: (state, getters, rootState) => {
       const { polls } = state;
       const { questions } = rootState.questions;
+      const { userList } = rootState.user;
 
-      let popPolls = JSON.parse(JSON.stringify(polls));
+      let popPolls = [...polls];
 
-      if (popPolls.length > 0 && questions.length > 0) {
+      if (popPolls.length > 0 && questions.length > 0 && userList.length > 0) {
         popPolls.forEach(poll => {
           const questionObjects = questions.filter(x => poll.questions.includes(x.id));
           poll.questions = questionObjects;
+          poll.createdBy = userList.find(x => x.id === poll.createdBy);
+          poll.activatedBy = userList.find(x => x.id === poll.activatedBy);
+          poll.closedBy = userList.find(x => x.id === poll.closedBy);
         });
         return popPolls;
       }

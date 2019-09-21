@@ -15,12 +15,14 @@ const templateStore = {
     populatedTemplates: (state, getters, rootState) => {
       const { templates } = state;
       const { questions } = rootState.questions;
-      let popTemplates = JSON.parse(JSON.stringify(templates));
+      const { userList } = rootState.user;
+      let popTemplates = [...templates];
 
-      if (popTemplates.length > 0 && questions.length > 0) {
+      if (popTemplates.length > 0 && questions.length > 0 && userList.length > 0) {
         popTemplates.forEach(template => {
           const questionObjects = questions.filter(x => template.questions.includes(x.id));
           template.questions = questionObjects;
+          template.createdBy = userList.find(x => x.id === template.createdBy);
         });
         return popTemplates;
       }

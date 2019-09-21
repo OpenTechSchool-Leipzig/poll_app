@@ -90,7 +90,7 @@ export default {
       return questionObjects;
     },
     storedQuestions() {
-      return this.$store.state.questions.questions;
+      return this.$store.getters.populatedQuestions;
     },
     storedTemplates() {
       return this.$store.getters.populatedTemplates;

@@ -4,6 +4,23 @@ const questionStore = {
   state: {
     questions: [],
   },
+
+  getters: {
+    populatedQuestions: (state, getters, rootState) => {
+      const { questions } = state;
+      const { userList } = rootState.user;
+
+      let popQuestions = [...questions];
+
+      if (popQuestions.length > 0 && userList.length > 0) {
+        popQuestions.forEach(question => {
+          question.createdBy = userList.find(x => x.id === question.createdBy);
+        });
+        return popQuestions;
+      }
+      return null;
+    },
+  },
   mutations: {
     updateQuestions(state, questionList) {
       state.questions = questionList;
