@@ -110,6 +110,7 @@ export default {
     list-style-type: none;
   }
   &__container {
+    transition: all 0.3s;
     &.v-enter,
     &.v-leave-to {
       transform: translateX(-120%);

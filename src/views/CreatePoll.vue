@@ -38,16 +38,36 @@
       </PollPreview>
 
       <div class="q-button__wrapper">
-        <button v-show="poll.questions.length > 1" class="q-button" @click="createPollHandler">
+        <button
+          v-tooltip="'Save your new Poll'"
+          v-show="poll.questions.length > 1"
+          class="q-button"
+          @click="createPollHandler"
+        >
           Create Poll
         </button>
-        <button v-show="poll.questions.length > 1" class="q-button" @click="createTemplateHandler">
+        <button
+          v-tooltip="'Save your new Poll as a Template'"
+          v-show="poll.questions.length > 1"
+          class="q-button"
+          @click="createTemplateHandler"
+        >
           Save New Template
         </button>
-        <button v-show="!isTemplateLoaded" class="q-button" @click="toggleTemplateList">
+        <button
+          v-tooltip="'load existing Template'"
+          v-show="!isTemplateLoaded"
+          class="q-button"
+          @click="toggleTemplateList"
+        >
           Load Template
         </button>
-        <button v-show="isTemplateLoaded" class="q-button" @click="updateTemplateHandler">
+        <button
+          vv-tooltip="'This will override the existing Template'"
+          v-show="isTemplateLoaded"
+          class="q-button"
+          @click="updateTemplateHandler"
+        >
           Update Template
         </button>
       </div>
@@ -85,7 +105,7 @@ export default {
     };
   },
   computed: {
-    selectedQuestions: function() {
+    selectedQuestions() {
       let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
       return questionObjects;
     },

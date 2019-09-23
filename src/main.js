@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import VTooltip from 'v-tooltip';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
@@ -7,6 +8,7 @@ import './registerServiceWorker';
 //import '../node_modules/bulma/css/bulma.css';
 
 Vue.config.productionTip = false;
+Vue.use(VTooltip, { defaultPlacement: 'bottom' });
 
 /* using "onAuthStateChanged" Observer from firebase to check stored user token and update user in store
 this is neccassary for the router to work properly. The observer returns it's unsubscribe method,
