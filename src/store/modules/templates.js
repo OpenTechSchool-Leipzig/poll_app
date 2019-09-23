@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import {
   fetchCollection,
   addData,
@@ -16,7 +17,7 @@ const templateStore = {
       const { templates } = state;
       const { questions } = rootState.questions;
       const { userList } = rootState.user;
-      let popTemplates = [...templates];
+      let popTemplates = cloneDeep(templates);
 
       if (popTemplates.length > 0 && questions.length > 0 && userList.length > 0) {
         popTemplates.forEach(template => {

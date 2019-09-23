@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import {
   fetchCollection,
   fetchDocument,
@@ -21,7 +22,7 @@ const pollStore = {
       const { questions } = rootState.questions;
       const { userList } = rootState.user;
 
-      let popPolls = [...polls];
+      let popPolls = cloneDeep(polls);
 
       if (popPolls.length > 0 && questions.length > 0 && userList.length > 0) {
         popPolls.forEach(poll => {

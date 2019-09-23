@@ -1,3 +1,4 @@
+import { cloneDeep } from 'lodash';
 import { fetchCollection, addData, getUserId, getTimestamp } from '../firebase';
 
 const questionStore = {
@@ -10,7 +11,7 @@ const questionStore = {
       const { questions } = state;
       const { userList } = rootState.user;
 
-      let popQuestions = [...questions];
+      let popQuestions = cloneDeep(questions);
 
       if (popQuestions.length > 0 && userList.length > 0) {
         popQuestions.forEach(question => {
