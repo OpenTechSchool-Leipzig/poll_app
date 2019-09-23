@@ -3,9 +3,10 @@
     <header>
       <h2>Question List</h2>
     </header>
+    <question-list-filter v-model="filters" />
     <transition-group tag="ul">
       <QuestionListItem
-        v-for="question in availableQuestions"
+        v-for="question in sortList(filteredQuestions)"
         :key="question.id"
         :question="question"
         @selectQuestion="forwardAddEmit"
@@ -16,15 +17,21 @@
 
 <script>
 import QuestionListItem from './QuestionListItem.vue';
+import QuestionListFilter from './QuestionListFilter.vue';
 
 export default {
-  /*data: function() {
+  data: function() {
     return {
-      expanded: [],
+      filters: {
+        search: '',
+        type: '',
+        sortBy: '',
+      },
     };
-  },*/
+  },
   components: {
     QuestionListItem,
+    QuestionListFilter,
   },
   props: {
     questions: Array,
@@ -34,10 +41,52 @@ export default {
     availableQuestions() {
       return this.questions.filter(x => !this.selectedQuestions.includes(x.id));
     },
+    filteredQuestions() {
+      return this.availableQuestions.filter(
+        x =>
+          x.text.toLowerCase().match(this.filters.search.toLowerCase()) &&
+          (!this.filters.type || x.type === this.filters.type)
+      );
+    },
   },
   methods: {
     forwardAddEmit(id) {
       this.$emit('selectQuestion', id);
+    },
+    sortList(questions) {
+      if (this.filters.sortBy) {
+        switch (this.filters.sortBy) {
+          case 'newest':
+            questions.sort((a, b) => {
+              if (!a.createdAt && !b.createdAt) {
+                return 0;
+              } else if (!b.createdAt) {
+                return -1;
+              } else if (!a.createdAt) {
+                return 1;
+              } else {
+                return b.createdAt.toMillis() - a.createdAt.toMillis();
+              }
+            });
+            break;
+          case 'oldest':
+            questions.sort((a, b) => {
+              if (!a.createdAt && !b.createdAt) {
+                return 0;
+              } else if (!a.createdAt) {
+                return -1;
+              } else if (!b.createdAt) {
+                return 1;
+              } else {
+                return a.createdAt.toMillis() - b.createdAt.toMillis();
+              }
+            });
+            break;
+          default:
+            break;
+        }
+      }
+      return questions;
     },
     /* Old method for handling accordeon (now handled in child-state)
     toggleItem(key) {

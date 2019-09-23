@@ -7,6 +7,7 @@
     <div v-show="expanded" class="question__details">
       <p>type: {{ question.type }}</p>
       <p>options: {{ JSON.stringify(question.options) }}</p>
+      <p v-if="question.createdAt">created At: {{ question.createdAt.toDate() }}</p>
     </div>
   </li>
 </template>
@@ -61,6 +62,7 @@ ul {
   margin: auto;
   margin-bottom: 6px;
   @include shadow1;
+  transition: all 0.3s;
 
   &:hover {
     @include shadow2;
