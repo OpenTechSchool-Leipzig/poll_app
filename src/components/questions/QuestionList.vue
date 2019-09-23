@@ -3,14 +3,14 @@
     <header>
       <h2>Question List</h2>
     </header>
-    <ul>
+    <transition-group tag="ul">
       <QuestionListItem
-        v-for="question in questions"
-        v-show="!selectedQuestions.includes(question.id)"
+        v-for="question in availableQuestions"
         :key="question.id"
         :question="question"
+        @selectQuestion="forwardAddEmit"
       />
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -30,7 +30,15 @@ export default {
     questions: Array,
     selectedQuestions: Array,
   },
+  computed: {
+    availableQuestions() {
+      return this.questions.filter(x => !this.selectedQuestions.includes(x.id));
+    },
+  },
   methods: {
+    forwardAddEmit(id) {
+      this.$emit('selectQuestion', id);
+    },
     /* Old method for handling accordeon (now handled in child-state)
     toggleItem(key) {
       if (this.expanded.includes(key)) {
@@ -49,6 +57,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: $primary-dark;
+  overflow: hidden;
 }
 header {
   @include section-header;

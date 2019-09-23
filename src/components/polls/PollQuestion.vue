@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     removeQuestion() {
-      this.$parent.$emit('removeQuestion', this.question.id);
+      this.$emit('removeQuestion', this.question.id);
     },
   },
 };
@@ -108,6 +108,21 @@ export default {
     display: flex;
     justify-content: center;
     list-style-type: none;
+  }
+  &__container {
+    &.v-enter,
+    &.v-leave-to {
+      transform: translateX(-120%);
+    }
+    &.v-enter-to,
+    &.v-leave {
+      transform: translateX(0);
+    }
+    &.v-enter-active,
+    &.v-leave-active,
+    &.v-move {
+      transition: all 0.5s ease-out;
+    }
   }
 }
 </style>

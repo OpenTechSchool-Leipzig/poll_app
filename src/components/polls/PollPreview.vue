@@ -22,7 +22,7 @@
 
     <slot></slot>
 
-    <ul class="poll-preview__list">
+    <transition-group tag="ul">
       <PollQuestion
         v-for="(question, index) in questions"
         :key="question.id"
@@ -30,8 +30,9 @@
         :qIndex="index"
         v-model="test"
         :isPreview="true"
+        @removeQuestion="forwardRemoveEmit"
       />
-    </ul>
+    </transition-group>
   </div>
 </template>
 
@@ -63,12 +64,19 @@ export default {
   },
   methods: {
     populateAnswers() {
+      // fill the "test" model with id's and empty answers so they could be referenced in the question-preview
       this.test = this.questions.map(question => {
         return {
           questionId: question.id,
           answer: question.type === 'choice' && !question.options.isYesNo ? [] : null,
         };
       });
+    },
+    forwardRemoveEmit(id) {
+      // Somehow transition-groups seems to prevent to use emit at parent as well as using $listeners.
+      // So the emit needs to be forwarde manually - it could be removed when the active poll is handled
+      // in vuex-Store, which would also allow to load templates or poll from the pollOverview Page
+      this.$emit('removeQuestion', id);
     },
   },
 };
@@ -79,6 +87,7 @@ export default {
   width: 100%;
   height: 100%;
   background-color: $primary-dark;
+  overflow: hidden;
   &__title {
     display: flex;
     justify-content: space-between;
