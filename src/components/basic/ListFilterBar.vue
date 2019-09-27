@@ -20,11 +20,11 @@
     </div>
 
     <div v-if="showFilters">
-      <div class="field">
+      <div v-if="typeof value.type != 'undefined'" class="field">
         <div class="control">
           <div class="select">
             <select v-model="value.type">
-              <option disabled value>Select question type</option>
+              <option selected disabled value>Select question type</option>
               <option value>All</option>
               <option value="open">Open question</option>
               <option value="choice">Multiple choice</option>
@@ -33,11 +33,26 @@
           </div>
         </div>
       </div>
-      <div class="field">
+
+      <div v-if="typeof value.state != 'undefined'" class="field">
+        <div class="control">
+          <div class="select">
+            <select v-model="value.state">
+              <option selected disabled value>Select poll state</option>
+              <option value>All</option>
+              <option value="draft">Draft</option>
+              <option value="active">Active</option>
+              <option value="closed">Closed</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div v-if="typeof value.sortBy != 'undefined'" class="field">
         <div class="control">
           <div class="select">
             <select v-model="value.sortBy">
-              <option disabled value>Selct sorting Option</option>
+              <option selected disabled value>Select sorting Option</option>
               <option value>Default</option>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>

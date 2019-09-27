@@ -3,7 +3,7 @@
     <header>
       <h2>Question List</h2>
     </header>
-    <question-list-filter v-model="filters" />
+    <ListFilterBar v-model="filters" />
     <transition-group tag="ul">
       <QuestionListItem
         v-for="question in sortList(filteredQuestions)"
@@ -17,7 +17,7 @@
 
 <script>
 import QuestionListItem from './QuestionListItem.vue';
-import QuestionListFilter from './QuestionListFilter.vue';
+import ListFilterBar from '../basic/ListFilterBar.vue';
 
 export default {
   data: function() {
@@ -31,7 +31,7 @@ export default {
   },
   components: {
     QuestionListItem,
-    QuestionListFilter,
+    ListFilterBar,
   },
   props: {
     questions: Array,

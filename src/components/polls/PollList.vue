@@ -3,8 +3,9 @@
     <header>
       <h2>{{ title }}</h2>
     </header>
+    <ListFilterBar :value="filters" />
     <ul>
-      <li v-for="poll in polls" class="poll" :key="poll.id">
+      <li v-for="poll in filteredPolls" class="poll" :key="poll.id">
         <div class="poll__short" :class="{ expanded: expanded.includes(poll.id) }">
           <div class="poll__info" @click="toggleItem(poll.id)">
             <div>{{ poll.title }}</div>
@@ -44,20 +45,35 @@
 // A better solution for the button part might be using <slot></slot>
 
 import QuestionListItem from '../questions/QuestionListItem.vue';
+import ListFilterBar from '../basic/ListFilterBar.vue';
 
 export default {
   data: function() {
     return {
       expanded: [],
+      filters: {
+        search: '',
+        state: '',
+      },
     };
   },
   components: {
     QuestionListItem,
+    ListFilterBar,
   },
   props: {
     title: String,
     polls: Array,
     buttons: Array,
+  },
+  computed: {
+    filteredPolls() {
+      return this.polls.filter(
+        x =>
+          x.title.toLowerCase().match(this.filters.search.toLowerCase()) &&
+          (!this.filters.state || x.state === this.filters.state)
+      );
+    },
   },
   methods: {
     toggleItem(key) {
@@ -72,6 +88,11 @@ export default {
     emitButton(button, id) {
       this.$emit(button.split(' ').join(''), id);
     },
+  },
+  mounted() {
+    if (this.title === 'Templates') {
+      delete this.filters.state;
+    }
   },
 };
 </script>
