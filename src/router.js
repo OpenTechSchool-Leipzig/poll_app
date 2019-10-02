@@ -6,7 +6,6 @@ import store from './store/store';
 import CreatePoll from './views/CreatePoll.vue';
 import PollOverview from './views/PollOverview.vue';
 import AnswerPoll from './views/AnswerPoll.vue';
-import Auth from './views/Auth.vue';
 import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import NotFound from './views/static/404.vue';
@@ -41,14 +40,6 @@ const router = new Router({
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
       component: () => import(/* webpackChunkName: "about" */ './views/static/About'),
-    },
-    {
-      path: '/auth',
-      name: 'auth',
-      component: Auth,
-      meta: {
-        guest: true,
-      },
     },
     {
       path: '/login',

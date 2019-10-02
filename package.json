@@ -13,7 +13,6 @@
     "bulma": "^0.7.5",
     "core-js": "^2.6.5",
     "firebase": "^6.0.1",
-    "firebaseui": "^4.1.0",
     "lodash": "^4.17.15",
     "register-service-worker": "^1.6.2",
     "v-tooltip": "^2.0.2",
