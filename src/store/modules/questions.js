@@ -1,5 +1,5 @@
 import { cloneDeep } from 'lodash';
-import { fetchCollection, addData, getUserId, getTimestamp } from '../firebase';
+import { fetchCollection, addData, getUserId, getTimestamp } from '../../utility/firebase';
 
 const questionStore = {
   state: {

@@ -1,4 +1,4 @@
-import { fetchCollection, addToArray } from '../firebase';
+import { fetchCollection, addToArray } from '../../utility/firebase';
 
 const answerStore = {
   state: {

@@ -1,4 +1,4 @@
-import { addDataWithId, fetchCollection } from '../firebase';
+import { addDataWithId, fetchCollection } from '../../utility/firebase';
 
 const userStore = {
   state: {

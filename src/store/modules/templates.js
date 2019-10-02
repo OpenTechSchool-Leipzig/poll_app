@@ -6,7 +6,7 @@ import {
   updateData,
   getUserId,
   getTimestamp,
-} from '../firebase';
+} from '../../utility/firebase';
 
 const templateStore = {
   state: {

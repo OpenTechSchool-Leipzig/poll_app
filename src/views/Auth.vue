@@ -13,7 +13,7 @@
 <script>
 import * as firebaseui from 'firebaseui';
 import firebase from 'firebase';
-import { auth } from '../store/firebase';
+import { auth } from '../utility/firebase';
 
 export default {
   name: 'auth',

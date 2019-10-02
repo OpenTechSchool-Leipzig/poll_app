@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { functions } from '../../store/firebase';
+import { functions } from '../../utility/firebase';
 
 export default {
   props: {

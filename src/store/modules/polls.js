@@ -7,7 +7,7 @@ import {
   serverTimestamp,
   getUserId,
   getTimestamp,
-} from '../firebase';
+} from '../../utility/firebase';
 
 const pollStore = {
   state: {

@@ -3,7 +3,7 @@ import VTooltip from 'v-tooltip';
 import App from './App.vue';
 import router from './router';
 import store from './store/store';
-import { auth } from './store/firebase';
+import { auth } from './utility/firebase';
 import './registerServiceWorker';
 //import '../node_modules/bulma/css/bulma.css';
 

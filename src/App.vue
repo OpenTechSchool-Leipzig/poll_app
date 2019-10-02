@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { auth } from './store/firebase';
+import { auth } from './utility/firebase';
 
 export default {
   mounted() {
