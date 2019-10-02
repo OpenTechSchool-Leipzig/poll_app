@@ -1,6 +1,10 @@
 <template>
   <div class="wrapper">
-    <FormCard title="Request Access">
+    <FormCard
+      title="Request Access"
+      @submit="register"
+      :submitBtn="{ name: 'Sign up', loading, disabled: !isInputValid }"
+    >
       <template #body>
         <InputUnit v-model="email" :name="'Email'" :type="'email'" />
         <InputUnit v-model="name" :name="'Username'" :type="'text'" />
@@ -19,17 +23,6 @@
         <div class="hint">
           <p>You can sign up but need to wait for an admin to confirm your registration</p>
         </div>
-      </template>
-      <template #footer>
-        <button
-          class="button is-primary is-outlined"
-          :class="{ 'is-loading': loading }"
-          :disabled="!isInputValid"
-          type="button"
-          @click.prevent="register"
-        >
-          Sign Up
-        </button>
       </template>
     </FormCard>
   </div>

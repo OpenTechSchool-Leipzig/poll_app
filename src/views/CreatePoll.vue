@@ -14,7 +14,7 @@
         @selectQuestion="selectQuestionHandler"
       />
       <div v-show="!showAddQuestion" class="q-button__wrapper">
-        <button class="q-button" @click="showAddQuestion = true">New Question</button>
+        <DefaultButton :name="'New Question'" :isPrimary="true" @click="showAddQuestion = true" />
       </div>
     </div>
     <div class="col-right">
@@ -81,6 +81,7 @@ import QuestionList from '@/components/questions/QuestionList.vue';
 import PollPreview from '@/components/polls/PollPreview.vue';
 import PollList from '@/components/polls/PollList.vue';
 import QuestionPreview from '@/components/questions/QuestionPreview.vue';
+import DefaultButton from '@/components/basic/DefaultButton.vue';
 
 export default {
   name: 'createPoll',
@@ -90,6 +91,7 @@ export default {
     PollPreview,
     PollList,
     QuestionPreview,
+    DefaultButton,
   },
   data: function() {
     return {

@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <FormCard title="Login to continue...">
+    <FormCard title="Login to continue..." @submit="login" :submitBtn="{ name: 'login', loading }">
       <template #body>
         <InputUnit v-model="email" :name="'Email'" :type="'email'" />
         <InputUnit v-model="password" :name="'Password'" :type="'password'" />
@@ -8,16 +8,6 @@
           No account yet?
           <router-link to="/signup">Request access here</router-link>
         </p>
-      </template>
-      <template #footer>
-        <button
-          class="button is-primary is-outlined"
-          :class="{ 'is-loading': loading }"
-          type="button"
-          @click.prevent="login"
-        >
-          login
-        </button>
       </template>
     </FormCard>
   </div>
@@ -42,9 +32,10 @@ export default {
   },
   methods: {
     async login() {
+      console.log('triggered function');
       this.loading = true;
-      await auth.signInWithEmailAndPassword(this.email, this.password);
       try {
+        await auth.signInWithEmailAndPassword(this.email, this.password);
         console.log('successfully logged in');
         this.loading = false;
       } catch (error) {

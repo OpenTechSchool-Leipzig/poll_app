@@ -1,6 +1,6 @@
 <template>
   <div class="form-card">
-    <form>
+    <form @submit.prevent="$emit('submit')">
       <header class="form-card__header">
         <h2 class="title is-1">{{ title }}</h2>
       </header>
@@ -8,6 +8,15 @@
         <slot name="body"></slot>
       </div>
       <div class="form-card__footer">
+        <DefaultButton
+          v-if="submitBtn"
+          isPrimary
+          :isLoading="submitBtn.loading"
+          :name="submitBtn.name"
+          :isDisabled="submitBtn.disabled"
+          :isDanger="submitBtn.danger"
+          @click="$emit('submit')"
+        />
         <slot name="footer"></slot>
       </div>
     </form>
@@ -15,9 +24,15 @@
 </template>
 
 <script>
+import DefaultButton from './DefaultButton.vue';
+
 export default {
+  components: {
+    DefaultButton,
+  },
   props: {
     title: String,
+    submitBtn: Object,
   },
 };
 </script>
