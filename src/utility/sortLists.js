@@ -1,48 +1,31 @@
-export const sortNewest = array => {
+export const sortTimestamp = (array, key, invert) => {
   return array.sort((a, b) => {
-    if (!a.createdAt && !b.createdAt) {
+    if (!a[key] && !b[key]) {
       return 0;
-    } else if (!b.createdAt) {
+    } else if ((!invert && !b[key]) || (invert && !a[key])) {
       return -1;
-    } else if (!a.createdAt) {
+    } else if ((!invert && !a[key]) || (invert && !b[key])) {
       return 1;
     } else {
-      return b.createdAt.toMillis() - a.createdAt.toMillis();
+      const calc = invert
+        ? a[key].toMillis() - b[key].toMillis()
+        : b[key].toMillis() - a[key].toMillis();
+      return calc;
     }
   });
 };
 
-export const sortOldest = array => {
-  return array.sort((a, b) => {
-    if (!a.createdAt && !b.createdAt) {
-      return 0;
-    } else if (!a.createdAt) {
+export const sortAphabetical = (array, key, invert) => {
+  console.log(array + key + invert);
+  array.sort((a, b) => {
+    const nameA = a[key].toUpperCase();
+    const nameB = b[key].toUpperCase();
+    if ((!invert && nameA < nameB) || (invert && nameA > nameB)) {
       return -1;
-    } else if (!b.createdAt) {
-      return 1;
-    } else {
-      return a.createdAt.toMillis() - b.createdAt.toMillis();
     }
-  });
-};
-
-// tried to generalize sortFunction but couldn't get it to work...
-/* export const sortTimestamp = (array, field, invert) => {
-  return array.sort((a, b) => {
-    if (!a[field] && !b[field]) {
-      return 0;
-    } else if ((!invert && !b[field]) || (invert && !a[field])) {
-      return -1;
-    } else if ((!invert && !a[field]) || (invert && !b[field])) {
+    if ((!invert && nameA > nameB) || (invert && nameA < nameB)) {
       return 1;
-    } else if (a[field] && b[field] && invert) {
-      return a[field].toMillis() - b[field].toMillis();
-    } else {
-      return b[field].toMillis() - a[field].toMillis();
     }
+    return 0;
   });
-}; */
-
-export const sortAphabetical = (array, field, invert) => {
-  console.log(array + field + invert);
 };

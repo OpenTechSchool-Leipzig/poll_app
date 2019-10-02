@@ -18,7 +18,7 @@
 <script>
 import QuestionListItem from './QuestionListItem.vue';
 import ListFilterBar from '../basic/ListFilterBar.vue';
-import { sortNewest } from '../../utility/sortLists';
+import { sortAphabetical, sortTimestamp } from '../../utility/sortLists';
 
 export default {
   data: function() {
@@ -58,33 +58,16 @@ export default {
       if (this.filters.sortBy) {
         switch (this.filters.sortBy) {
           case 'newest':
-            sortNewest(questions);
-            /* questions.sort((a, b) => {
-              if (!a.createdAt && !b.createdAt) {
-                return 0;
-              } else if (!b.createdAt) {
-                return -1;
-              } else if (!a.createdAt) {
-                return 1;
-              } else {
-                return b.createdAt.toMillis() - a.createdAt.toMillis();
-              }
-            }); */
+            sortTimestamp(questions, 'createdAt', false);
             break;
-          /* case 'newest-test':
-            console.log(sortTimestamp(questions, 'createdAt', false)); */
           case 'oldest':
-            questions.sort((a, b) => {
-              if (!a.createdAt && !b.createdAt) {
-                return 0;
-              } else if (!a.createdAt) {
-                return -1;
-              } else if (!b.createdAt) {
-                return 1;
-              } else {
-                return a.createdAt.toMillis() - b.createdAt.toMillis();
-              }
-            });
+            sortTimestamp(questions, 'createdAt', true);
+            break;
+          case 'a-to-z':
+            sortAphabetical(questions, 'text', false);
+            break;
+          case 'z-to-a':
+            sortAphabetical(questions, 'text', true);
             break;
           default:
             break;

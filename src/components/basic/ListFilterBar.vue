@@ -56,6 +56,8 @@
               <option value>Default</option>
               <option value="newest">Newest</option>
               <option value="oldest">Oldest</option>
+              <option value="a-to-z">A to Z</option>
+              <option value="z-to-a">Z to A</option>
             </select>
           </div>
         </div>
