@@ -1,9 +1,9 @@
 <template>
   <button
-    class="button is-outlined is-small"
+    class="button is-outlined is-small is-primary"
     :class="{
       'is-loading': isLoading,
-      'is-primary': isPrimary,
+      'is-inverted': !isPrimary && !(isDanger || hasDangerIcon),
       'is-danger': isDanger || hasDangerIcon,
     }"
     :disabled="isDisabled"
@@ -64,7 +64,10 @@ export default {
       return icons;
     },
     hasDangerIcon() {
-      return this.icons.filter(x => x.isDanger)[0].isDanger;
+      if (this.icons.filter(x => x.isDanger).length > 0) {
+        return true;
+      }
+      return false;
     },
   },
   methods: {
@@ -76,4 +79,8 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.button:not(:last-child) {
+  margin-right: 2px;
+}
+</style>

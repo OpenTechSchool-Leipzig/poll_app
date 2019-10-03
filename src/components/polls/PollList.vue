@@ -14,13 +14,12 @@
           </div>
 
           <div class="poll__buttons" v-if="buttons && buttons.length > 0">
-            <button
+            <IconButton
               v-for="(button, index) in buttons"
               :key="index"
-              @click.prevent="emitButton(button, poll.id)"
-            >
-              {{ button }}
-            </button>
+              :name="button"
+              @click="emitButton(button, poll.id)"
+            />
           </div>
         </div>
         <ul
@@ -46,6 +45,7 @@
 
 import QuestionListItem from '../questions/QuestionListItem.vue';
 import ListFilterBar from '../basic/ListFilterBar.vue';
+import IconButton from '../basic/IconButton.vue';
 
 export default {
   data: function() {
@@ -60,6 +60,7 @@ export default {
   components: {
     QuestionListItem,
     ListFilterBar,
+    IconButton,
   },
   props: {
     title: String,

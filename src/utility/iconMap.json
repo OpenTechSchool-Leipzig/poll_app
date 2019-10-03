@@ -11,5 +11,9 @@
   {
     "icon": "edit",
     "labels": ["change", "edit", "update"]
+  },
+  {
+    "icon": "file-download",
+    "labels": ["select", "load"]
   }
 ]
