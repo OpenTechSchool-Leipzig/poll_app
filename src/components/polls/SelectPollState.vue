@@ -1,7 +1,6 @@
 <template>
-  <div>
-    <p>Selected Poll ID = {{ pollId }}</p>
-    <p>New State = {{ selection }}</p>
+  <DefaultModal @closeModal="$emit('clearState')">
+    <h3>{{ pollTitle }}</h3>
     <form @submit.prevent="updateState">
       <div class="radio-group">
         <input v-model="selection" id="draft" type="radio" :value="'draft'" />
@@ -15,15 +14,23 @@
         <input v-model="selection" id="closed" type="radio" :value="'closed'" />
         <label for="closed">Closed</label>
       </div>
-      <button>Update State</button>
+      <DefaultButton @click="updateState" name="Update State" />
     </form>
-  </div>
+  </DefaultModal>
 </template>
 
 <script>
+import DefaultButton from '../basic/DefaultButton.vue';
+import DefaultModal from '../basic/DefaultModal.vue';
+
 export default {
+  components: {
+    DefaultButton,
+    DefaultModal,
+  },
   props: {
     pollId: String,
+    pollTitle: String,
     initialState: String,
   },
   data() {

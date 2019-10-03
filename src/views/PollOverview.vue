@@ -19,6 +19,7 @@
       <SelectPollState
         v-if="pollToUpdate.id"
         :pollId="pollToUpdate.id"
+        :pollTitle="pollToUpdate.title"
         :initialState="pollToUpdate.initialState"
         @clearState="clearStateSelection"
       />
@@ -65,8 +66,10 @@ export default {
       this.$store.dispatch('deleteTemplate', id);
     },
     handleStateSelection(id) {
+      const selectedPoll = this.populatedPolls.find(x => x.id === id);
       this.pollToUpdate.id = id;
-      this.pollToUpdate.initialState = this.populatedPolls.find(x => x.id === id).state;
+      this.pollToUpdate.title = selectedPoll.title;
+      this.pollToUpdate.initialState = selectedPoll.state;
     },
     visitPollHandler(id) {
       this.$router.push({ path: `/poll/${id}` });
