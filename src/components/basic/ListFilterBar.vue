@@ -2,8 +2,11 @@
   <div class="filter-body">
     <div class="level is-mobile">
       <div class="level-left">
-        <div class="control">
+        <div class="control has-icons-left">
           <input class="input" v-model="value.search" />
+          <span class="icon is-small is-left">
+            <font-awesome-icon icon="search" />
+          </span>
         </div>
       </div>
       <div class="level-left">
@@ -13,7 +16,8 @@
             :class="{ 'is-inverted': !showFilters }"
             @click="showFilters = !showFilters"
           >
-            filter
+            <font-awesome-icon icon="filter" />
+            <font-awesome-icon icon="sort-amount-up-alt" />
           </button>
         </div>
       </div>
@@ -21,7 +25,7 @@
 
     <div v-if="showFilters">
       <div v-if="typeof value.type != 'undefined'" class="field">
-        <div class="control">
+        <div class="control is-expanded">
           <div class="select">
             <select v-model="value.type">
               <option selected disabled value>Select question type</option>
@@ -91,5 +95,10 @@ export default {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   @include shadow1;
+}
+.button {
+  svg:first-child {
+    margin-right: 8px;
+  }
 }
 </style>
