@@ -1,7 +1,7 @@
 <template>
   <button
     class="button is-outlined"
-    :class="{ 'is-loading': isLoading, 'is-primary': isPrimary }"
+    :class="{ 'is-loading': isLoading, 'is-primary': isPrimary, 'is-danger': isDanger }"
     :disabled="isDisabled"
     @click.prevent="emitEvent"
   >
@@ -22,6 +22,11 @@ export default {
       type: Boolean,
     },
     isPrimary: {
+      required: false,
+      default: false,
+      type: Boolean,
+    },
+    isDanger: {
       required: false,
       default: false,
       type: Boolean,

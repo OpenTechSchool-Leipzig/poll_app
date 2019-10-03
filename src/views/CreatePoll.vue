@@ -38,38 +38,35 @@
       </PollPreview>
 
       <div class="q-button__wrapper">
-        <button
+        <DefaultButton
           v-tooltip="'Save your new Poll'"
           v-show="poll.questions.length > 1"
-          class="q-button"
+          name="Create Poll"
           @click="createPollHandler"
-        >
-          Create Poll
-        </button>
-        <button
+          isPrimary
+        />
+        <DefaultButton
           v-tooltip="'Save your new Poll as a Template'"
           v-show="poll.questions.length > 1"
-          class="q-button"
+          name="Save New Template"
           @click="createTemplateHandler"
-        >
-          Save New Template
-        </button>
-        <button
+          isPrimary
+        />
+        <DefaultButton
           v-tooltip="'load existing Template'"
           v-show="!isTemplateLoaded"
-          class="q-button"
+          name="Load Template"
           @click="toggleTemplateList"
-        >
-          Load Template
-        </button>
-        <button
+          isPrimary
+        />
+
+        <DefaultButton
           v-tooltip="'This will override the existing Template'"
           v-show="isTemplateLoaded"
-          class="q-button"
+          name="Update Template"
           @click="updateTemplateHandler"
-        >
-          Update Template
-        </button>
+          isDanger
+        />
       </div>
     </div>
   </div>
