@@ -1,0 +1,14 @@
+[
+  {
+    "icon": "trash-alt",
+    "labels": ["delete"]
+  },
+  {
+    "icon": "external-link-alt",
+    "labels": ["visit", "link"]
+  },
+  {
+    "icon": "edit",
+    "labels": ["change", "edit", "update"]
+  }
+]

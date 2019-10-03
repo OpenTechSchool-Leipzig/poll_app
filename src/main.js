@@ -16,6 +16,7 @@ import {
   faBars,
   faFilter,
   faSortAmountUpAlt,
+  faExternalLinkAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -40,7 +41,8 @@ library.add(
   faEdit,
   faBars,
   faFilter,
-  faSortAmountUpAlt
+  faSortAmountUpAlt,
+  faExternalLinkAlt
 );
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
