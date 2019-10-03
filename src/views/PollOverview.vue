@@ -1,6 +1,5 @@
 <template>
   <div class="columns">
-    <IconButton name="Delete all and Edit" />
     <div class="column is-three-fiths-desktop">
       <PollList
         v-if="!!populatedPolls"
@@ -34,7 +33,6 @@
 import PollList from '@/components/polls/PollList.vue';
 import SelectPollState from '@/components/polls/SelectPollState.vue';
 import UserList from '@/components/users/UserList.vue';
-import IconButton from '@/components/basic/IconButton.vue';
 
 export default {
   name: 'PollOverview',
@@ -42,7 +40,6 @@ export default {
     PollList,
     SelectPollState,
     UserList,
-    IconButton,
   },
   data() {
     return {
