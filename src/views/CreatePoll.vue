@@ -63,7 +63,7 @@
           Load Template
         </button>
         <button
-          vv-tooltip="'This will override the existing Template'"
+          v-tooltip="'This will override the existing Template'"
           v-show="isTemplateLoaded"
           class="q-button"
           @click="updateTemplateHandler"

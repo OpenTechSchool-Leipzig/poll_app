@@ -3,7 +3,7 @@
     <div class="level is-mobile">
       <div class="level-left">
         <div class="control has-icons-left">
-          <input class="input" v-model="value.search" />
+          <input class="input" v-model="value.search" v-tooltip="'Search in ' + searchTarget" />
           <span class="icon is-small is-left">
             <font-awesome-icon icon="search" />
           </span>
@@ -15,6 +15,7 @@
             class="button is-outlined is-primary"
             :class="{ 'is-inverted': !showFilters }"
             @click="showFilters = !showFilters"
+            v-tooltip="'show filter and sorting options'"
           >
             <font-awesome-icon icon="filter" />
             <font-awesome-icon icon="sort-amount-up-alt" />
@@ -74,6 +75,7 @@
 export default {
   props: {
     value: Object,
+    searchTarget: String,
   },
   data() {
     return {

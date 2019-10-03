@@ -3,7 +3,7 @@
     <header>
       <h2>Question List</h2>
     </header>
-    <ListFilterBar v-model="filters" />
+    <ListFilterBar v-model="filters" searchTarget="Question Text" />
     <transition-group tag="ul">
       <QuestionListItem
         v-for="question in sortList(filteredQuestions)"

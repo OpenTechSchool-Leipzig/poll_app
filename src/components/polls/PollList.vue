@@ -3,7 +3,7 @@
     <header>
       <h2>{{ title }}</h2>
     </header>
-    <ListFilterBar :value="filters" />
+    <ListFilterBar :value="filters" searchTarget="Poll Title" />
     <ul>
       <li v-for="poll in filteredPolls" class="poll" :key="poll.id">
         <div class="poll__short" :class="{ expanded: expanded.includes(poll.id) }">
