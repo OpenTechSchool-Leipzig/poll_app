@@ -1,7 +1,8 @@
 [
   {
     "icon": "trash-alt",
-    "labels": ["delete"]
+    "labels": ["delete"],
+    "isDanger": true
   },
   {
     "icon": "external-link-alt",

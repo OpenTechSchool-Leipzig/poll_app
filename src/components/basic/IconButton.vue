@@ -1,9 +1,14 @@
 <template>
   <button
-    class="button is-outlined"
-    :class="{ 'is-loading': isLoading, 'is-primary': isPrimary, 'is-danger': isDanger }"
+    class="button is-outlined is-small"
+    :class="{
+      'is-loading': isLoading,
+      'is-primary': isPrimary,
+      'is-danger': isDanger || hasDangerIcon,
+    }"
     :disabled="isDisabled"
     @click.prevent="emitEvent"
+    v-tooltip="name"
   >
     <template v-if="icons.length === 0">{{ name }}</template>
     <template v-else>
@@ -58,6 +63,9 @@ export default {
       });
       return icons;
     },
+    hasDangerIcon() {
+      return this.icons.filter(x => x.isDanger)[0].isDanger;
+    },
   },
   methods: {
     emitEvent() {
@@ -68,9 +76,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.button {
-  min-width: 120px;
-  text-transform: uppercase;
-}
-</style>
+<style lang="scss" scoped></style>
