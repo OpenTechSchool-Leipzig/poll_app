@@ -2,7 +2,7 @@
   <form>
     <header>
       <h2>New Question</h2>
-      <button @click.prevent="$emit('close')">close</button>
+      <DefaultButton @click="$emit('close')" name="close" />
     </header>
     <div class="form-input">
       <label>Question Text</label>
@@ -38,7 +38,7 @@
       </div>
       <div v-if="!newQuestion.options.isYesNo" class="form-input">
         <input type="choices" v-model="answerInput" />
-        <button @click.prevent="addChoice">add answer</button>
+        <IconButton @click="addChoice" name="add answer" />
       </div>
       <ul class="choice-list">
         <li
@@ -46,9 +46,10 @@
           :key="newQuestion.options.choices.indexOf(choice)"
         >
           {{ choice }}
-          <button @click.prevent="removeChoice(newQuestion.options.choices.indexOf(choice))">
-            remove
-          </button>
+          <IconButton
+            @click="removeChoice(newQuestion.options.choices.indexOf(choice))"
+            name="remove answer"
+          />
         </li>
       </ul>
     </div>
@@ -66,11 +67,13 @@
 
 <script>
 import DefaultButton from '../basic/DefaultButton.vue';
+import IconButton from '../basic/IconButton.vue';
 
 export default {
   name: 'AddQuestion',
   components: {
     DefaultButton,
+    IconButton,
   },
   data: function() {
     return {

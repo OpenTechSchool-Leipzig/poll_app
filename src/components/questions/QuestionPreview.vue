@@ -15,9 +15,10 @@
         <div class="q-preview__choice" v-for="choice in question.options.choices" :key="choice">
           <input id="choice" :type="[question.options.oneAnswerOnly ? 'radio' : 'checkbox']" />
           <label for="choice">{{ choice }}</label>
-          <button @click.prevent="removeChoice(question.options.choices.indexOf(choice))">
-            remove
-          </button>
+          <IconButton
+            @click="removeChoice(question.options.choices.indexOf(choice))"
+            name="Remove Answer Option"
+          />
         </div>
         <div v-if="question.options.customAnswer" class="poll-preview__choice">
           <input id="custom-answer" type="checkbox" />
@@ -40,7 +41,12 @@
 </template>
 
 <script>
+import IconButton from '../basic/IconButton.vue';
+
 export default {
+  components: {
+    IconButton,
+  },
   props: {
     question: Object,
   },

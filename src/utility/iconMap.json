@@ -15,5 +15,13 @@
   {
     "icon": "file-download",
     "labels": ["select", "load"]
+  },
+  {
+    "icon": "plus",
+    "labels": ["add"]
+  },
+  {
+    "icon": "minus",
+    "labels": ["remove"]
   }
 ]
