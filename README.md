@@ -47,9 +47,7 @@ var firebaseConfig = {
   };
 ```
 
-to savely store these credentials
-
-create a file which is named .env.local to the root folder of the project and add the following lines.
+to savely store these credentials create a file that is named .env.local in the root folder of the project and add the following lines.
 
 ```
 VUE_APP_FIREBASE_API_KEY = 'your apiKey'
@@ -79,6 +77,6 @@ in your terminal navigate to the fbadmin folder `cd fbadmin` and run `npm instal
 Again go to your Firebase Project Page and navigate to settings > service account and click on "Generate new private key". Copy or Move the file to the fbadmin folder and rename it to `ServiceAccountKey.json`.
 The Filename is included in the .gitignore file. But you should make shure to never expose it to public repositories because it will allow full controll to your firebase project!
 
-When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote to an admin and run `npm run promte <userId>`.
+When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote and run `npm run promte <userId>`, where you replace `<userID>` with the copied id.
 
 Congratulations!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
