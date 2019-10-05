@@ -45,7 +45,7 @@
 
 import QuestionListItem from '../questions/QuestionListItem.vue';
 import ListFilterBar from '../basic/ListFilterBar.vue';
-import IconButton from '../basic/IconButton.vue';
+import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   data: function() {

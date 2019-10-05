@@ -20,7 +20,7 @@
 <script>
 import iconMap from '@/utility/iconMap.json';
 
-import buttonMixin from './Buttons/buttonMixin';
+import buttonMixin from './buttonMixin';
 
 export default {
   mixins: [buttonMixin],

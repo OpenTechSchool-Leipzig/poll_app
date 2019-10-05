@@ -66,8 +66,8 @@
 </template>
 
 <script>
-import DefaultButton from '../basic/DefaultButton.vue';
-import IconButton from '../basic/IconButton.vue';
+import DefaultButton from '../basic/Buttons/DefaultButton.vue';
+import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   name: 'AddQuestion',

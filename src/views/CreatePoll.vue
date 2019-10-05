@@ -80,7 +80,7 @@ import QuestionList from '@/components/questions/QuestionList.vue';
 import PollPreview from '@/components/polls/PollPreview.vue';
 import PollList from '@/components/polls/PollList.vue';
 import QuestionPreview from '@/components/questions/QuestionPreview.vue';
-import DefaultButton from '@/components/basic/DefaultButton.vue';
+import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'createPoll',

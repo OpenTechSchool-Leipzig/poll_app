@@ -16,7 +16,7 @@
 <script>
 import { mapState } from 'vuex';
 import DefaultModal from './DefaultModal.vue';
-import DefaultButton from './DefaultButton.vue';
+import DefaultButton from './Buttons/DefaultButton.vue';
 
 export default {
   components: {

@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import buttonMixin from './Buttons/buttonMixin';
+import buttonMixin from './buttonMixin';
 
 export default {
   mixins: [buttonMixin],
