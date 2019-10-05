@@ -66,6 +66,8 @@
           name="Update Template"
           @click="updateTemplateHandler"
           isDanger
+          hasConfirmation
+          confirmationText="This will override the existing Template"
         />
       </div>
     </div>
