@@ -40,14 +40,20 @@ export default {
   },
   computed: {
     availableQuestions() {
-      return this.questions.filter(x => !this.selectedQuestions.includes(x.id));
+      if (this.questions && this.questions.length > 0)
+        return this.questions.filter(x => !this.selectedQuestions.includes(x.id));
+
+      return [];
     },
     filteredQuestions() {
-      return this.availableQuestions.filter(
-        x =>
-          x.text.toLowerCase().match(this.filters.search.toLowerCase()) &&
-          (!this.filters.type || x.type === this.filters.type)
-      );
+      if (this.availableQuestions && this.availableQuestions.length > 0) {
+        return this.availableQuestions.filter(
+          x =>
+            x.text.toLowerCase().match(this.filters.search.toLowerCase()) &&
+            (!this.filters.type || x.type === this.filters.type)
+        );
+      }
+      return [];
     },
   },
   methods: {

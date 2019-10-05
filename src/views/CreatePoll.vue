@@ -107,8 +107,11 @@ export default {
   },
   computed: {
     selectedQuestions() {
-      let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
-      return questionObjects;
+      if (this.storedQuestions && this.storedQuestions.length > 0) {
+        let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
+        return questionObjects;
+      }
+      return [];
     },
     storedQuestions() {
       return this.$store.getters.populatedQuestions;
