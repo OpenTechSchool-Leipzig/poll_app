@@ -7,7 +7,7 @@
       'is-danger': isDanger || hasDangerIcon,
     }"
     :disabled="isDisabled"
-    @click.prevent="emitEvent"
+    @click.prevent="checkEmit"
     v-tooltip="name"
   >
     <template v-if="icons.length === 0">{{ name }}</template>
@@ -20,38 +20,10 @@
 <script>
 import iconMap from '@/utility/iconMap.json';
 
+import buttonMixin from './Buttons/buttonMixin';
+
 export default {
-  props: {
-    name: {
-      type: String,
-      required: true,
-    },
-    isLoading: {
-      required: false,
-      default: false,
-      type: Boolean,
-    },
-    isPrimary: {
-      required: false,
-      default: false,
-      type: Boolean,
-    },
-    isDanger: {
-      required: false,
-      default: false,
-      type: Boolean,
-    },
-    isDisabled: {
-      required: false,
-      default: false,
-      type: Boolean,
-    },
-    type: {
-      type: String,
-      required: false,
-      default: 'button',
-    },
-  },
+  mixins: [buttonMixin],
   computed: {
     icons() {
       let icons = [];
@@ -71,9 +43,18 @@ export default {
     },
   },
   methods: {
-    emitEvent() {
-      console.log(this.type === 'submit' ? 'submit' : 'click');
-      this.$emit(this.type === 'submit' ? 'submit' : 'click');
+    checkEmit() {
+      if (!this.hasConfirmation && !this.hasDangerIcon) {
+        this.emitEvent();
+      } else {
+        this.$store.commit('setDialog', {
+          title: this.name,
+          text: 'Are you sure you want to permanently ' + this.name + '?',
+          type: this.name.split(' ')[0],
+          isDanger: this.isDanger || this.hasDangerIcon,
+          action: this.emitEvent,
+        });
+      }
     },
   },
 };
