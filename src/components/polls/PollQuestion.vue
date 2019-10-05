@@ -1,7 +1,7 @@
 <template>
   <li class="question__container">
     <h3>{{ question.text }}</h3>
-    <button v-if="isPreview" @click="removeQuestion">REMOVE</button>
+    <IconButton v-if="isPreview" @click="removeQuestion" name="Remove Question" />
     <form>
       <textarea v-if="question.type === 'open'" />
       <div class="question__choices" v-if="question.type !== 'open'">
@@ -56,7 +56,12 @@
 </template>
 
 <script>
+import IconButton from '../basic/IconButton.vue';
+
 export default {
+  components: {
+    IconButton,
+  },
   props: {
     question: Object,
     isPreview: Boolean,

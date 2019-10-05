@@ -2,7 +2,11 @@
   <li class="question">
     <div class="question__short" :class="{ expanded: expanded }">
       <p @click="toggleExpansion">{{ question.text }}</p>
-      <button v-if="!hideButtons" @click.prevent="emitSelection(question.id)">Add</button>
+      <IconButton
+        v-if="!hideButtons"
+        @click="emitSelection(question.id)"
+        name="Add Question to Poll"
+      />
     </div>
     <div v-show="expanded" class="question__details">
       <p>type: {{ question.type }}</p>
@@ -13,10 +17,15 @@
 </template>
 
 <script>
+import IconButton from '../basic/IconButton.vue';
+
 export default {
   name: 'QuestionListItem',
+  components: {
+    IconButton,
+  },
   // giving each item it's own state for handling accordion functionality makes the component way more flexible
-  // It might however not be a good practise and we should check if it leads to performance issues!
+  // It might however not be a good practise...
   data: function() {
     return {
       expanded: false,
