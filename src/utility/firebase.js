@@ -3,11 +3,11 @@ import firebase from 'firebase';
 
 firebase.initializeApp({
   apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
-  databaseURL: 'https://ots-poll.firebaseio.com',
-  storageBucket: 'ots-poll.appspot.com',
-  authDomain: 'ots-poll.firebaseapp.com',
+  databaseURL: process.env.VUE_APP_FIREBASE_DB_URL,
+  storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+  authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
   messagingSenderId: process.env.VUE_APP_FIREBASE_MS_ID,
-  projectId: 'ots-poll',
+  projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
   appId: process.env.VUE_APP_FIREBASE_APP_ID,
 });
 
