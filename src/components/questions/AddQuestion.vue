@@ -61,7 +61,7 @@
       <label>Number of Steps</label>
       <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
     </div>
-    <DefaultButton :name="'Add Question'" isPrimary @click.prevent="emitQuestion" />
+    <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
   </form>
 </template>
 
