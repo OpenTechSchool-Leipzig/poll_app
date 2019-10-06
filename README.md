@@ -33,11 +33,7 @@ The following guide will explain step-by-step how to connect the app to your fir
 
 1. clone the repository and run `npm install`
 
-<<<<<<< HEAD
-
-2. # For setting up a (free) firebase project, simply visit <https://console.firebase.google.com> and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. The you'll see a code snippet with the firebase credentials.
-3. For setting up a (free) firebase project, simply visit (https://console.firebase.google.com) and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. Then you'll see a code snippet with the firebase credentials that looks like following:
-   > > > > > > > 1a069ec21ec612640c5c5be35ddf6cb73ee8954b
+2. For setting up a (free) firebase project, simply visit <https://console.firebase.google.com> and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. Then you'll see a code snippet with the firebase credentials that looks like following:
 
 ```
 var firebaseConfig = {
