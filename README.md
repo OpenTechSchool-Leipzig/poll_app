@@ -33,7 +33,7 @@ The following guide will explain step-by-step how to connect the app to your fir
 
 1. clone the repository and run `npm install`
 
-2. For setting up a (free) firebase project, simply visithttps://console.firebase.google.com and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. The you'll see a code snippet with the firebase credentials.
+2. For setting up a (free) firebase project, simply visit <https://console.firebase.google.com> and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. The you'll see a code snippet with the firebase credentials.
 
 ```
 var firebaseConfig = {
@@ -80,3 +80,9 @@ The Filename is included in the .gitignore file. But you should make shure to ne
 When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote and run `npm run promte <userId>`, where you replace `<userID>` with the copied id.
 
 Congratulations!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
+
+### Issues and Project
+
+Before you contribute, please read through existing issues and also have a look at the [project's kanban board](https://github.com/OpenTechSchool-Leipzig/poll_app/projects/1). If you want to work on an issue, please assign yourself and update the cards progress. If you find a bug or have some ideas for features or imporvements feel free to create your own issue.
+
+Thanks a lot for your contribution! :sparkling_heart:
