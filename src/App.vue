@@ -7,13 +7,18 @@
       <a @click.prevent="logOut">LogOut</a>
     </div>
     <router-view />
+    <confirmationModal />
   </div>
 </template>
 
 <script>
 import { auth } from './utility/firebase';
+import confirmationModal from './components/basic/ConfirmationModal.vue';
 
 export default {
+  components: {
+    confirmationModal,
+  },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut
     auth.onAuthStateChanged(user => {

@@ -45,7 +45,7 @@
 
 import QuestionListItem from '../questions/QuestionListItem.vue';
 import ListFilterBar from '../basic/ListFilterBar.vue';
-import IconButton from '../basic/IconButton.vue';
+import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   data: function() {
@@ -69,11 +69,13 @@ export default {
   },
   computed: {
     filteredPolls() {
-      return this.polls.filter(
-        x =>
-          x.title.toLowerCase().match(this.filters.search.toLowerCase()) &&
-          (!this.filters.state || x.state === this.filters.state)
-      );
+      if (this.polls && this.polls.length > 0)
+        return this.polls.filter(
+          x =>
+            x.title.toLowerCase().match(this.filters.search.toLowerCase()) &&
+            (!this.filters.state || x.state === this.filters.state)
+        );
+      return [];
     },
   },
   methods: {

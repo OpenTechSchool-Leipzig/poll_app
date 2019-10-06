@@ -61,13 +61,13 @@
       <label>Number of Steps</label>
       <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
     </div>
-    <DefaultButton :name="'Add Question'" isPrimary @click.prevent="emitQuestion" />
+    <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
   </form>
 </template>
 
 <script>
-import DefaultButton from '../basic/DefaultButton.vue';
-import IconButton from '../basic/IconButton.vue';
+import DefaultButton from '../basic/Buttons/DefaultButton.vue';
+import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   name: 'AddQuestion',

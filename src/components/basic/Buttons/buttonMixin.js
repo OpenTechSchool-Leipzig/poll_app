@@ -1,16 +1,4 @@
-<template>
-  <button
-    class="button is-outlined"
-    :class="{ 'is-loading': isLoading, 'is-primary': isPrimary, 'is-danger': isDanger }"
-    :disabled="isDisabled"
-    @click.prevent="emitEvent"
-  >
-    {{ name }}
-  </button>
-</template>
-
-<script>
-export default {
+const buttonMixin = {
   props: {
     name: {
       type: String,
@@ -41,19 +29,35 @@ export default {
       required: false,
       default: 'button',
     },
+    hasConfirmation: {
+      required: false,
+      default: false,
+      type: Boolean,
+    },
+    confirmationText: {
+      type: String,
+      required: false,
+      default: 'Are you sure?',
+    },
   },
   methods: {
     emitEvent() {
-      console.log(this.type === 'submit' ? 'submit' : 'click');
       this.$emit(this.type === 'submit' ? 'submit' : 'click');
+    },
+    checkEmit() {
+      if (!this.hasConfirmation) {
+        this.emitEvent();
+      } else {
+        this.$store.commit('setDialog', {
+          title: this.name,
+          text: this.confirmationText,
+          type: this.name.split(' ')[0],
+          isDanger: this.isDanger,
+          action: this.emitEvent,
+        });
+      }
     },
   },
 };
-</script>
 
-<style lang="scss" scoped>
-.button {
-  min-width: 120px;
-  text-transform: uppercase;
-}
-</style>
+export default buttonMixin;

@@ -66,6 +66,8 @@
           name="Update Template"
           @click="updateTemplateHandler"
           isDanger
+          hasConfirmation
+          confirmationText="This will override the existing Template"
         />
       </div>
     </div>
@@ -78,7 +80,7 @@ import QuestionList from '@/components/questions/QuestionList.vue';
 import PollPreview from '@/components/polls/PollPreview.vue';
 import PollList from '@/components/polls/PollList.vue';
 import QuestionPreview from '@/components/questions/QuestionPreview.vue';
-import DefaultButton from '@/components/basic/DefaultButton.vue';
+import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'createPoll',
@@ -105,8 +107,11 @@ export default {
   },
   computed: {
     selectedQuestions() {
-      let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
-      return questionObjects;
+      if (this.storedQuestions && this.storedQuestions.length > 0) {
+        let questionObjects = this.storedQuestions.filter(x => this.poll.questions.includes(x.id));
+        return questionObjects;
+      }
+      return [];
     },
     storedQuestions() {
       return this.$store.getters.populatedQuestions;

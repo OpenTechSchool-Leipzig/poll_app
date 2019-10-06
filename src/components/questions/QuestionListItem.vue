@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import IconButton from '../basic/IconButton.vue';
+import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   name: 'QuestionListItem',
