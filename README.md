@@ -28,12 +28,12 @@ you need to have node and npm installed on your machine. If you want to work on 
 
 ### Set up the Project
 
-To set up the project you could ether ask for access to our firebase project (via OTS Slack Channel) or simply connect the App to your own firebase project.
-The following guide will explain step-by-step how to connect the app to your firebase project and create your first admin user.
+To set up the project you could either ask for access to our firebase project (via OTS Slack Channel) or simply connect the App to your own firebase project.
+The following guide will explain step-by-step how to connect the app to your firebase project and create a first admin user.
 
 1. clone the repository and run `npm install`
 
-2. For setting up a (free) firebase project, simply visit <https://console.firebase.google.com> and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give a name. Then you'll see a code snippet with the firebase credentials that looks like following:
+2. For setting up a (free) firebase project, simply visit <https://console.firebase.google.com> and create a new project (which requieres a google account). On the Overview Page of your project click on "add app" and give it a name. Then you'll see a code snippet with the firebase credentials that looks like following:
 
 ```
 var firebaseConfig = {
@@ -59,25 +59,24 @@ VUE_APP_FIREBASE_MS_ID = 'your messagingSenderId'
 VUE_APP_FIREBASE_APP_ID = 'your appId'
 ```
 
-Of course you have to replace the placeholder strings with your actual firebase credentials.
+Of course you'll have to replace the placeholder strings with your actual firebase credentials.
 
 Now the app should be able to connect to your firebase project and you can run `npm run serve` to start the vue development server.
-When you visit your local server you should allready see a login page. But there is still one problem left:
+When you visit your local server you should already see a login page. But there is still one problem left:
 There is no authorized user in your firebase project. So let's go on and create one!
 
 3. Promote your First Admin-User
 
 Go to your login screen and click on the link to request Access. Here you can create your first useraccount.
-When everything went right, you should find two changes on your firebase project page. 1. When you go to the Database tab you should see that there has been a new users collection created in which you should find your user with it's name and email.
-You also should be able to find the user in the authentication tab. When no user was created there might be an error with your firebase credentials so go back and check if everything is correct.
+When everything went right, you should find two changes on your firebase project page. 1. When you go to the Database tab you should see that there has been a new users collection created, in which you should find your user with it's name and email. 2. You also should be able to find the user in the authentication tab. When no user was created there might be an error with your firebase credentials so go back and check if everything is correct.
 
 To make your new user an admin you also have to set up the firebaseAdmin SDK. This is only requiered for the first admin, since you can grant other users admin rights via the frontend once the first admin is registered (We're using cloudfunctions there).
 
-In your terminal navigate to the fbadmin folder `cd fbadmin` and run `npm install`. To use the admin SDK you'll have to copy the Service Accounts Private Key.
+In your terminal, navigate to the fbadmin folder `cd fbadmin` and run `npm install`. To use the admin SDK you'll have to add the Service Accounts Private Key.
 Again go to your Firebase Project Page and navigate to settings > service account and click on "Generate new private key". Copy or move the file to the fbadmin folder and rename it to `ServiceAccountKey.json`.
 The Filename is included in the .gitignore file, but you should make sure to never expose it to public repositories, because it will allow full controll to your firebase project!
 
-When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promte <userId>`, where you replace `<userID>` with the copied ID.
+When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promte <userID>`, where you replace `<userID>` with the copied ID.
 
 Congratulations the setup is finished!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
 
