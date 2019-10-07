@@ -81,7 +81,7 @@ In your terminal, navigate to the fbadmin folder `cd fbadmin` and run `npm insta
 Again go to your Firebase Project Page and navigate to settings > service account and click on "Generate new private key". Copy or move the file to the fbadmin folder and rename it to `ServiceAccountKey.json`.
 The Filename is included in the .gitignore file, but you should make sure to never expose it to public repositories, because it will allow full controll to your firebase project!
 
-When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promte <userID>`, where you replace `<userID>` with the copied ID.
+When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promote <userID>`, where you replace `<userID>` with the copied ID.
 
 Congratulations the setup is finished!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
 
