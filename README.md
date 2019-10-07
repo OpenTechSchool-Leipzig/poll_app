@@ -67,7 +67,10 @@ There is no authorized user in your firebase project. So let's go on and create 
 
 3. Promote your First Admin-User
 
-Go to your login screen and click on the link to request Access. Here you can create your first useraccount.
+At first you have to enable the e-mail sign-in method for yor firebase project. On your project overview go to authentication sign in method and select e-mail and enable it.
+
+Now you can go to the webapps login screen and click on the link to request Access. Here you can create your first useraccount.
+
 When everything went right, you should find two changes on your firebase project page. 1. When you go to the Database tab you should see that there has been a new users collection created, in which you should find your user with it's name and email. 2. You also should be able to find the user in the authentication tab. When no user was created there might be an error with your firebase credentials so go back and check if everything is correct.
 
 To make your new user an admin you also have to set up the firebaseAdmin SDK. This is only requiered for the first admin, since you can grant other users admin rights via the frontend once the first admin is registered (We're using cloudfunctions there).
