@@ -41,11 +41,13 @@ var firebaseConfig = {
     authDomain: "your-project-name.firebaseapp.com",
     databaseURL: "https://your-project-name.firebaseio.com",
     projectId: "your-project-name",
-    storageBucket: "*****",
+    storageBucket: "",
     messagingSenderId: "******",
     appId: "****"
   };
 ```
+
+As you can see the storageBucket is missing. To set this up, you first need to create a firestore database. Click on Database and follow the instructions to set it up. Now you can visit your app settings and copy the now complete credentials.
 
 To savely store these credentials, create a file that is named `.env.local` in the root folder of the project and add the following lines:
 
@@ -82,6 +84,8 @@ The Filename is included in the .gitignore file, but you should make sure to nev
 When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promte <userID>`, where you replace `<userID>` with the copied ID.
 
 Congratulations the setup is finished!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
+
+Bonus: use the firebase cli to update rules and the cloudfunctions.
 
 ### Issues and Project
 
