@@ -2,14 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
 
-// views
-import CreatePoll from './views/CreatePoll.vue';
-import PollOverview from './views/PollOverview.vue';
-import AnswerPoll from './views/AnswerPoll.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-import NotFound from './views/static/404.vue';
-import NoPermission from './views/static/402.vue';
 
 Vue.use(Router);
 
@@ -20,7 +12,7 @@ const router = new Router({
     {
       path: '/newpoll',
       name: 'newPoll',
-      component: CreatePoll,
+      component: () => import('./views/CreatePoll.vue'),
       meta: {
         admin: true,
       },
@@ -28,7 +20,7 @@ const router = new Router({
     {
       path: '/',
       name: 'polloverview',
-      component: PollOverview,
+      component: () => import('./views/PollOverview.vue'),
       meta: {
         admin: true,
       },
@@ -44,7 +36,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: () => import('./views/Login.vue'),
       meta: {
         guest: true,
       },
@@ -52,7 +44,7 @@ const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: Register,
+      component: () => import('./views/Register.vue'),
       meta: {
         guest: true,
       },
@@ -60,7 +52,7 @@ const router = new Router({
     {
       path: '/402',
       name: '402',
-      component: NoPermission,
+      component: () => import('./views/static/402.vue'),
       meta: {
         auth: true,
       },
@@ -69,13 +61,13 @@ const router = new Router({
     {
       path: '/poll/:pollId',
       name: 'answerPoll',
-      component: AnswerPoll,
+      component: () => import('./views/AnswerPoll.vue'),
     },
     // wildcard route for 404
     {
       path: '*',
       name: '404',
-      component: NotFound,
+      component: () => import('./views/static/404.vue'),
     },
   ],
 });
