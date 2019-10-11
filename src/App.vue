@@ -1,11 +1,6 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <!-- <router-link to="/">Poll Overview</router-link>|
-      <router-link to="/newpoll">Create Poll</router-link>|
-      <router-link to="/about">About</router-link>| 
-      <router-link to="/login">Login</router-link>|
-      <a @click.prevent="logOut">LogOut</a> -->
+    <!-- <div id="nav">
       <nav class="navbar" role="navigation" aria-label="main navigation">
         <div class="navbar-brand">
           <span class="logo">OpenTechSchool</span>
@@ -28,28 +23,26 @@
             <router-link to="/newpoll" class="navbar-item is-tab">Create Poll</router-link>
             <router-link to="/about" class="navbar-item is-tab">About</router-link>
             <router-link to="/login" class="navbar-item is-tab">Login</router-link>
-            <a @click.prevent="logOut">LogOut</a>
+            <a @click.prevent="logOut" class="navbar-item is-tab">LogOut</a>
           </div>
         </div>
       </nav>
-    </div>
+    </div>-->
+    <nav-bar></nav-bar>
     <router-view />
     <confirmationModal />
   </div>
 </template>
 
 <script>
-import { auth } from './utility/firebase';
+import { auth } from '@/utility/firebase';
 import confirmationModal from './components/basic/ConfirmationModal.vue';
+import NavBar from './components/basic/NavBar.vue';
 
 export default {
   components: {
     confirmationModal,
-  },
-  data: function() {
-    return {
-      isOpen: false,
-    };
+    NavBar,
   },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut
@@ -69,16 +62,6 @@ export default {
       }
     });
   },
-  methods: {
-    async logOut() {
-      await auth.signOut();
-      try {
-        console.log('logged user out');
-      } catch (err) {
-        console.log(err);
-      }
-    },
-  },
 };
 </script>
 
@@ -89,33 +72,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-}
-.nav {
-  padding: 10px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
-}
-label {
-  text-align: left;
-}
-.logo {
-  font-size: 2em;
-  margin: 0 3px 0 0.5em;
-  background: #085987;
-  color: #fff;
-  padding: 8px 13px;
-}
-.navbar {
-  background: #085987;
-}
-.navbar-burger {
-  span {
-    height: 2px;
-  }
 }
 </style>
