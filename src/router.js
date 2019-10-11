@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
 
-
 Vue.use(Router);
 
 const router = new Router({
