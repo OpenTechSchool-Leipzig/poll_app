@@ -2,36 +2,21 @@
   <div>
     <h2>Your Team:</h2>
     <ul>
-      <li
-        class="box"
-        v-for="user in users"
-        :key="user.id"
-        @click="promoteUser(user.id, !!user.admin)"
-      >
+      <li class="box" v-for="user in users" :key="user.id">
         <div>user: {{ user.name }} email: {{ user.email }}</div>
         <div v-if="user.admin" class="tag is-primary">admin</div>
+      </li>
+      <li class="box has-background-primary">
+        Cloudfunctions for promoting Users are disabled in this demo
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-import { functions } from '../../utility/firebase';
-
 export default {
   props: {
     users: Array,
-  },
-  methods: {
-    promoteUser(userId, isAdmin) {
-      console.log(`ID: ${userId}, isAdmin: ${isAdmin}`);
-      if (!isAdmin) {
-        const addAdminRole = functions.httpsCallable('addAdminRole');
-        addAdminRole({ userId: userId }).then(res => {
-          console.log(res);
-        });
-      }
-    },
   },
 };
 </script>
