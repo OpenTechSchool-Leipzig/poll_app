@@ -9,6 +9,9 @@
           <router-link to="/signup">Request access here</router-link>
         </p>
       </template>
+      <template #footer>
+        <DefaultButton name="log in with Test Account" @click="loginWithTestUser" />
+      </template>
     </FormCard>
   </div>
 </template>
@@ -17,11 +20,13 @@
 import { auth } from '../utility/firebase';
 import FormCard from '../components/basic/FormCard.vue';
 import InputUnit from '../components/basic/InputUnit.vue';
+import DefaultButton from '../components/basic/Buttons/DefaultButton.vue';
 
 export default {
   components: {
     FormCard,
     InputUnit,
+    DefaultButton,
   },
   data() {
     return {
@@ -32,11 +37,21 @@ export default {
   },
   methods: {
     async login() {
-      console.log('triggered function');
       this.loading = true;
       try {
         await auth.signInWithEmailAndPassword(this.email, this.password);
         console.log('successfully logged in');
+        this.loading = false;
+      } catch (error) {
+        console.log(error);
+        this.loading = false;
+      }
+    },
+    async loginWithTestUser() {
+      this.loading = true;
+      try {
+        await auth.signInWithEmailAndPassword('test@poll.app', process.env.VUE_APP_FB_TEST_PW);
+        console.log('successfully logged in as test user');
         this.loading = false;
       } catch (error) {
         console.log(error);
