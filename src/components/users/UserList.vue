@@ -7,11 +7,19 @@
         <div v-if="user.admin" class="tag is-primary">admin</div>
       </li>
       <li class="box has-background-primary">
-        This is a public demo. Feel free to add questions, create polls/surveys from this questions
-        or save them as templates. You can also active them and save answers to those polls! Have
-        fun! &#10024;
+        <p>
+          This is a public demo. Feel free to add questions, create polls/surveys from this
+          questions or save them as templates. You can also active polls and save answers to them.
+          Have fun testing it! &#10024;!
+        </p>
       </li>
-      <li class="box has-background-warn">
+      <li class="box has-background-primary">
+        <p>
+          If you want to contribute visit the projects
+          <a href="https://github.com/OpenTechSchool-Leipzig/poll_app">github page</a> 🐋!
+        </p>
+      </li>
+      <li class="box has-background-warning">
         Cloudfunctions for promoting Users are disabled in this demo
       </li>
     </ul>
