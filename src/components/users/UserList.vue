@@ -7,6 +7,11 @@
         <div v-if="user.admin" class="tag is-primary">admin</div>
       </li>
       <li class="box has-background-primary">
+        This is a public demo. Feel free to add questions, create polls/surveys from this questions
+        or save them as templates. You can also active them and save answers to those polls! Have
+        fun! &#10024;
+      </li>
+      <li class="box has-background-warn">
         Cloudfunctions for promoting Users are disabled in this demo
       </li>
     </ul>
