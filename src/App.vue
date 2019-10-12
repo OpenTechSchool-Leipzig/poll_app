@@ -27,7 +27,9 @@ export default {
         user.getIdTokenResult().then(tokenResult => {
           user.admin = tokenResult.claims.admin;
           this.$store.commit('setUser', user);
+          // Problem: if a token is stored, the observer gets triggered befor the $route data is there => redirection doesn't work.
           if (this.$route.meta.guest) {
+            console.log('..redirecting');
             this.$router.push({ path: '/' });
           }
         });
