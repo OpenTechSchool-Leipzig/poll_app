@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
+import { auth } from './utility/firebase';
 
 Vue.use(Router);
 
@@ -73,28 +74,49 @@ const router = new Router({
 
 // navigation guard
 router.beforeEach((to, from, next) => {
+  // check if token has allready been verified
+  if (store.state.user.uid === null) {
+    if (auth.currentUser)
+      auth.currentUser.getIdTokenResult().then(tokenResult => {
+        const userData = {
+          uid: tokenResult.claims.user_id,
+          admin: tokenResult.claims.admin,
+        };
+        checkRoutes(to, from, next, userData);
+      });
+    // if no token exists and the route target is not login redirect to login page
+    else if (to.path !== '/login') {
+      next({ path: '/login' });
+    }
+  } else {
+    checkRoutes(to, from, next, store.state.user);
+  }
+});
+
+function checkRoutes(to, from, next, userData) {
   if (to.matched.some(route => route.meta.admin)) {
     // check for custom admin claim
-    if (store.state.user.admin) next();
+    if (userData.admin) next();
     else {
       // redirect to no permission page
       next({ path: '/402' });
     }
   } else if (to.matched.some(route => route.meta.auth)) {
     // if user is not logged in, allways redirect to auth page
-    if (store.state.user.uid) next();
+    if (userData.uid) next();
     else {
       next({ path: '/login' });
     }
   } else if (to.matched.some(route => route.meta.guest)) {
     // check if user is logged in
-    if (!store.state.user.uid) next();
+    if (!userData.uid) next();
     else {
-      next({ path: '/' });
+      // redirect user to last route or default page
+      next(from.name ? false : '/');
     }
   } else {
     next();
   }
-});
+}
 
 export default router;
