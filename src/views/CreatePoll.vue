@@ -208,6 +208,9 @@ export default {
     if (this.$store.state.templates.templates.length < 1) {
       this.$store.dispatch('fetchTemplates');
     }
+    if (this.$store.state.user.userList.length < 1) {
+      this.$store.dispatch('fetchUsers');
+    }
   },
 };
 </script>
