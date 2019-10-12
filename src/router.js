@@ -86,7 +86,10 @@ router.beforeEach((to, from, next) => {
       });
     // if no token exists and the route target is not login redirect to login page
     else if (to.path !== '/login') {
+      console.log('redirect to login');
       next({ path: '/login' });
+    } else {
+      checkRoutes(to, from, next, store.state.user);
     }
   } else {
     checkRoutes(to, from, next, store.state.user);
