@@ -99,7 +99,7 @@ export default {
   },
   methods: {
     emitQuestion() {
-      if (this.newQuestion.type != null && this.newQuestion.text > 3) {
+      if (this.newQuestion.type != null && this.newQuestion.text.length > 3) {
         let value = JSON.parse(JSON.stringify(this.newQuestion));
         //v-model overwrites all values. So we have to define default options in the object
         //and therefore need to clean unneccasary options on emit
