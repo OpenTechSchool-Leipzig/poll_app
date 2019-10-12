@@ -1,33 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <nav class="navbar" role="navigation" aria-label="main navigation">
-        <div class="navbar-brand">
-          <span class="logo">OpenTechSchool</span>
-          <a
-            role="button"
-            class="navbar-burger"
-            aria-label="menu"
-            aria-expanded="false"
-            @click="isOpen = !isOpen"
-            v-bind:class="{ 'is-active': isOpen }"
-          >
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-          </a>
-        </div>
-        <div class="navbar-menu" v-bind:class="{ 'is-active': isOpen }">
-          <div class="navbar-end">
-            <router-link to="/" class="navbar-item is-tab">Poll Overview</router-link>
-            <router-link to="/newpoll" class="navbar-item is-tab">Create Poll</router-link>
-            <router-link to="/about" class="navbar-item is-tab">About</router-link>
-            <router-link to="/login" class="navbar-item is-tab">Login</router-link>
-            <a @click.prevent="logOut" class="navbar-item is-tab">LogOut</a>
-          </div>
-        </div>
-      </nav>
-    </div>-->
     <nav-bar></nav-bar>
     <router-view />
     <confirmationModal />
@@ -43,6 +15,9 @@ export default {
   components: {
     confirmationModal,
     NavBar,
+  },
+  created() {
+    console.log(auth.currentUser.admin);
   },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut

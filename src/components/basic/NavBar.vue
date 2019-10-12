@@ -18,8 +18,10 @@
       </div>
       <div class="navbar-menu" v-bind:class="{ 'is-active': isOpen }">
         <div class="navbar-end">
-          <router-link to="/" class="navbar-item is-tab">Poll Overview</router-link>
-          <router-link to="/newpoll" class="navbar-item is-tab">Create Poll</router-link>
+          <router-link to="/" v-if="isAdmin" class="navbar-item is-tab">Poll Overview</router-link>
+          <router-link to="/newpoll" v-if="isAdmin" class="navbar-item is-tab"
+            >Create Poll</router-link
+          >
           <router-link to="/about" class="navbar-item is-tab">About</router-link>
           <router-link to="/login" class="navbar-item is-tab">Login</router-link>
           <a @click.prevent="logOut" class="navbar-item is-tab">LogOut</a>
@@ -36,7 +38,11 @@ export default {
   data: function() {
     return {
       isOpen: false,
+      isAdmin: Boolean,
     };
+  },
+  beforeCreate() {
+    this.isAdmin = auth.currentUser.admin;
   },
   methods: {
     async logOut() {
