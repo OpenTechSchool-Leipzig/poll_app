@@ -18,7 +18,9 @@ Of course this is just a proposal, you could add your own ideas too! Same applie
 
 ### Technologies used so far
 
-The Frontend is build in [VueJS](https://vuejs.org/) with VueX and Vue Router. And we're using [Firebase](https://firebase.google.com/) as backend for authentication and storage (firestore). We also included [Bulma](https://bulma.io/) as CSS Framework, but till now only a few components make use of it.
+The Frontend is build in [VueJS](https://vuejs.org/) with VueX and Vue Router. And we're using [Firebase](https://firebase.google.com/) as backend for authentication and storage (firestore). We also included [Bulma](https://bulma.io/) as CSS Framework, but till now only a few components make use of it. A [Demo](https://poll-app.netlify.com) is deployed on Netlify.
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/33f1cef7-49ad-4633-bcb7-0a91b416de63/deploy-status)](https://app.netlify.com/sites/poll-app/deploys)
 
 ## How to Contribute?
 
