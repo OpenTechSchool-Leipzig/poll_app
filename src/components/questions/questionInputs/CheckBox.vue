@@ -1,5 +1,5 @@
 <template>
-  <label class="checkbox" :for="inputId">
+  <label class="checkbox" :for="inputId" :class="{ selected: checkSelection }">
     <input :id="inputId" :value="answerValue" v-model="localValue" type="checkbox" />
     {{ name }}
   </label>
@@ -11,6 +11,9 @@ export default {
   computed: {
     inputId() {
       return this.name.split(' ').join('');
+    },
+    checkSelection() {
+      return this.localValue.includes(this.answerValue);
     },
     localValue: {
       get() {
@@ -25,5 +28,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// ToDo: style checkbox here
+.checkbox {
+  @extend .question-input;
+}
 </style>

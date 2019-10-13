@@ -14,7 +14,7 @@
       <div class="question__choices" v-if="question.type !== 'open'">
         <div v-if="question.options.isYesNo" class="question__yesno">
           <RadioInput name="yes" :answerValue="true" v-model="value[qIndex].answer" />
-          <RadioInput name="no" :answerValue="false" v-model="value[qIndex].answer" />
+          <RadioInput name="no" :answerValue="false" v-model="value[qIndex].answer" isDanger />
         </div>
         <div
           class="question__choice"
@@ -82,7 +82,8 @@ export default {
 <style lang="scss" scoped>
 .question {
   &__container {
-    background-color: $primary-light;
+    background-color: $primary;
+    border-radius: 4px;
     margin: 10px;
     padding: 20px;
   }

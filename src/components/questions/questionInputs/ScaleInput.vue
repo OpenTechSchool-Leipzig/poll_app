@@ -1,15 +1,19 @@
 <template>
-  <ul class="scale">
-    <li>{{ options.startValue }}</li>
-    <input
-      type="radio"
-      :value="n"
-      v-model="localValue"
-      v-for="n in parseInt(options.scaleSteps)"
-      :key="n"
-    />
-    <li>{{ options.endValue }}</li>
-  </ul>
+  <div class="wrapper">
+    <ul class="scale" :class="{ selected: localValue }">
+      <li>{{ options.startValue }}</li>
+      <li>
+        <input
+          type="radio"
+          :value="n"
+          v-model="localValue"
+          v-for="n in parseInt(options.scaleSteps)"
+          :key="n"
+        />
+      </li>
+      <li>{{ options.endValue }}</li>
+    </ul>
+  </div>
 </template>
 
 <script>
@@ -32,9 +36,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.wrapper {
+  display: flex;
+  justify-content: center;
+}
 .scale {
+  @extend .question-input;
   display: flex;
   justify-content: center;
   list-style-type: none;
+
+  li {
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+  }
+  input:not(:last-child) {
+    margin-right: 6px;
+  }
 }
 </style>

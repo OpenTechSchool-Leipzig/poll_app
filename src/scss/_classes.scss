@@ -1,0 +1,12 @@
+.question-input {
+  @include question-input;
+  // this could be a class that gets extended rather than a mixin
+  &.selected {
+    border-color: $primary;
+    background-color: $primary-light;
+  }
+  &.danger {
+    border-color: $danger;
+    background-color: lighten($danger, 10%);
+  }
+}

@@ -1,5 +1,9 @@
 <template>
-  <label class="radio" :for="inputId">
+  <label
+    class="radio"
+    :for="inputId"
+    :class="[localValue === answerValue ? (isDanger ? 'danger' : 'selected') : '']"
+  >
     <input :id="inputId" :value="answerValue" v-model="localValue" type="radio" />
     {{ name }}
   </label>
@@ -7,7 +11,12 @@
 
 <script>
 export default {
-  props: ['value', 'answerValue', 'name'],
+  props: {
+    value: null,
+    answerValue: null,
+    name: String,
+    isDanger: Boolean,
+  },
   computed: {
     inputId() {
       return this.name.split(' ').join('');
@@ -25,5 +34,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// ToDo: style radiobuttons here
+.radio {
+  @extend .question-input;
+}
 </style>

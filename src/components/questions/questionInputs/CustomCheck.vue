@@ -1,7 +1,7 @@
 <template>
-  <label class="checkbox" for="custom-answer">
-    <input id="custom-answer" :checked="localValue" type="checkbox" />
-    <input type="text" v-model="localValue" />
+  <label class="checkbox" for="custom-answer" :class="{ selected: value }">
+    <input @click.prevent id="custom-answer" :checked="localValue" type="checkbox" />
+    <input class="custom-check" type="text" v-model="localValue" />
   </label>
 </template>
 
@@ -22,5 +22,22 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// ToDo: style for custom checkbox here
+.checkbox {
+  @extend .question-input;
+  padding: 2px 2px 2px 10px;
+  &.selected {
+    .custom-check {
+      border-color: $primary;
+    }
+  }
+}
+.custom-check {
+  padding: 8px;
+  border-radius: 18px;
+  border: 1px solid $grey-light;
+  &:focus {
+    outline: none;
+    border-color: $cyan;
+  }
+}
 </style>
