@@ -16,9 +16,6 @@ export default {
     confirmationModal,
     NavBar,
   },
-  created() {
-    console.log(auth.currentUser.admin);
-  },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut
     auth.onAuthStateChanged(user => {

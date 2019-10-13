@@ -48,10 +48,10 @@ export default {
   },
   computed: {
     isActiveUserAdmin() {
-      return this.$store.state.user.admin;
+      return this.$store.state.user && this.$store.state.user.admin;
     },
     userExists() {
-      return this.$store.getters.userExists;
+      return this.$store.state.user.uid;
     },
   },
   methods: {
@@ -107,24 +107,24 @@ label {
     height: 2px;
   }
 }
-.navbar-menu {
-  display: block;
-  opacity: 0;
+// .navbar-menu {
+//   display: block;
+//   opacity: 0;
 
-  position: absolute; /* or float: left; width: 100%;*/
-  //float: left;
-  //width: 100%;
-  left: 0;
-  right: 0;
+//   position: absolute; /* or float: left; width: 100%;*/
+//   //float: left;
+//   //width: 100%;
+//   left: 0;
+//   right: 0;
 
-  transform: translateY(-50%);
-  transition: all 0.4s ease-in-out;
-  pointer-events: none;
-}
+//   transform: translateY(-50%);
+//   transition: all 0.4s ease-in-out;
+//   pointer-events: none;
+// }
 
-.navbar-menu.is-active {
-  opacity: 1;
-  transform: none;
-  pointer-events: auto;
-}
+// .navbar-menu.is-active {
+//   opacity: 1;
+//   transform: none;
+//   pointer-events: auto;
+// }
 </style>
