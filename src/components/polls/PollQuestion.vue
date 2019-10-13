@@ -87,7 +87,10 @@ export default {
   &__container {
     background-color: $primary-light;
     border-radius: 4px;
-    margin: 10px;
+    margin: 10px 0;
+    width: 100%;
+    max-width: 1000px;
+
     padding: 20px;
     h3 {
       margin-top: 0;

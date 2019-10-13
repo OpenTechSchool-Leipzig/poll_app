@@ -69,10 +69,10 @@ export default {
   padding: 20px;
 
   &__title {
-    font-size: 1.17em;
+    font-size: 1.5rem;
     border: none;
     background: transparent;
-    width: 90%;
+    width: 100%;
   }
   &__choices {
     display: flex;

@@ -1,7 +1,7 @@
 <template>
   <div class="poll">
     <div v-if="isLoading">is loading...</div>
-    <div v-if="!isLoading">
+    <template v-if="!isLoading">
       <div class="poll__badge poll__badge--warn" v-if="activePoll.state === 'draft'">!DRAFT!</div>
       <div class="poll__badge poll__badge--danger" v-if="activePoll.state === 'closed'">
         !CLOSED!
@@ -21,7 +21,7 @@
         />
       </ul>
       <button v-if="activePoll.state === 'active'" @click="sendAnswerHandler">Send Answers</button>
-    </div>
+    </template>
   </div>
 </template>
 
@@ -82,10 +82,25 @@ export default {
 <style lang="scss" scoped>
 .poll {
   width: 100%;
-  max-width: 1200px;
   height: 100%;
   background-color: $primary-dark;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px;
+
+  header {
+    @extend .poll-title;
+    h2 {
+      font-size: 1.5rem;
+      display: inline-block;
+    }
+    h4 {
+      font-size: 1.2rem;
+      display: inline-block;
+    }
+  }
+
   &__list {
     list-style: none;
     margin: 10px 0;
@@ -102,8 +117,5 @@ export default {
       border: 2px solid darken($danger, 20%);
     }
   }
-}
-header {
-  @include section-header;
 }
 </style>
