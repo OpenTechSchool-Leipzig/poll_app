@@ -191,7 +191,4 @@ select {
   align-items: center;
   margin-bottom: 10px;
 }
-.submit-btn {
-  @include btn-primary;
-}
 </style>

@@ -234,9 +234,6 @@ header {
   @include section-header;
 }
 .q-button {
-  @include btn-primary;
-  margin: auto;
-
   &__wrapper {
     width: 100%;
     position: relative;
