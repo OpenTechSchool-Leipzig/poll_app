@@ -8,6 +8,11 @@ const userStore = {
     admin: null,
     userList: [],
   },
+  getters: {
+    userExists: state => {
+      return state.userList.find(user => user.id == state.uid);
+    },
+  },
   mutations: {
     setUser(state, newUser) {
       if (newUser) {
