@@ -7,8 +7,11 @@
     - make sure everything works fine on mobile devices
   -->
   <li class="question__container">
-    <h3>{{ question.text }}</h3>
-    <IconButton v-if="isPreview" @click="removeQuestion" name="Remove Question" />
+    <h3 :class="{ preview: isPreview }">
+      {{ question.text }}
+      <IconButton v-if="isPreview" @click="removeQuestion" name="Remove Question" isDanger />
+    </h3>
+
     <form>
       <TextArea v-if="question.type === 'open'" v-model="value[qIndex].answer" />
       <div class="question__choices" v-if="question.type !== 'open'">
@@ -82,20 +85,21 @@ export default {
 <style lang="scss" scoped>
 .question {
   &__container {
-    background-color: $primary;
+    background-color: $primary-light;
     border-radius: 4px;
     margin: 10px;
     padding: 20px;
+    h3 {
+      margin-top: 0;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      &.preview {
+        display: flex;
+        justify-content: space-between;
+      }
+    }
   }
-  h3 {
-    margin-top: 0;
-  }
-  textarea {
-    width: 90%;
-    height: 100px;
-    border-radius: 5px;
-    resize: none;
-  }
+
   &__choices {
     display: flex;
     justify-content: center;
