@@ -12,7 +12,6 @@ if (process.argv.length !== 3) {
 const userId = process.argv[2];
 
 function updateUserDoc(uid) {
-  // somehow I cannot perform any action on the firestore database
   admin
     .firestore()
     .collection('users')

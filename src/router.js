@@ -1,15 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
-
-// views
-import CreatePoll from './views/CreatePoll.vue';
-import PollOverview from './views/PollOverview.vue';
-import AnswerPoll from './views/AnswerPoll.vue';
-import Login from './views/Login.vue';
-import Register from './views/Register.vue';
-import NotFound from './views/static/404.vue';
-import NoPermission from './views/static/402.vue';
+import { auth } from './utility/firebase';
 
 Vue.use(Router);
 
@@ -20,7 +12,7 @@ const router = new Router({
     {
       path: '/newpoll',
       name: 'newPoll',
-      component: CreatePoll,
+      component: () => import('./views/CreatePoll.vue'),
       meta: {
         admin: true,
       },
@@ -28,7 +20,7 @@ const router = new Router({
     {
       path: '/',
       name: 'polloverview',
-      component: PollOverview,
+      component: () => import('./views/PollOverview.vue'),
       meta: {
         admin: true,
       },
@@ -44,7 +36,7 @@ const router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login,
+      component: () => import('./views/Login.vue'),
       meta: {
         guest: true,
       },
@@ -52,7 +44,7 @@ const router = new Router({
     {
       path: '/signup',
       name: 'signup',
-      component: Register,
+      component: () => import('./views/Register.vue'),
       meta: {
         guest: true,
       },
@@ -60,7 +52,7 @@ const router = new Router({
     {
       path: '/402',
       name: '402',
-      component: NoPermission,
+      component: () => import('./views/static/402.vue'),
       meta: {
         auth: true,
       },
@@ -69,41 +61,65 @@ const router = new Router({
     {
       path: '/poll/:pollId',
       name: 'answerPoll',
-      component: AnswerPoll,
+      component: () => import('./views/AnswerPoll.vue'),
     },
     // wildcard route for 404
     {
       path: '*',
       name: '404',
-      component: NotFound,
+      component: () => import('./views/static/404.vue'),
     },
   ],
 });
 
 // navigation guard
 router.beforeEach((to, from, next) => {
+  // check if token has allready been verified
+  if (store.state.user.uid === null) {
+    if (auth.currentUser)
+      auth.currentUser.getIdTokenResult().then(tokenResult => {
+        const userData = {
+          uid: tokenResult.claims.user_id,
+          admin: tokenResult.claims.admin,
+        };
+        checkRoutes(to, from, next, userData);
+      });
+    // if no token exists and the route target is not login redirect to login page
+    else if (to.path !== '/login') {
+      console.log('redirect to login');
+      next({ path: '/login' });
+    } else {
+      checkRoutes(to, from, next, store.state.user);
+    }
+  } else {
+    checkRoutes(to, from, next, store.state.user);
+  }
+});
+
+function checkRoutes(to, from, next, userData) {
   if (to.matched.some(route => route.meta.admin)) {
     // check for custom admin claim
-    if (store.state.user.admin) next();
+    if (userData.admin) next();
     else {
       // redirect to no permission page
       next({ path: '/402' });
     }
   } else if (to.matched.some(route => route.meta.auth)) {
     // if user is not logged in, allways redirect to auth page
-    if (store.state.user.uid) next();
+    if (userData.uid) next();
     else {
       next({ path: '/login' });
     }
   } else if (to.matched.some(route => route.meta.guest)) {
     // check if user is logged in
-    if (!store.state.user.uid) next();
+    if (!userData.uid) next();
     else {
-      next({ path: '/' });
+      // redirect user to last route or default page
+      next(from.name ? false : '/');
     }
   } else {
     next();
   }
-});
+}
 
 export default router;

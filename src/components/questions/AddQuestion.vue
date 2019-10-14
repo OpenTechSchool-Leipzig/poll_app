@@ -99,43 +99,50 @@ export default {
   },
   methods: {
     emitQuestion() {
-      let value = JSON.parse(JSON.stringify(this.newQuestion));
-      //v-model overwrites all values. So we have to define default options in the object
-      //and therefore need to clean unneccasary options on emit
-      switch (value.type) {
-        case 'open':
-          delete value.options;
-          break;
-        case 'choice':
-          delete value.options.startValue;
-          delete value.options.endValue;
-          delete value.options.scaleSteps;
-          break;
-        case 'scale':
-          delete value.options.withText;
-          delete value.options.customAnswer;
-          delete value.options.isYesNo;
-          delete value.options.choices;
-          delete value.options.oneAnswerOnly;
-          break;
+      if (this.newQuestion.type != null && this.newQuestion.text.length > 3) {
+        let value = JSON.parse(JSON.stringify(this.newQuestion));
+        //v-model overwrites all values. So we have to define default options in the object
+        //and therefore need to clean unneccasary options on emit
+        switch (value.type) {
+          case 'open':
+            delete value.options;
+            break;
+          case 'choice':
+            delete value.options.startValue;
+            delete value.options.endValue;
+            delete value.options.scaleSteps;
+            break;
+          case 'scale':
+            delete value.options.withText;
+            delete value.options.customAnswer;
+            delete value.options.isYesNo;
+            delete value.options.choices;
+            delete value.options.oneAnswerOnly;
+            break;
+        }
+        this.$emit('addQuestion', value);
+        this.newQuestion = {
+          text: null,
+          type: null,
+          options: {
+            withText: false,
+            customAnswer: false,
+            isYesNo: false,
+            choices: [],
+            startValue: 'Totally Agree',
+            endValue: 'Totally Disagree',
+            scaleSteps: '5',
+          },
+        };
+        // reset the reference for question preview
+        this.$emit('newQuestion', null);
+      } else {
+        //TODO: add notification
+        console.log('invalid input: Question text has to be longer than 3 symbols');
       }
-      this.$emit('addQuestion', value);
-      this.newQuestion = {
-        text: null,
-        type: null,
-        options: {
-          withText: false,
-          customAnswer: false,
-          isYesNo: false,
-          choices: [],
-          startValue: 'Totally Agree',
-          endValue: 'Totally Disagree',
-          scaleSteps: '5',
-        },
-      };
-      this.$emit('newQuestion', null);
     },
     emitObject() {
+      // emit question Object for question preview
       this.$emit('newQuestion', this.newQuestion);
     },
     addChoice() {
@@ -183,8 +190,5 @@ select {
   justify-content: space-evenly;
   align-items: center;
   margin-bottom: 10px;
-}
-.submit-btn {
-  @include btn-primary;
 }
 </style>

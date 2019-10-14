@@ -1,66 +1,64 @@
 <template>
+  <!--
+    ToDo:
+    - create custom input components.
+    - Structure form with bulma ?
+    - replace divs that are only for v-if with templates
+    - make sure everything works fine on mobile devices
+  -->
   <li class="question__container">
     <h3>{{ question.text }}</h3>
     <IconButton v-if="isPreview" @click="removeQuestion" name="Remove Question" />
     <form>
-      <textarea v-if="question.type === 'open'" />
+      <TextArea v-if="question.type === 'open'" v-model="value[qIndex].answer" />
       <div class="question__choices" v-if="question.type !== 'open'">
-        <div v-if="question.options.isYesNo">
-          <div class="question__yesno">
-            <input id="yes" type="radio" :value="true" v-model="value[qIndex].answer" />
-            <label for="yes">Yes</label>
-            <input id="no" type="radio" :value="false" v-model="value[qIndex].answer" />
-            <label for="no">No</label>
-          </div>
+        <div v-if="question.options.isYesNo" class="question__yesno">
+          <RadioInput name="yes" :answerValue="true" v-model="value[qIndex].answer" />
+          <RadioInput name="no" :answerValue="false" v-model="value[qIndex].answer" isDanger />
         </div>
         <div
           class="question__choice"
           v-for="(choice, index) in question.options.choices"
           :key="index"
         >
-          <input
+          <RadioInput
             v-if="question.options.oneAnswerOnly"
-            :id="choice"
-            type="radio"
-            :value="choice"
+            :name="choice"
+            :answerValue="choice"
             v-model="value.answer"
           />
-          <input
-            v-else
-            :id="choice"
-            type="checkbox"
-            :value="choice"
-            v-model="value[qIndex].answer"
-          />
-          <label :for="choice">{{ choice }}</label>
+          <CheckBox v-else :name="choice" :answerValue="choice" v-model="value[qIndex].answer" />
         </div>
         <div v-if="question.options.customAnswer" class="question__choice">
-          <input id="custom-answer" type="checkbox" :checked="value[qIndex].customAnswer" />
-          <input type="text" v-model="value[qIndex].customAnswer" />
+          <CustomCheck v-model="value[qIndex].customAnswer" />
         </div>
-        <textarea v-if="question.options.withText" v-model="value[qIndex].text" />
+        <TextArea v-if="question.options.withText" v-model="value[qIndex].text" />
       </div>
-      <ul class="question__scale" v-if="question.type === 'scale'">
-        <li>{{ question.options.startValue }}</li>
-        <input
-          type="radio"
-          :value="n"
-          v-model="value[qIndex].answer"
-          v-for="n in parseInt(question.options.scaleSteps)"
-          :key="n"
-        />
-        <li>{{ question.options.endValue }}</li>
-      </ul>
+      <ScaleInput
+        v-if="question.type === 'scale'"
+        :options="question.options"
+        v-model="value[qIndex].answer"
+      />
     </form>
   </li>
 </template>
 
 <script>
 import IconButton from '../basic/Buttons/IconButton.vue';
+import RadioInput from '../questions/questionInputs/RadioInput.vue';
+import CheckBox from '../questions/questionInputs/CheckBox.vue';
+import CustomCheck from '../questions/questionInputs/CustomCheck.vue';
+import ScaleInput from '../questions/questionInputs/ScaleInput.vue';
+import TextArea from '../questions/questionInputs/TextArea.vue';
 
 export default {
   components: {
     IconButton,
+    RadioInput,
+    CheckBox,
+    CustomCheck,
+    ScaleInput,
+    TextArea,
   },
   props: {
     question: Object,
@@ -84,7 +82,8 @@ export default {
 <style lang="scss" scoped>
 .question {
   &__container {
-    background-color: $primary-light;
+    background-color: $primary;
+    border-radius: 4px;
     margin: 10px;
     padding: 20px;
   }
@@ -108,11 +107,6 @@ export default {
     display: flex;
     align-items: center;
     white-space: nowrap;
-  }
-  &__scale {
-    display: flex;
-    justify-content: center;
-    list-style-type: none;
   }
   &__container {
     transition: all 0.3s;

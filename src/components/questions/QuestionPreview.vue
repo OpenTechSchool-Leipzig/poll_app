@@ -2,50 +2,52 @@
   <div class="q-preview">
     <form v-if="question">
       <input class="q-preview__title" v-model="question.text" />
-      <textarea v-if="question.type === 'open'" />
+      <TextArea v-if="question.type === 'open'" />
       <div class="q-preview__choices" v-if="question.type !== 'open'">
         <div v-if="question.options.isYesNo">
           <div class="q-preview__yesno">
-            <input id="yes" type="radio" value="true" />
-            <label for="yes">Yes</label>
-            <input id="no" type="radio" value="false" />
-            <label for="no">No</label>
+            <RadioInput name="yes" />
+            <RadioInput name="no" />
           </div>
         </div>
         <div class="q-preview__choice" v-for="choice in question.options.choices" :key="choice">
-          <input id="choice" :type="[question.options.oneAnswerOnly ? 'radio' : 'checkbox']" />
-          <label for="choice">{{ choice }}</label>
+          <RadioInput v-if="question.options.oneAnswerOnly" :name="choice" />
+          <CheckBox v-else :name="choice" />
           <IconButton
             @click="removeChoice(question.options.choices.indexOf(choice))"
             name="Remove Answer Option"
           />
         </div>
         <div v-if="question.options.customAnswer" class="poll-preview__choice">
-          <input id="custom-answer" type="checkbox" />
-          <input type="answer" />
+          <CustomCheck />
         </div>
-        <textarea v-if="question.options.withText" />
+        <TextArea v-if="question.options.withText" />
       </div>
-      <ul class="q-preview__scale" v-if="question.type === 'scale'">
-        <input type="text" v-model="question.options.startValue" />
-        <input
-          type="radio"
-          :value="n"
-          v-for="n in parseInt(question.options.scaleSteps)"
-          v-bind:key="n"
-        />
-        <input type="text" v-model="question.options.endValue" />
-      </ul>
+      <ScaleInput
+        v-if="question.type === 'scale'"
+        :options="question.options"
+        v-model="value[qIndex].answer"
+      />
     </form>
   </div>
 </template>
 
 <script>
 import IconButton from '../basic/Buttons/IconButton.vue';
+import RadioInput from './questionInputs/RadioInput.vue';
+import CheckBox from './questionInputs/CheckBox.vue';
+import CustomCheck from './questionInputs/CustomCheck.vue';
+import ScaleInput from './questionInputs/ScaleInput.vue';
+import TextArea from './questionInputs/TextArea.vue';
 
 export default {
   components: {
     IconButton,
+    RadioInput,
+    CheckBox,
+    CustomCheck,
+    ScaleInput,
+    TextArea,
   },
   props: {
     question: Object,
@@ -66,15 +68,6 @@ export default {
   margin: 10px;
   padding: 20px;
 
-  h3 {
-    margin-top: 0;
-  }
-  textarea {
-    width: 90%;
-    height: 100px;
-    border-radius: 5px;
-    resize: none;
-  }
   &__title {
     font-size: 1.17em;
     border: none;
@@ -92,11 +85,6 @@ export default {
     display: flex;
     align-items: center;
     white-space: nowrap;
-  }
-  &__scale {
-    display: flex;
-    justify-content: center;
-    list-style-type: none;
   }
 }
 </style>

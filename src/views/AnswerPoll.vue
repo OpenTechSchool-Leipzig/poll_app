@@ -62,7 +62,7 @@ export default {
         if (!x.answer) return null;
       });
       console.log('sending answer...');
-      this.$store.dispatch('AddAnswer', {
+      this.$store.dispatch('addAnswer', {
         pollId: this.activePoll.id,
         answers: { ...this.userAnswer },
       });
