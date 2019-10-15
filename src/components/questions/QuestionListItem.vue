@@ -9,14 +9,28 @@
       />
     </div>
     <div v-show="expanded" class="question__details">
-      <p>type: {{ question.type }}</p>
-      <p>options: {{ JSON.stringify(question.options) }}</p>
-      <p v-if="question.createdAt">created At: {{ question.createdAt.toDate() }}</p>
+      <ul>
+        <li>type: {{ typeLabel }}</li>
+        <li v-if="choicesLabel">
+          choices:
+          <ul class="nested-list">
+            <li v-for="(choice, i) in choicesLabel" :key="i">{{ choice }}</li>
+          </ul>
+        </li>
+        <li v-if="optionsLabels">
+          options:
+          <ul class="nested-list">
+            <li v-for="(option, i) in optionsLabels" :key="i">{{ option }}</li>
+          </ul>
+        </li>
+        <li v-if="question.createdAt">created: {{ createdAtLabel }}</li>
+      </ul>
     </div>
   </li>
 </template>
 
 <script>
+import { get } from 'lodash';
 import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
@@ -30,6 +44,72 @@ export default {
     return {
       expanded: false,
     };
+  },
+
+  computed: {
+    typeLabel() {
+      let typeLabel;
+      switch (this.question.type) {
+        case 'open':
+          typeLabel = 'Open question';
+          break;
+        case 'choice':
+          typeLabel = 'Multiple choice';
+          break;
+        case 'scale':
+          typeLabel = 'Scale question';
+          break;
+        default:
+          typeLabel = '';
+      }
+      return typeLabel;
+    },
+    choicesLabel() {
+      const choices = get(this.question, 'options.choices');
+      if (choices && choices.length > 0) {
+        return choices;
+      }
+      return null;
+    },
+    optionsLabels() {
+      const options = get(this.question, 'options');
+      if (options) {
+        const optionLabels = [];
+        if (options.isYesNo === true) {
+          optionLabels.push('Yes/No question');
+        }
+        if (options.oneAnswerOnly === true) {
+          optionLabels.push('Allow only one answer');
+        }
+        if (options.withText === true) {
+          optionLabels.push('Has textfield for explanation');
+        }
+        if (options.customAnswer === true) {
+          optionLabels.push('Allow user to add answer');
+        }
+        if (options.startValue) {
+          optionLabels.push(`Start value: ${options.startValue}`);
+        }
+        if (options.endValue) {
+          optionLabels.push(`End value: ${options.endValue}`);
+        }
+        if (options.scaleSteps) {
+          optionLabels.push(`Scale steps: ${options.scaleSteps}`);
+        }
+        return optionLabels.length > 0 ? optionLabels : null;
+      }
+      return null;
+    },
+    createdAtLabel() {
+      const dateOptions = {
+        year: 'numeric',
+        month: 'short',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      };
+      return this.question.createdAt.toDate().toLocaleDateString('de-DE', dateOptions);
+    },
   },
   props: {
     question: Object,
@@ -64,6 +144,14 @@ ul {
   list-style: none;
   margin: 5px 0 10px;
   padding: 0;
+}
+
+ul.nested-list {
+  display: inline-grid;
+  list-style-type: square;
+  list-style-position: inside;
+  margin: 0;
+  padding: 0 5px;
 }
 .question {
   background-color: $primary-light;
