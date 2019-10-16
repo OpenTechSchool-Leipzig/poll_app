@@ -3,8 +3,9 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
+// TODO: split the cloud functions code to make it cleaner!
+
 function updateUserDoc(uid) {
-  // somehow I cannot perform any action on the firestore database
   admin
     .firestore()
     .collection('users')
@@ -28,7 +29,6 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
       error: 'only admins can promote users',
     };
   }
-  console.log(data);
   return admin
     .auth()
     .setCustomUserClaims(data.userId, {
@@ -45,4 +45,25 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
         error: `Failed to grant user admin role: ${err}`,
       };
     });
+});
+
+exports.updateState = functions.firestore.document('polls/{pollId}').onUpdate((change, context) => {
+  const newValue = change.after.data();
+
+  // ...or the previous value before this update
+  const previousValue = change.before.data();
+
+  // access a particular field as you would any JS property
+  if (newValue.state !== previousValue.state) {
+    console.log(
+      'changed state on ' +
+        newValue.title +
+        '   from: ' +
+        previousValue.state +
+        '   to: ' +
+        newValue.state
+    );
+  }
+
+  // perform desired operations ...
 });
