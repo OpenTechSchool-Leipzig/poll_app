@@ -122,9 +122,9 @@ export default {
     },
 
     emitSelection(id) {
-      // use $parent instance property to trigger emit at parent component level.
-      // A more flexible approach might be using "v-on='$listeners'" in component template
-      // !!transition-group prevents using $parent and $listeners!!
+      // I originally used the $parent instance property to trigger emit at parent component level.
+      // A more flexible approach might be using "v-on='$listeners'" in component template. But:
+      // !! transition-group prevents using $parent and $listeners !!
       this.$emit('selectQuestion', id);
     },
   },
