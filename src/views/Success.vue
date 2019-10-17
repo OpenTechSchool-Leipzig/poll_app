@@ -29,7 +29,12 @@ export default {
   },
   async mounted() {
     if (!this.$store.state.activePoll.activePoll) {
-      await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+      try {
+        await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+        this.isLoading = false;
+      } catch (err) {
+        this.$router.push({ name: '404' });
+      }
     }
     this.isLoading = false;
   },
