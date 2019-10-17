@@ -8,6 +8,7 @@ import answerStore from './modules/answers';
 import userStore from './modules/user';
 import confirmationDialogStore from './modules/confirmationDialog';
 import activePollStore from './modules/activePoll';
+import notificationsStore from './modules/notifications';
 
 Vue.use(Vuex);
 
@@ -20,5 +21,6 @@ export default new Vuex.Store({
     user: userStore,
     confirmationDialog: confirmationDialogStore,
     activePoll: activePollStore,
+    notifications: notificationsStore,
   },
 });

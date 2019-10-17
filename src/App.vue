@@ -1,20 +1,23 @@
 <template>
   <div id="app">
     <nav-bar />
+    <notifications />
     <router-view />
-    <confirmationModal />
+    <confirmation-modal />
   </div>
 </template>
 
 <script>
 import { auth } from '@/utility/firebase';
-import confirmationModal from './components/basic/ConfirmationModal.vue';
+import ConfirmationModal from './components/basic/ConfirmationModal.vue';
 import NavBar from './components/basic/NavBar.vue';
+import Notifications from '@/components/basic/Notifications.vue';
 
 export default {
   components: {
-    confirmationModal,
+    ConfirmationModal,
     NavBar,
+    Notifications,
   },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut

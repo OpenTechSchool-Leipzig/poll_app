@@ -39,7 +39,11 @@ export default {
         console.log('successfully logged in');
         this.loading = false;
       } catch (error) {
-        console.log(error);
+        this.$store.dispatch('addNotification', {
+          title: 'Error',
+          message: error,
+          type: 'danger',
+        });
         this.loading = false;
       }
     },
