@@ -152,23 +152,43 @@ export default {
       }
     },
     async createPollHandler() {
-      //replace console logs with notifications
       const pollData = this.poll;
-      if (pollData.title && pollData.date && pollData.questions) {
+      let errorMsg;
+      if (!pollData.title) {
+        errorMsg = 'Please enter a poll title';
+      } else if (!pollData.date) {
+        errorMsg = 'Please choose a workshop date';
+      } else if (!pollData.questions) {
+        errorMsg = 'Please add at least one question';
+      } else {
         pollData.state = 'draft';
         this.$store.dispatch('addPoll', pollData);
         try {
-          console.log('success: saved Poll "' + pollData.title + '"');
+          this.$store.dispatch('addNotification', {
+            title: 'Success',
+            message: 'Successfully saved Poll "' + pollData.title + '"',
+            type: 'success',
+          });
+
           this.poll = {
             title: null,
             date: null,
             questions: [],
           };
         } catch (error) {
-          console.log(error);
+          this.$store.dispatch('addNotification', {
+            title: 'Error',
+            message: error,
+            type: 'danger',
+          });
         }
-      } else {
-        console.error('enter valid Data!');
+      }
+      if (errorMsg) {
+        this.$store.dispatch('addNotification', {
+          title: 'Error',
+          message: errorMsg,
+          type: 'danger',
+        });
       }
     },
     async createTemplateHandler() {
@@ -179,7 +199,11 @@ export default {
         try {
           console.log('success: saved Template "' + pollData.title + '"');
         } catch (error) {
-          console.log(error);
+          this.$store.dispatch('addNotification', {
+            title: 'Error',
+            message: error,
+            type: 'danger',
+          });
         }
       } else {
         console.error('enter valid Data!');
