@@ -77,7 +77,7 @@ export default {
 }
 
 .notifications {
-  padding-top: 20px;
+  padding: 20px 0;
   width: 90%;
   max-width: 800px;
   margin: 0 auto;

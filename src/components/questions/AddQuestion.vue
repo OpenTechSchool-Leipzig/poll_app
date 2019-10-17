@@ -99,7 +99,12 @@ export default {
   },
   methods: {
     emitQuestion() {
-      if (this.newQuestion.type != null && this.newQuestion.text.length > 3) {
+      let errorMsg;
+      if (!this.newQuestion.text || this.newQuestion.text.length < 4) {
+        errorMsg = 'Invalid input: Question text has to be longer than 3 symbols';
+      } else if (!this.newQuestion.type) {
+        errorMsg = 'Please choose a question type';
+      } else {
         let value = JSON.parse(JSON.stringify(this.newQuestion));
         //v-model overwrites all values. So we have to define default options in the object
         //and therefore need to clean unneccasary options on emit
@@ -136,9 +141,13 @@ export default {
         };
         // reset the reference for question preview
         this.$emit('newQuestion', null);
-      } else {
-        //TODO: add notification
-        console.log('invalid input: Question text has to be longer than 3 symbols');
+      }
+      if (errorMsg) {
+        this.$store.dispatch('addNotification', {
+          title: 'Error',
+          message: errorMsg,
+          type: 'danger',
+        });
       }
     },
     emitObject() {
