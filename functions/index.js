@@ -43,8 +43,9 @@ exports.updateState = functions.firestore.document('polls/{pollId}').onUpdate((c
         return err;
       });
   }
-
-  if (newValue.state === 'draft') {
+  // for now I handle state change to draft the same way als to closed
+  // this should be reworked to prevent setting back to draft in the future
+  if (newValue.state === 'closed' || newValue.state === 'draft') {
     return removeFromActivePoll(admin, context.params.pollId)
       .then(res => {
         console.log('removed activePoll with id: ' + context.params.pollId);
