@@ -35,7 +35,6 @@ export default {
   },
   data() {
     return {
-      // data structure for answers
       isLoading: true,
       userAnswer: [],
     };

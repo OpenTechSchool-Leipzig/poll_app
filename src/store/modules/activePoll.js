@@ -11,8 +11,8 @@ const activePollStore = {
   },
   actions: {
     async fetchActivePoll({ commit }, pollId) {
-      const fetchedPoll = await fetchDocument('activePolls', pollId);
       try {
+        const fetchedPoll = await fetchDocument('activePolls', pollId);
         commit('setActivePoll', fetchedPoll);
       } catch (err) {
         throw err;

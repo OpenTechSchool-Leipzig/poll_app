@@ -63,13 +63,18 @@ export default {
   },
   async mounted() {
     if (!this.$store.state.activePoll.activePoll) {
-      await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+      try {
+        await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+      } catch (err) {
+        console.log(err);
+      }
     }
-    /*  if (!this.activePoll) {
-      this.$router.push({ path: `/preview/${id}` });
-    } */
-    this.populateAnswers();
-    this.isLoading = false;
+    if (!this.activePoll) {
+      this.$router.push({ path: `/preview/${this.$route.params.pollId}` });
+    } else {
+      this.populateAnswers();
+      this.isLoading = false;
+    }
   },
 };
 </script>
