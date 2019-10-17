@@ -9,44 +9,51 @@ const router = new Router({
   base: process.env.BASE_URL,
   routes: [
     {
-      path: '/newpoll',
-      name: 'newPoll',
-      component: () => import('./views/CreatePoll.vue'),
-      meta: {
-        admin: true,
-      },
-    },
-    {
       path: '/',
-      name: 'polloverview',
-      component: () => import('./views/PollOverview.vue'),
-      meta: {
-        admin: true,
-      },
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/static/About'),
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: () => import('./views/Login.vue'),
-      meta: {
-        guest: true,
-      },
-    },
-    {
-      path: '/signup',
-      name: 'signup',
-      component: () => import('./views/Register.vue'),
-      meta: {
-        guest: true,
-      },
+      name: 'admin',
+      component: () => import(/* webpackChunkName: "admin-group" */ './views/admin/AdminFrame.vue'),
+      children: [
+        {
+          path: '',
+          name: 'polloverview',
+          component: () => import(/* webpackChunkName: "admin-group" */ './views/PollOverview.vue'),
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: 'newpoll',
+          name: 'newPoll',
+          component: () => import(/* webpackChunkName: "admin-group" */ './views/CreatePoll.vue'),
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: '/preview/:pollId',
+          name: 'previewPoll',
+          component: () => import('./views/PollPreview.vue'),
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: '/login',
+          name: 'login',
+          component: () => import(/* webpackChunkName: "admin-group" */ './views/Login.vue'),
+          meta: {
+            guest: true,
+          },
+        },
+        {
+          path: '/signup',
+          name: 'signup',
+          component: () => import(/* webpackChunkName: "admin-group" */ './views/Register.vue'),
+          meta: {
+            guest: true,
+          },
+        },
+      ],
     },
     {
       path: '/402',

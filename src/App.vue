@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <nav-bar />
     <notifications />
     <router-view />
     <confirmation-modal />
@@ -9,14 +8,12 @@
 
 <script>
 import { auth } from '@/utility/firebase';
-import ConfirmationModal from './components/basic/ConfirmationModal.vue';
-import NavBar from './components/basic/NavBar.vue';
+import ConfirmationModal from '@/components/basic/ConfirmationModal.vue';
 import Notifications from '@/components/basic/Notifications.vue';
 
 export default {
   components: {
     ConfirmationModal,
-    NavBar,
     Notifications,
   },
   mounted() {
