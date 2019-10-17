@@ -16,7 +16,8 @@ const router = new Router({
         {
           path: '',
           name: 'polloverview',
-          component: () => import(/* webpackChunkName: "admin-group" */ './views/PollOverview.vue'),
+          component: () =>
+            import(/* webpackChunkName: "admin-group" */ './views/admin/PollOverview.vue'),
           meta: {
             admin: true,
           },
@@ -24,7 +25,8 @@ const router = new Router({
         {
           path: 'newpoll',
           name: 'newPoll',
-          component: () => import(/* webpackChunkName: "admin-group" */ './views/CreatePoll.vue'),
+          component: () =>
+            import(/* webpackChunkName: "admin-group" */ './views/admin/CreatePoll.vue'),
           meta: {
             admin: true,
           },
@@ -32,7 +34,7 @@ const router = new Router({
         {
           path: '/preview/:pollId',
           name: 'previewPoll',
-          component: () => import('./views/PollPreview.vue'),
+          component: () => import('./views/admin/PollPreview.vue'),
           meta: {
             admin: true,
           },
@@ -40,7 +42,7 @@ const router = new Router({
         {
           path: '/login',
           name: 'login',
-          component: () => import(/* webpackChunkName: "admin-group" */ './views/Login.vue'),
+          component: () => import(/* webpackChunkName: "admin-group" */ './views/admin/Login.vue'),
           meta: {
             guest: true,
           },
@@ -48,7 +50,8 @@ const router = new Router({
         {
           path: '/signup',
           name: 'signup',
-          component: () => import(/* webpackChunkName: "admin-group" */ './views/Register.vue'),
+          component: () =>
+            import(/* webpackChunkName: "admin-group" */ './views/admin/Register.vue'),
           meta: {
             guest: true,
           },
@@ -73,14 +76,6 @@ const router = new Router({
       path: '/success/:pollId',
       name: 'success',
       component: () => import('./views/Success.vue'),
-    },
-    {
-      path: '/preview/:pollId',
-      name: 'previewPoll',
-      component: () => import('./views/PollPreview.vue'),
-      meta: {
-        admin: true,
-      },
     },
     // wildcard route for 404
     {
