@@ -43,16 +43,20 @@ export async function fetchCollection(collection) {
 }
 // get Document
 export async function fetchDocument(collection, document) {
-  const snapshot = await firebase
-    .firestore()
-    .collection(collection)
-    .doc(document)
-    .get();
-  const data = snapshot.data();
-  data.id = snapshot.id;
-  console.log(data);
   try {
-    return data;
+    const snapshot = await firebase
+      .firestore()
+      .collection(collection)
+      .doc(document)
+      .get();
+    const data = snapshot.data();
+    if (data) {
+      data.id = snapshot.id;
+      console.log('data: ' + data);
+      return data;
+    } else {
+      throw Error('could not fetch document ' + document + ' in collection ' + collection);
+    }
   } catch (err) {
     throw err;
   }

@@ -80,15 +80,11 @@ export default {
     if (!this.$store.state.activePoll.activePoll) {
       try {
         await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+        this.populateAnswers();
+        this.isLoading = false;
       } catch (err) {
-        console.log(err);
+        this.$router.push({ name: '404' });
       }
-    }
-    if (!this.activePoll) {
-      this.$router.push({ path: `/preview/${this.$route.params.pollId}` });
-    } else {
-      this.populateAnswers();
-      this.isLoading = false;
     }
   },
 };
