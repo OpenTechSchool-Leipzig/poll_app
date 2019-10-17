@@ -58,12 +58,17 @@ const unsubscribe = auth.onAuthStateChanged(firebaseUser => {
     firebaseUser.getIdTokenResult().then(tokenResult => {
       firebaseUser.admin = tokenResult.claims.admin;
       store.commit('setUser', firebaseUser);
+      initVue();
     });
+  else initVue();
+  unsubscribe();
+});
+
+const initVue = () => {
   new Vue({
     el: '#app',
     router,
     store,
     render: h => h(App),
   });
-  unsubscribe();
-});
+};
