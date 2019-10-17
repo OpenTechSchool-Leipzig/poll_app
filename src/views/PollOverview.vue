@@ -72,7 +72,11 @@ export default {
       this.pollToUpdate.initialState = selectedPoll.state;
     },
     visitPollHandler(id) {
-      this.$router.push({ path: `/poll/${id}` });
+      if (this.populatedPolls.find(x => x.id === id).state === 'active') {
+        this.$router.push({ path: `/poll/${id}` });
+      } else {
+        this.$router.push({ path: `/preview/${id}` });
+      }
     },
     clearStateSelection() {
       console.log('clearState');
