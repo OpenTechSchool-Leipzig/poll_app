@@ -70,6 +70,10 @@ export default {
         pollId: this.activePoll.id,
         answers: { ...this.userAnswer },
       });
+      this.$router.push({
+        name: 'success',
+        pollId: this.activePoll.id,
+      });
     },
   },
   async mounted() {

@@ -63,6 +63,11 @@ const router = new Router({
       component: () => import('./views/AnswerPoll.vue'),
     },
     {
+      path: '/success/:pollId',
+      name: 'success',
+      component: () => import('./views/Success.vue'),
+    },
+    {
       path: '/preview/:pollId',
       name: 'previewPoll',
       component: () => import('./views/PollPreview.vue'),
