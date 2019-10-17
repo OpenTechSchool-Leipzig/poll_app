@@ -13,14 +13,29 @@ async function populatePollData(firebaseInstance, newValue, pollId) {
       data.id = doc.id;
       fetchedQuestions.push(data);
     });
-    console.log(fetchedQuestions);
-    let pollData = cloneDeep(newValue);
+    //using spread operator to remove admin info
+    let {
+      createdAt,
+      createdBy,
+      updatedAt,
+      updatedBy,
+      activatedBy,
+      closedAt,
+      closedBy,
+      ...pollData
+    } = cloneDeep(newValue);
+    console.log(pollData);
 
     if (fetchedQuestions.length === 0) {
       throw Error("couldn't fetch question Data");
     }
-    console.log(pollData.questions);
-    const questionObjects = fetchedQuestions.filter(x => pollData.questions.includes(x.id));
+    const questionObjects = fetchedQuestions
+      .filter(x => pollData.questions.includes(x.id))
+      .map(x => {
+        const { createdAt, createdBy, ...question } = x;
+        return question;
+      });
+    console.log(questionObjects);
     if (questionObjects.length === 0) {
       throw Error("couldn't find Question IDs in Questionlist");
     }
@@ -53,4 +68,25 @@ function createActivePoll(firebaseInstance, pollId, pollData) {
   });
 }
 
-module.exports = populatePollData;
+function removeActivePoll(firebaseInstance, pollId) {
+  return new Promise((resolve, reject) => {
+    firebaseInstance
+      .firestore()
+      .collection('activePolls')
+      .doc(pollId)
+      .delete()
+      .then(() => {
+        resolve({
+          message: 'deleted activePoll',
+        });
+        return { message: 'deleted activePoll' };
+      })
+      .catch(err => {
+        reject(err);
+        throw err;
+      });
+  });
+}
+
+module.exports.copyToActivePoll = populatePollData;
+module.exports.removeFromActivePoll = removeActivePoll;

@@ -2,7 +2,7 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
 const setAdminRole = require('./adminRole.js');
-const copyToActivePoll = require('./updateState');
+const { copyToActivePoll, removeFromActivePoll } = require('./updateState');
 
 admin.initializeApp();
 
@@ -33,10 +33,21 @@ exports.updateState = functions.firestore.document('polls/{pollId}').onUpdate((c
   );
 
   if (newValue.state === 'active') {
-    console.log('create... activePoll with id: ' + context.params.pollId);
-    copyToActivePoll(admin, newValue, context.params.pollId)
+    return copyToActivePoll(admin, newValue, context.params.pollId)
       .then(res => {
-        console.log(res);
+        console.log('created activePoll with id: ' + context.params.pollId);
+        return res;
+      })
+      .catch(err => {
+        console.error(err);
+        return err;
+      });
+  }
+
+  if (newValue.state === 'draft') {
+    return removeFromActivePoll(admin, context.params.pollId)
+      .then(res => {
+        console.log('removed activePoll with id: ' + context.params.pollId);
         return res;
       })
       .catch(err => {

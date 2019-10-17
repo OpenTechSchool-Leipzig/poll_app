@@ -81,7 +81,7 @@ export async function updateData(collection, document, payload) {
     .firestore()
     .collection(collection)
     .doc(document)
-    .update({ ...payload, UpdatedAt: serverTimestamp });
+    .update({ ...payload, updatedAt: serverTimestamp });
   try {
     console.log('Successfully updated: ' + payload.title);
   } catch (err) {
