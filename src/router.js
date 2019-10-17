@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from './store/store';
-import { auth } from './utility/firebase';
 
 Vue.use(Router);
 
@@ -82,28 +81,7 @@ const router = new Router({
 
 // navigation guard
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(route => route.meta.admin)) {
-    // check if token has allready been verified
-    if (store.state.user.uid === null) {
-      if (auth.currentUser)
-        auth.currentUser.getIdTokenResult().then(tokenResult => {
-          const userData = {
-            uid: tokenResult.claims.user_id,
-            admin: tokenResult.claims.admin,
-          };
-          checkRoutes(to, from, next, userData);
-        });
-      // if no token exists and the route target is not login redirect to login page
-      else if (to.path !== '/login') {
-        console.log('redirect to login');
-        next({ path: '/login' });
-      } else {
-        checkRoutes(to, from, next, store.state.user);
-      }
-    }
-  } else {
-    checkRoutes(to, from, next, store.state.user);
-  }
+  checkRoutes(to, from, next, store.state.user);
 });
 
 function checkRoutes(to, from, next, userData) {
