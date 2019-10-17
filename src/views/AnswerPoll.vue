@@ -16,18 +16,27 @@
           :isPreview="false"
         />
       </ul>
-      <button v-if="activePoll.state === 'active'" @click="sendAnswerHandler">Send Answers</button>
+      <DefaultButton
+        v-show="activePoll.state === 'active'"
+        name="Send Answers"
+        @click="sendAnswerHandler"
+        isPrimary
+        :hasConfirmation="!allQuestionsAnswered"
+        confirmationText="You did not answer all questions. Do you really want to send your answers already?"
+      />
     </template>
   </div>
 </template>
 
 <script>
 import PollQuestion from '@/components/polls/PollQuestion.vue';
+import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'AnswerPoll',
   components: {
     PollQuestion,
+    DefaultButton,
   },
   data() {
     return {
@@ -40,6 +49,11 @@ export default {
     activePoll() {
       return this.$store.state.activePoll.activePoll;
     },
+    allQuestionsAnswered() {
+      return !this.userAnswer.some(x => {
+        return x.answer === null || x.answer === [];
+      });
+    },
   },
   methods: {
     populateAnswers() {
@@ -51,9 +65,6 @@ export default {
       });
     },
     sendAnswerHandler() {
-      this.userAnswer.forEach(x => {
-        if (!x.answer) return null;
-      });
       console.log('sending answer...');
       this.$store.dispatch('addAnswer', {
         pollId: this.activePoll.id,
