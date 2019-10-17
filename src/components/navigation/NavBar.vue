@@ -25,7 +25,6 @@
             <router-link to="/newpoll" v-if="isActiveUserAdmin" class="navbar-item is-tab"
               >Create Poll</router-link
             >
-            <router-link to="/about" class="navbar-item is-tab">About</router-link>
             <router-link to="/login" v-if="!userExists" class="navbar-item is-tab"
               >Login</router-link
             >
