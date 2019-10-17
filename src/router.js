@@ -63,6 +63,14 @@ const router = new Router({
       name: 'answerPoll',
       component: () => import('./views/AnswerPoll.vue'),
     },
+    {
+      path: '/preview/:pollId',
+      name: 'previewPoll',
+      component: () => import('./views/PollPreview.vue'),
+      meta: {
+        admin: true,
+      },
+    },
     // wildcard route for 404
     {
       path: '*',
@@ -74,22 +82,24 @@ const router = new Router({
 
 // navigation guard
 router.beforeEach((to, from, next) => {
-  // check if token has allready been verified
-  if (store.state.user.uid === null) {
-    if (auth.currentUser)
-      auth.currentUser.getIdTokenResult().then(tokenResult => {
-        const userData = {
-          uid: tokenResult.claims.user_id,
-          admin: tokenResult.claims.admin,
-        };
-        checkRoutes(to, from, next, userData);
-      });
-    // if no token exists and the route target is not login redirect to login page
-    else if (to.path !== '/login') {
-      console.log('redirect to login');
-      next({ path: '/login' });
-    } else {
-      checkRoutes(to, from, next, store.state.user);
+  if (to.matched.some(route => route.meta.admin)) {
+    // check if token has allready been verified
+    if (store.state.user.uid === null) {
+      if (auth.currentUser)
+        auth.currentUser.getIdTokenResult().then(tokenResult => {
+          const userData = {
+            uid: tokenResult.claims.user_id,
+            admin: tokenResult.claims.admin,
+          };
+          checkRoutes(to, from, next, userData);
+        });
+      // if no token exists and the route target is not login redirect to login page
+      else if (to.path !== '/login') {
+        console.log('redirect to login');
+        next({ path: '/login' });
+      } else {
+        checkRoutes(to, from, next, store.state.user);
+      }
     }
   } else {
     checkRoutes(to, from, next, store.state.user);

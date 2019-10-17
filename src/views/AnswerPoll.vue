@@ -2,10 +2,6 @@
   <div class="poll">
     <div v-if="isLoading">is loading...</div>
     <template v-if="!isLoading">
-      <div class="poll__badge poll__badge--warn" v-if="activePoll.state === 'draft'">!DRAFT!</div>
-      <div class="poll__badge poll__badge--danger" v-if="activePoll.state === 'closed'">
-        !CLOSED!
-      </div>
       <header>
         <h2>{{ activePoll.title }}</h2>
         <h4>on {{ activePoll.date }}</h4>
@@ -41,11 +37,8 @@ export default {
     };
   },
   computed: {
-    populatedPolls() {
-      return this.$store.getters.populatedPolls || [];
-    },
     activePoll() {
-      return this.populatedPolls.find(poll => poll.id === this.$route.params.pollId);
+      return this.$store.state.activePoll.activePoll;
     },
   },
   methods: {
@@ -69,12 +62,12 @@ export default {
     },
   },
   async mounted() {
-    // this data should only be fetched for draft and closed state polls
-    if (!this.populatedPolls.find(x => x.id === this.$route.params.pollId)) {
-      await this.$store.dispatch('fetchQuestions');
-      await this.$store.dispatch('fetchUsers');
-      await this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+    if (!this.$store.state.activePoll.activePoll) {
+      await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
     }
+    /*  if (!this.activePoll) {
+      this.$router.push({ path: `/preview/${id}` });
+    } */
     this.populateAnswers();
     this.isLoading = false;
   },

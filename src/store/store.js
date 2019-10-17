@@ -7,6 +7,7 @@ import templateStore from './modules/templates';
 import answerStore from './modules/answers';
 import userStore from './modules/user';
 import confirmationDialogStore from './modules/confirmationDialog';
+import activePollStore from './modules/activePoll';
 
 Vue.use(Vuex);
 
@@ -18,5 +19,6 @@ export default new Vuex.Store({
     answers: answerStore,
     user: userStore,
     confirmationDialog: confirmationDialogStore,
+    activePoll: activePollStore,
   },
 });

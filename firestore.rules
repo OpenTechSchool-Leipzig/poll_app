@@ -7,7 +7,7 @@ service cloud.firestore {
       allow read, update, delete: if request.auth.uid == userId;
       allow create: if request.auth.uid != null;
     }
-    match /activePolls {
+    match /activePolls/{document=**} {
       allow read: if true;
       allow write: if false;
     }
