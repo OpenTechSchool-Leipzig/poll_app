@@ -23,7 +23,7 @@
             <li v-for="(option, i) in optionsLabels" :key="i">{{ option }}</li>
           </ul>
         </li>
-        <li v-if="question.createdAt">created: {{ createdAtLabel }}</li>
+        <li v-if="createdByLabel">created by {{ createdByLabel }} on {{ createdAtLabel }}</li>
       </ul>
     </div>
   </li>
@@ -99,6 +99,9 @@ export default {
         return optionLabels.length > 0 ? optionLabels : null;
       }
       return null;
+    },
+    createdByLabel() {
+      return get(this.question, 'createdBy.name');
     },
     createdAtLabel() {
       const dateOptions = {
