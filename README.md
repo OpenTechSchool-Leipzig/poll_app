@@ -91,6 +91,6 @@ Bonus: use the firebase cli to update rules and the cloudfunctions.
 
 ### Issues and Project
 
-Before you contribute, please read through existing issues and also have a look at the [project's kanban board](https://github.com/OpenTechSchool-Leipzig/poll_app/projects/1). If you want to work on an issue, please assign yourself and update the cards progress. If you find a bug or have some ideas for features or imporvements feel free to create your own issue.
+Before you contribute, please read through existing issues and also have a look at the [project's kanban board](https://github.com/OpenTechSchool-Leipzig/poll_app/projects/1). If you want to work on an issue, please comment on it and we will assignments. If you find a bug or have some ideas for features or imporvements feel free to let us know.
 
 Thanks a lot for your contribution! :sparkling_heart:
