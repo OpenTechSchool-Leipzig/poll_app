@@ -94,11 +94,10 @@ export default {
 .poll {
   width: 100%;
   height: 100%;
-  background-color: $primary-dark;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 10px 10px 10px;
 
   header {
     @extend .poll-title;

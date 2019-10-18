@@ -19,6 +19,7 @@
 .poll-title {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   background-color: $primary-light;
   margin: 10px auto;

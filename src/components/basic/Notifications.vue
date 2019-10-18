@@ -77,10 +77,16 @@ export default {
 }
 
 .notifications {
-  padding: 20px 0;
-  width: 90%;
-  max-width: 800px;
-  margin: 0 auto;
+  position: absolute;
+  padding: 60px 0;
+  width: 100%;
+  margin: 0;
+  article {
+    width: 90%;
+    max-width: 800px;
+    margin-bottom: 10px;
+    margin: auto;
+  }
 }
 
 .message {

@@ -45,11 +45,10 @@ export default {
 .poll {
   width: 100%;
   height: 100%;
-  background-color: $primary-dark;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 10px;
+  padding: 0 10px 10px 10px;
 
   header {
     @extend .poll-title;
@@ -61,6 +60,14 @@ export default {
       font-size: 1.2rem;
       display: inline-block;
     }
+  }
+}
+.message-header {
+  justify-content: center;
+  min-height: 50vh;
+  p {
+    font-size: 2.5rem;
+    text-align: center;
   }
 }
 </style>

@@ -43,6 +43,7 @@ export default {
   margin: 60px auto;
   border-radius: 2px;
   @include shadow2;
+  background-color: $white;
 
   &__header {
     padding: 20px;
