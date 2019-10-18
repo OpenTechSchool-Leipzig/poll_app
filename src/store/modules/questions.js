@@ -33,21 +33,21 @@ const questionStore = {
   },
   actions: {
     async fetchQuestions({ commit }) {
-      const fetchedQuestions = await fetchCollection('questions');
       try {
+        const fetchedQuestions = await fetchCollection('questions');
         commit('updateQuestions', fetchedQuestions);
       } catch (err) {
         throw err;
       }
     },
     async addQuestion({ commit }, question) {
-      const questionData = {
-        ...question,
-        createdAt: getTimestamp(Date.now()),
-        createdBy: getUserId(),
-      };
-      const questionId = await addData('questions', questionData);
       try {
+        const questionData = {
+          ...question,
+          createdAt: getTimestamp(Date.now()),
+          createdBy: getUserId(),
+        };
+        const questionId = await addData('questions', questionData);
         questionData.id = questionId;
         commit('pushQuestion', questionData);
         return questionId;

@@ -12,8 +12,8 @@ const answerStore = {
   },
   actions: {
     async fetchAnswers({ commit }) {
-      const fetchedAnswers = await fetchCollection('answers');
       try {
+        const fetchedAnswers = await fetchCollection('answers');
         commit('updateAnswers', fetchedAnswers);
       } catch (err) {
         throw err;
@@ -22,9 +22,10 @@ const answerStore = {
 
     // eslint-disable-next-line no-unused-vars
     async addAnswer({ commit }, { pollId, answers }) {
-      console.log('id: ' + pollId + 'add Answer: ' + answers);
-      await addToArray('answers', pollId, 'userAnswers', answers);
       try {
+        console.log('id: ' + pollId + 'add Answer: ' + answers);
+        await addToArray('answers', pollId, 'userAnswers', answers);
+
         console.log('answers added');
       } catch (err) {
         console.log(err);

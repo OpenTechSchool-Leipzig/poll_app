@@ -69,11 +69,18 @@ export default {
   },
   async mounted() {
     // this data should only be fetched for draft and closed state polls
-    if (!this.populatedPolls.find(x => x.id === this.$route.params.pollId)) {
-      await this.$store.dispatch('fetchQuestions');
-      await this.$store.dispatch('fetchUsers');
-      await this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+    try {
+      if (!this.populatedPolls.find(x => x.id === this.$route.params.pollId)) {
+        let a = this.$store.dispatch('fetchQuestions');
+        let b = this.$store.dispatch('fetchUsers');
+        let c = this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+        // this will await for all promises to resolve whithout preventing all fetch functions to be called
+        await Promise.all([a, b, c]);
+      }
+    } catch (err) {
+      console.log(err);
     }
+
     this.populateAnswers();
     this.isLoading = false;
   },
