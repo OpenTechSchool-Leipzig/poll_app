@@ -19,12 +19,12 @@ const pollStore = {
   getters: {
     populatedPolls: (state, getters, rootState) => {
       const { polls } = state;
-      const { questions } = rootState.questions;
+      const questions = getters.populatedQuestions;
       const { userList } = rootState.user;
 
       let popPolls = cloneDeep(polls);
 
-      if (popPolls.length > 0 && questions.length > 0 && userList.length > 0) {
+      if (popPolls.length > 0 && questions && questions.length > 0 && userList.length > 0) {
         popPolls.forEach(poll => {
           const questionObjects = questions.filter(x => poll.questions.includes(x.id));
           poll.questions = questionObjects;

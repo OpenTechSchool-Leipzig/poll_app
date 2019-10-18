@@ -17,10 +17,10 @@
 </template>
 
 <script>
-import { auth } from '../utility/firebase';
-import FormCard from '../components/basic/FormCard.vue';
-import InputUnit from '../components/basic/InputUnit.vue';
-import DefaultButton from '../components/basic/Buttons/DefaultButton.vue';
+import { auth } from '@/utility/firebase';
+import FormCard from '@/components/basic/FormCard.vue';
+import InputUnit from '@/components/basic/InputUnit.vue';
+import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   components: {
@@ -43,7 +43,11 @@ export default {
         console.log('successfully logged in');
         this.loading = false;
       } catch (error) {
-        console.log(error);
+        this.$store.dispatch('addNotification', {
+          title: 'Error',
+          message: error,
+          type: 'danger',
+        });
         this.loading = false;
       }
     },

@@ -1,26 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 
-admin.initializeApp();
+const setAdminRole = require('./adminRole.js');
+const { copyToActivePoll, removeFromActivePoll } = require('./updateState');
 
-function updateUserDoc(uid) {
-  // somehow I cannot perform any action on the firestore database
-  admin
-    .firestore()
-    .collection('users')
-    .doc(uid)
-    .set({ admin: true }, { merge: true })
-    .then(() => {
-      return {
-        message: 'updated firestore user document',
-      };
-    })
-    .catch(err => {
-      return {
-        error: `firestore: ${err}`,
-      };
-    });
-}
+admin.initializeApp();
 
 exports.addAdminRole = functions.https.onCall((data, context) => {
   if (context.auth.token.admin !== true) {
@@ -28,21 +12,50 @@ exports.addAdminRole = functions.https.onCall((data, context) => {
       error: 'only admins can promote users',
     };
   }
-  console.log(data);
-  return admin
-    .auth()
-    .setCustomUserClaims(data.userId, {
-      admin: true,
-    })
-    .then(() => {
-      updateUserDoc(data.userId);
-      return {
-        message: `User ${data.userId} has been given admin role`,
-      };
-    })
-    .catch(err => {
-      return {
-        error: `Failed to grant user admin role: ${err}`,
-      };
-    });
+  return setAdminRole(admin, data);
+});
+
+exports.updateState = functions.firestore.document('polls/{pollId}').onUpdate((change, context) => {
+  const newValue = change.after.data();
+  const previousValue = change.before.data();
+
+  if (newValue.state === previousValue.state) {
+    return { message: 'nothing to do here' };
+  }
+
+  console.log(
+    'changed state on ' +
+      newValue.title +
+      '   from: ' +
+      previousValue.state +
+      '   to: ' +
+      newValue.state
+  );
+
+  if (newValue.state === 'active') {
+    return copyToActivePoll(admin, newValue, context.params.pollId)
+      .then(res => {
+        console.log('created activePoll with id: ' + context.params.pollId);
+        return res;
+      })
+      .catch(err => {
+        console.error(err);
+        return err;
+      });
+  }
+  // for now I handle state change to draft the same way als to closed
+  // this should be reworked to prevent setting back to draft in the future
+  if (newValue.state === 'closed' || newValue.state === 'draft') {
+    return removeFromActivePoll(admin, context.params.pollId)
+      .then(res => {
+        console.log('removed activePoll with id: ' + context.params.pollId);
+        return res;
+      })
+      .catch(err => {
+        console.error(err);
+        return err;
+      });
+  }
+
+  return { message: 'no action implemented yet' };
 });

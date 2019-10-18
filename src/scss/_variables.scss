@@ -1,8 +1,11 @@
 //colors
 $primary: #42b983;
 $primary-light: #65e7ad;
+$primary-lighter: lighten($primary-light, 10%);
+
 $primary-dark: #103826;
 
 $secondary: #2c3e50;
+$secondary-dark: #045347;
 
 $success: $primary-light;

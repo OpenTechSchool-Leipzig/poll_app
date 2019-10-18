@@ -89,11 +89,7 @@ export default {
   background-color: $primary-dark;
   overflow: hidden;
   &__title {
-    display: flex;
-    justify-content: space-between;
-    background-color: $primary-light;
-    margin: 10px;
-    padding: 20px;
+    @extend .poll-title;
   }
   &__input {
     border: none;
@@ -110,10 +106,12 @@ export default {
       background-color: rgba(yellow, 0.7);
     }
   }
-  &__list {
+  ul {
     list-style: none;
-    margin: 10px 0;
-    padding: 0;
+    padding: 0 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 }
 header {

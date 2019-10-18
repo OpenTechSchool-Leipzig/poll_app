@@ -18,7 +18,9 @@ Of course this is just a proposal, you could add your own ideas too! Same applie
 
 ### Technologies used so far
 
-The Frontend is build in [VueJS](https://vuejs.org/) with VueX and Vue Router. And we're using [Firebase](https://firebase.google.com/) as backend for authentication and storage (firestore). We also included [Bulma](https://bulma.io/) as CSS Framework, but till now only a few components make use of it.
+The Frontend is build in [VueJS](https://vuejs.org/) with VueX and Vue Router. And we're using [Firebase](https://firebase.google.com/) as backend for authentication and storage (firestore). We also included [Bulma](https://bulma.io/) as CSS Framework, but till now only a few components make use of it. A [Demo](https://poll-app.netlify.com) is deployed on Netlify.
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/33f1cef7-49ad-4633-bcb7-0a91b416de63/deploy-status)](https://app.netlify.com/sites/poll-app/deploys)
 
 ## How to Contribute?
 
@@ -89,6 +91,6 @@ Bonus: use the firebase cli to update rules and the cloudfunctions.
 
 ### Issues and Project
 
-Before you contribute, please read through existing issues and also have a look at the [project's kanban board](https://github.com/OpenTechSchool-Leipzig/poll_app/projects/1). If you want to work on an issue, please assign yourself and update the cards progress. If you find a bug or have some ideas for features or imporvements feel free to create your own issue.
+Before you contribute, please read through existing issues and also have a look at the [project's kanban board](https://github.com/OpenTechSchool-Leipzig/poll_app/projects/1). If you want to work on an issue, please comment on it and we will assignments. If you find a bug or have some ideas for features or imporvements feel free to let us know.
 
 Thanks a lot for your contribution! :sparkling_heart:

@@ -29,9 +29,9 @@
 </template>
 
 <script>
-import { auth } from '../utility/firebase';
-import FormCard from '../components/basic/FormCard.vue';
-import InputUnit from '../components/basic/InputUnit.vue';
+import { auth } from '@/utility/firebase';
+import FormCard from '@/components/basic/FormCard.vue';
+import InputUnit from '@/components/basic/InputUnit.vue';
 
 export default {
   components: {

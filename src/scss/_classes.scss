@@ -1,0 +1,30 @@
+.question-input {
+  width: fit-content;
+  padding: 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+  border: 1px solid $grey-light;
+  background-color: $grey-lighter;
+  @include shadow1;
+  &.selected {
+    border-color: $primary;
+    background-color: $primary-lighter;
+  }
+  &.danger {
+    border-color: $danger;
+    background-color: lighten($danger, 20%);
+  }
+}
+
+.poll-title {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  align-items: center;
+  background-color: $primary-light;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 4px;
+  max-width: 1000px;
+  width: 100%;
+}

@@ -1,20 +1,20 @@
 <template>
   <div id="app">
-    <nav-bar></nav-bar>
+    <notifications />
     <router-view />
-    <confirmationModal />
+    <confirmation-modal />
   </div>
 </template>
 
 <script>
 import { auth } from '@/utility/firebase';
-import confirmationModal from './components/basic/ConfirmationModal.vue';
-import NavBar from './components/basic/NavBar.vue';
+import ConfirmationModal from '@/components/basic/ConfirmationModal.vue';
+import Notifications from '@/components/basic/Notifications.vue';
 
 export default {
   components: {
-    confirmationModal,
-    NavBar,
+    ConfirmationModal,
+    Notifications,
   },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut
@@ -29,7 +29,6 @@ export default {
           this.$store.commit('setUser', user);
           // Problem: if a token is stored, the observer gets triggered befor the $route data is there => redirection doesn't work.
           if (this.$route.meta.guest) {
-            console.log('..redirecting');
             this.$router.push({ path: '/' });
           }
         });
@@ -46,5 +45,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  min-height: 100vh;
+  @include background-gradient;
 }
 </style>

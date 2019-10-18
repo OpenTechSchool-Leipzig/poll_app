@@ -1,11 +1,7 @@
 <template>
   <div class="poll">
     <div v-if="isLoading">is loading...</div>
-    <div v-if="!isLoading">
-      <div class="poll__badge poll__badge--warn" v-if="activePoll.state === 'draft'">!DRAFT!</div>
-      <div class="poll__badge poll__badge--danger" v-if="activePoll.state === 'closed'">
-        !CLOSED!
-      </div>
+    <template v-if="!isLoading">
       <header>
         <h2>{{ activePoll.title }}</h2>
         <h4>on {{ activePoll.date }}</h4>
@@ -20,18 +16,27 @@
           :isPreview="false"
         />
       </ul>
-      <button v-if="activePoll.state === 'active'" @click="sendAnswerHandler">Send Answers</button>
-    </div>
+      <DefaultButton
+        v-show="activePoll.state === 'active'"
+        name="Send Answers"
+        @click="sendAnswerHandler"
+        isPrimary
+        :hasConfirmation="!allQuestionsAnswered"
+        confirmationText="You did not answer all questions. Do you really want to send your answers already?"
+      />
+    </template>
   </div>
 </template>
 
 <script>
 import PollQuestion from '@/components/polls/PollQuestion.vue';
+import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'AnswerPoll',
   components: {
     PollQuestion,
+    DefaultButton,
   },
   data() {
     return {
@@ -41,11 +46,13 @@ export default {
     };
   },
   computed: {
-    populatedPolls() {
-      return this.$store.getters.populatedPolls || [];
-    },
     activePoll() {
-      return this.populatedPolls.find(poll => poll.id === this.$route.params.pollId);
+      return this.$store.state.activePoll.activePoll;
+    },
+    allQuestionsAnswered() {
+      return !this.userAnswer.some(x => {
+        return x.answer === null || x.answer === [];
+      });
     },
   },
   methods: {
@@ -58,23 +65,27 @@ export default {
       });
     },
     sendAnswerHandler() {
-      this.userAnswer.forEach(x => {
-        if (!x.answer) return null;
-      });
       console.log('sending answer...');
       this.$store.dispatch('addAnswer', {
         pollId: this.activePoll.id,
         answers: { ...this.userAnswer },
       });
+      this.$router.push({
+        name: 'success',
+        pollId: this.activePoll.id,
+      });
     },
   },
   async mounted() {
-    if (!this.populatedPolls.find(x => x.id === this.$route.params.pollId)) {
-      await this.$store.dispatch('fetchQuestions');
-      await this.$store.dispatch('fetchSinglePoll', this.$route.params.pollId);
+    if (!this.$store.state.activePoll.activePoll) {
+      try {
+        await this.$store.dispatch('fetchActivePoll', this.$route.params.pollId);
+        this.populateAnswers();
+        this.isLoading = false;
+      } catch (err) {
+        this.$router.push({ name: '404' });
+      }
     }
-    this.populateAnswers();
-    this.isLoading = false;
   },
 };
 </script>
@@ -82,10 +93,24 @@ export default {
 <style lang="scss" scoped>
 .poll {
   width: 100%;
-  max-width: 1200px;
   height: 100%;
-  background-color: $primary-dark;
-  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 10px 10px 10px;
+
+  header {
+    @extend .poll-title;
+    h2 {
+      font-size: 1.5rem;
+      display: inline-block;
+    }
+    h4 {
+      font-size: 1.2rem;
+      display: inline-block;
+    }
+  }
+
   &__list {
     list-style: none;
     margin: 10px 0;
@@ -102,8 +127,5 @@ export default {
       border: 2px solid darken($danger, 20%);
     }
   }
-}
-header {
-  @include section-header;
 }
 </style>
