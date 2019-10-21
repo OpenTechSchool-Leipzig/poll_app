@@ -23,7 +23,7 @@ const answerStore = {
     // eslint-disable-next-line no-unused-vars
     async addAnswer({ commit }, { pollId, answers }) {
       try {
-        console.log('id: ' + pollId + 'add Answer: ' + answers);
+        console.log(answers);
         await addToArray('answers', pollId, 'userAnswers', answers);
 
         console.log('answers added');
