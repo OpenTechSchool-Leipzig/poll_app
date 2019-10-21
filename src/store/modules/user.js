@@ -32,8 +32,8 @@ const userStore = {
       await addDataWithId('users', userData.id, userData.info);
     },
     async fetchUsers({ commit }) {
-      const userList = await fetchCollection('users');
       try {
+        const userList = await fetchCollection('users');
         commit('setUserList', userList);
       } catch (err) {
         throw err;

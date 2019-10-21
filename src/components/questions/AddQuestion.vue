@@ -60,6 +60,8 @@
       <input type="text" v-model="newQuestion.options.endValue" />
       <label>Number of Steps</label>
       <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
+      <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
+      <label for="explanation">add textfield for explanation</label>
     </div>
     <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
   </form>
@@ -118,7 +120,6 @@ export default {
             delete value.options.scaleSteps;
             break;
           case 'scale':
-            delete value.options.withText;
             delete value.options.customAnswer;
             delete value.options.isYesNo;
             delete value.options.choices;

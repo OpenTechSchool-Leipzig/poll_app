@@ -36,7 +36,7 @@ export default {
 
 <style lang="scss" scoped>
 .modal {
-  display: flex;
+  display: flex !important;
 }
 
 .modal-enter,

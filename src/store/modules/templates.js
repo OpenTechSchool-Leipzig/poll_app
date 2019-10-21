@@ -49,8 +49,8 @@ const templateStore = {
   },
   actions: {
     async fetchTemplates({ commit }) {
-      const fetchedTemplates = await fetchCollection('templates');
       try {
+        const fetchedTemplates = await fetchCollection('templates');
         commit('updateTemplates', fetchedTemplates);
       } catch (err) {
         throw err;
@@ -62,8 +62,8 @@ const templateStore = {
         createdAt: getTimestamp(Date.now()),
         createdBy: getUserId(),
       };
-      const pollId = await addData('templates', templateData);
       try {
+        const pollId = await addData('templates', templateData);
         templateData.id = pollId;
         commit('pushTemplate', templateData);
       } catch (error) {
@@ -76,16 +76,17 @@ const templateStore = {
         updatedAt: getTimestamp(Date.now()),
         updatedBy: getUserId(),
       };
-      await updateData('templates', template.id, templateData);
       try {
+        await updateData('templates', template.id, templateData);
+
         commit('updateSingleTemplate', templateData);
       } catch (err) {
         console.log(err);
       }
     },
     async deleteTemplate({ commit }, pollId) {
-      await deleteData('templates', pollId);
       try {
+        await deleteData('templates', pollId);
         commit('dropTemplate', pollId);
       } catch {
         console.log('could not delete Data');

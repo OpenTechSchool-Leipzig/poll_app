@@ -54,16 +54,18 @@ const pollStore = {
   },
   actions: {
     async fetchPolls({ commit }) {
-      const fetchedPolls = await fetchCollection('polls');
       try {
+        const fetchedPolls = await fetchCollection('polls');
+
         commit('updatePolls', fetchedPolls);
       } catch (err) {
         throw err;
       }
     },
     async fetchSinglePoll({ commit }, pollId) {
-      const fetchedPoll = await fetchDocument('polls', pollId);
       try {
+        const fetchedPoll = await fetchDocument('polls', pollId);
+
         commit('pushPoll', fetchedPoll);
       } catch (err) {
         throw err;
@@ -75,8 +77,9 @@ const pollStore = {
         createdAt: getTimestamp(Date.now()),
         createdBy: getUserId(),
       };
-      const pollId = await addData('polls', pollData);
       try {
+        const pollId = await addData('polls', pollData);
+
         pollData.id = pollId;
         commit('pushPoll', pollData);
       } catch (error) {
@@ -106,9 +109,8 @@ const pollStore = {
           };
           break;
       }
-
-      await updateData('polls', pollId, { ...activationInfo });
       try {
+        await updateData('polls', pollId, { ...activationInfo });
         const timestamp = getTimestamp(Date.now());
         if (activationInfo.closedAt) {
           activationInfo = { ...activationInfo, closedAt: timestamp };

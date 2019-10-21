@@ -21,13 +21,9 @@
         <div v-if="question.options.customAnswer" class="poll-preview__choice">
           <CustomCheck />
         </div>
-        <TextArea v-if="question.options.withText" />
       </div>
-      <ScaleInput
-        v-if="question.type === 'scale'"
-        :options="question.options"
-        v-model="value[qIndex].answer"
-      />
+      <ScaleInput v-if="question.type === 'scale'" :options="question.options" />
+      <TextArea v-if="question.options.withText" />
     </form>
   </div>
 </template>
