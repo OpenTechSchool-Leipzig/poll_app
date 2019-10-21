@@ -1,5 +1,3 @@
-import Vue from 'vue';
-
 const notificationsStore = {
   state: {
     notifications: [],
@@ -20,23 +18,13 @@ const notificationsStore = {
         return notification.id !== id;
       });
     },
-    fadeNotification: (state, id) => {
-      state.notifications.map(notification => {
-        if (notification.id === id) {
-          Vue.set(notification, 'fade', 'fadeOut');
-        }
-      });
-    },
   },
   actions: {
     addNotification: ({ commit }, notification) => {
       commit('addNotification', notification);
     },
     removeNotification: ({ commit }, notification) => {
-      commit('fadeNotification', notification.id);
-      setTimeout(() => {
-        commit('removeNotification', notification.id);
-      }, 500);
+      commit('removeNotification', notification.id);
     },
   },
   getters: {

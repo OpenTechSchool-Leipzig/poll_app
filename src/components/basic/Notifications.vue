@@ -1,22 +1,24 @@
 <template>
   <div class="notifications">
-    <article
-      v-for="notification in notifications"
-      v-bind:key="notification.id"
-      v-bind:class="['message', `is-${notification.type}`, { 'fade-out': notification.fade }]"
-    >
-      <div class="message-header">
-        <p>{{ notification.title }}</p>
+    <transition name="fadeout">
+      <article
+        v-for="notification in notifications"
+        v-bind:key="notification.id"
+        v-bind:class="['message', `is-${notification.type}`]"
+      >
+        <div class="message-header">
+          <p>{{ notification.title }}</p>
 
-        <button
-          class="delete"
-          aria-label="delete"
-          :disabled="notification.fade"
-          @click="remove(notification)"
-        ></button>
-      </div>
-      <div class="message-body">{{ notification.message }}</div>
-    </article>
+          <button
+            class="delete"
+            aria-label="delete"
+            :disabled="notification.fade"
+            @click="remove(notification)"
+          ></button>
+        </div>
+        <div class="message-body">{{ notification.message }}</div>
+      </article>
+    </transition>
   </div>
 </template>
 
@@ -98,7 +100,7 @@ export default {
   animation-fill-mode: both;
 }
 
-.fade-out {
+.fadeout-leave-active {
   -webkit-animation-name: fadeOut;
   animation-name: fadeOut;
   -webkit-animation-duration: 0.5s;
