@@ -19,7 +19,7 @@ export default {
   },
   computed: {
     inputId() {
-      return this.name.split(' ').join('');
+      return this.name.split(' ').join('') + Math.floor(Math.random() * 999999);
     },
     localValue: {
       get() {
