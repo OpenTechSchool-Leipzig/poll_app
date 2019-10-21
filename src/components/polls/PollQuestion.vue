@@ -35,13 +35,13 @@
         <div v-if="question.options.customAnswer" class="question__choice">
           <CustomCheck v-model="value[qIndex].customAnswer" />
         </div>
-        <TextArea v-if="question.options.withText" v-model="value[qIndex].text" />
       </div>
       <ScaleInput
         v-if="question.type === 'scale'"
         :options="question.options"
         v-model="value[qIndex].answer"
       />
+      <TextArea v-if="question.options.withText" v-model="value[qIndex].text" />
     </form>
   </li>
 </template>
