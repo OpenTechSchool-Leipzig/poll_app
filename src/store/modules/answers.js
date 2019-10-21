@@ -28,7 +28,7 @@ const answerStore = {
 
         console.log('answers added');
       } catch (err) {
-        console.log(err);
+        throw err;
       }
     },
   },

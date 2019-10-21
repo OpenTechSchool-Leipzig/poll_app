@@ -66,14 +66,24 @@ export default {
     },
     sendAnswerHandler() {
       console.log('sending answer...');
-      this.$store.dispatch('addAnswer', {
-        pollId: this.activePoll.id,
-        answers: { ...this.userAnswer },
-      });
-      this.$router.push({
-        name: 'success',
-        pollId: this.activePoll.id,
-      });
+      this.$store
+        .dispatch('addAnswer', {
+          pollId: this.activePoll.id,
+          answers: { ...this.userAnswer },
+        })
+        .then(() => {
+          this.$router.push({
+            name: 'success',
+            pollId: this.activePoll.id,
+          });
+        })
+        .catch(error => {
+          this.$store.dispatch('addNotification', {
+            title: 'Error',
+            message: error,
+            type: 'danger',
+          });
+        });
     },
   },
   async mounted() {
