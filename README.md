@@ -87,7 +87,9 @@ When this setup is finished, type `npm run userlist` and copy the id of the user
 
 Congratulations the setup is finished!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
 
-Bonus: use the firebase cli to update rules and the cloudfunctions.
+<strike>Bonus:</strike> use the firebase cli to update rules and cloudfunctions.
+
+**As we now use cloudfunctions to create the documents which are used on the end-user poll view, you'll need to install the firebase cli, connect it to your project and deploy the provided rules and cloudfunctions using the commands `firebase deploy --only firestore:rules` and `firebase deploy --only functions`.**
 
 ### Issues and Project
 
