@@ -41,7 +41,7 @@
         :options="question.options"
         v-model="value[qIndex].answer"
       />
-      <TextArea v-if="question.options.withText" v-model="value[qIndex].text" />
+      <TextArea v-if="question.options && question.options.withText" v-model="value[qIndex].text" />
     </form>
   </li>
 </template>
