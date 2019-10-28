@@ -1,3 +1,5 @@
 /node_modules
 ServiceAccountKey.json
 ServiceAccountKeyDemo.json
+.env
+/export
