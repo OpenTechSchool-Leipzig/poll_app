@@ -1,16 +1,4 @@
-//const admin = require('firebase-admin');
-//const serviceAccount = require('./ServiceAccountKey.json');
 const fs = require('fs');
-require('dotenv').config();
-/* try {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: process.env.FIREBASE_DB_URL,
-  });
-} catch (err) {
-  throw err;
-} */
-
 const admin = require('./initFirebase')();
 
 if (process.argv.length !== 3) {

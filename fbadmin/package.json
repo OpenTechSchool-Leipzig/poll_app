@@ -4,9 +4,9 @@
   "description": "serverside admin SDK for firebase",
   "main": "index.js",
   "scripts": {
-    "promote": "node promote.js",
-    "userlist": "node userList.js",
-    "export": "node exportAnswers.js"
+    "promote": "node ./scripts/promote.js",
+    "userlist": "node ./scripts/userList.js",
+    "export": "node ./scripts/exportAnswers.js"
   },
   "author": "Markus",
   "license": "ISC",
