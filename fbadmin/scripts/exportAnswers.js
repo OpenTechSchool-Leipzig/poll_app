@@ -30,7 +30,6 @@ async function exportAnswers() {
           Object.values(answerSet).map(answer => populateQuestionName(answer, questionsData))
         ),
       };
-      console.log(populatedData);
       const dataString = JSON.stringify(populatedData);
       fs.writeFile(`./export/answers_${pollId}.json`, dataString, 'utf8', err => {
         if (err) {
