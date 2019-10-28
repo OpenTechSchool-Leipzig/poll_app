@@ -82,6 +82,8 @@ To make your new user an admin you also have to set up the firebaseAdmin SDK. Th
 In your terminal, navigate to the fbadmin folder `cd fbadmin` and run `npm install`. To use the admin SDK you'll have to add the Service Accounts Private Key.
 Again go to your Firebase Project Page and navigate to settings > service account and click on "Generate new private key". Copy or move the file to the fbadmin folder and rename it to `ServiceAccountKey.json`.
 The Filename is included in the .gitignore file, but you should make sure to never expose it to public repositories, because it will allow full controll to your firebase project!
+Additionally you need to set up an .env file in the fbadmin folder with this following line
+`FIREBASE_DB_URL = 'your databaseURL'` this database URL is the same as allready stored in your .env.local file.
 
 When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promote <userID>`, where you replace `<userID>` with the copied ID.
 

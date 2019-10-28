@@ -3,6 +3,8 @@
 This is the node.js based firebase admin SDK for the OTS-Poll app.
 
 to use it, you'll have to store your projects Admin SDK under the name ServiceAccountKey.json inside the fbadmin folder. But do not store it to a public repositiory!
+Additionally you need to set up an .env file with this following line
+`FIREBASE_DB_URL = 'your Firebase DB URL'`
 
 ## Scripts
 
