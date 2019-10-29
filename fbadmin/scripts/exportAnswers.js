@@ -31,6 +31,9 @@ async function exportAnswers() {
         ),
       };
       const dataString = JSON.stringify(populatedData);
+      if (!fs.existsSync('./export')) {
+        fs.mkdirSync('./export');
+      }
       fs.writeFile(`./export/answers_${pollId}.json`, dataString, 'utf8', err => {
         if (err) {
           console.log('An error occured while writing JSON Object to File.');
