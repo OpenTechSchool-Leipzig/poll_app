@@ -14,7 +14,11 @@ Right now, the Admin SDK supports the following npm / node scripts to read or mo
 
 copy the userId from the firebase console and type: `npm rum promote <userId>` to the console. (make sure you navigated to the \fbadmin folder)
 
-### userList `<details>` | console log of all users
+### userList `<details>` | console logs a list of all users
 
 `npm rum userlist` => short info (id, email, displayName, customClaims)
 `npm rum userlist all` => all user Information
+
+### exportAnswers `<pollId>` | export answers to JSON
+
+`npm run export <pollId>` will create a .json file containing all answers for the given poll. It will be stored in `fbadmin/export`
