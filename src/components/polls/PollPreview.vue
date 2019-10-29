@@ -55,6 +55,7 @@ export default {
     return {
       // state as model for child
       test: [],
+      showDateWarning: false,
     };
   },
   watch: {
