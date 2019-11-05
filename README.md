@@ -22,13 +22,13 @@ The Frontend is build in [VueJS](https://vuejs.org/) with VueX and Vue Router. A
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/33f1cef7-49ad-4633-bcb7-0a91b416de63/deploy-status)](https://app.netlify.com/sites/poll-app/deploys)
 
-## How to Contribute?
+# How to Contribute?
 
-### Prerequisites:
+## Prerequisites:
 
-you need to have node and npm installed on your machine. If you want to work on firebase rules, cloudfunctions or the admin SDK you'll also need the firebase CLI.
+you need to have node and npm installed on your machine. As we use rules and cloudfuction for firebase you should also install the [firebase CLI](https://firebase.google.com/docs/cli).
 
-### Set up the Project
+## Set up the Project
 
 To set up the project you could either ask for access to our firebase project (via OTS Slack Channel) or simply connect the App to your own firebase project.
 The following guide will explain step-by-step how to connect the app to your firebase project and create a first admin user.
@@ -49,7 +49,7 @@ var firebaseConfig = {
   };
 ```
 
-As you can see the storageBucket is missing. To set this up, you first need to create a firestore database. Click on Database and follow the instructions to set it up. Now you can visit your app settings and copy the now complete credentials.
+As you can see the storageBucket is missing. To set this up, you first need to create a firestore database. Click on Database and follow the instructions to set it up. **Make sure to select the test settings for your security rules!** Otherwise you won't be able to create the initial admin user. (You can of course change your rules if you selected the locked option) No worries: we will secure the database at the and of the settup. Now you can visit your app settings and copy the now complete credentials.
 
 To savely store these credentials, create a file that is named `.env.local` in the root folder of the project and add the following lines:
 
@@ -87,11 +87,13 @@ Additionally you need to set up an .env file in the fbadmin folder with this fol
 
 When this setup is finished, type `npm run userlist` and copy the id of the user you want to promote. No you can run `npm run promote <userID>`, where you replace `<userID>` with the copied ID.
 
+4. use the firebase cli to update rules and cloudfunctions.
+
+\*As we now use cloudfunctions to create the documents which are used on the end-user poll view, you'll need to install the firebase cli, connect it to your project and deploy the provided rules and cloudfunctions using the commands:`firebase deploy --only firestore:rules` and `firebase deploy --only functions`.
+
+This will secure the database and enable all functionalty that is based on cloud functions.
+
 Congratulations the setup is finished!:tada: Now you can sign in to the dashboard and are prepared to contribute to the project! :sparkles:
-
-<strike>Bonus:</strike> use the firebase cli to update rules and cloudfunctions.
-
-**As we now use cloudfunctions to create the documents which are used on the end-user poll view, you'll need to install the firebase cli, connect it to your project and deploy the provided rules and cloudfunctions using the commands `firebase deploy --only firestore:rules` and `firebase deploy --only functions`.**
 
 ### Issues and Project
 
