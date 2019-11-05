@@ -142,8 +142,8 @@ export default {
       this.showTemplates = !this.showTemplates;
     },
     async addQuestionHandler(question) {
-      const addedQuestionId = await this.$store.dispatch('addQuestion', question);
       try {
+        const addedQuestionId = await this.$store.dispatch('addQuestion', question);
         //Add new question to current poll
         this.poll.questions.push(addedQuestionId);
         this.closeAddQuestionHandler();
@@ -162,8 +162,8 @@ export default {
         errorMsg = 'Please add at least one question';
       } else {
         pollData.state = 'draft';
-        this.$store.dispatch('addPoll', pollData);
         try {
+          await this.$store.dispatch('addPoll', pollData);
           this.$store.dispatch('addNotification', {
             title: 'Success',
             message: 'Successfully saved Poll "' + pollData.title + '"',
@@ -195,8 +195,8 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.questions) {
-        this.$store.dispatch('addTemplate', pollData);
         try {
+          await this.$store.dispatch('addTemplate', pollData);
           console.log('success: saved Template "' + pollData.title + '"');
         } catch (error) {
           this.$store.dispatch('addNotification', {
@@ -217,8 +217,8 @@ export default {
     },
     async updateTemplateHandler() {
       //check if changes are made
-      await this.$store.dispatch('editTemplate', this.poll);
       try {
+        await this.$store.dispatch('editTemplate', this.poll);
         console.log('success: update Template "' + this.poll.title + '"');
       } catch (error) {
         console.log(error);

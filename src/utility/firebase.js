@@ -26,16 +26,16 @@ export const getUserId = () => {
 // get collection
 export async function fetchCollection(collection) {
   const fetchedData = [];
-  const snapshot = await firebase
-    .firestore()
-    .collection(collection)
-    .get();
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    data.id = doc.id;
-    fetchedData.push(data);
-  });
   try {
+    const snapshot = await firebase
+      .firestore()
+      .collection(collection)
+      .get();
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      data.id = doc.id;
+      fetchedData.push(data);
+    });
     return fetchedData;
   } catch (err) {
     throw err;
@@ -66,11 +66,11 @@ export async function fetchDocument(collection, document) {
 export async function addData(collection, payload) {
   // override local timestamp
 
-  const res = await firebase
-    .firestore()
-    .collection(collection)
-    .add({ ...payload, createdAt: serverTimestamp });
   try {
+    const res = await firebase
+      .firestore()
+      .collection(collection)
+      .add({ ...payload, createdAt: serverTimestamp });
     return res.id;
   } catch (err) {
     throw err;
@@ -81,12 +81,12 @@ export async function addData(collection, payload) {
 export async function updateData(collection, document, payload) {
   // const timestamp = firebase.firestore.FieldValue.serverTimestamp();
   // const userId = firebase.auth().currentUser.uid;
-  await firebase
-    .firestore()
-    .collection(collection)
-    .doc(document)
-    .update({ ...payload, updatedAt: serverTimestamp });
   try {
+    await firebase
+      .firestore()
+      .collection(collection)
+      .doc(document)
+      .update({ ...payload, updatedAt: serverTimestamp });
     console.log('Successfully updated: ' + payload.title);
   } catch (err) {
     throw err;
@@ -95,12 +95,12 @@ export async function updateData(collection, document, payload) {
 
 // Remove Data from collection
 export async function deleteData(collection, id) {
-  await firebase
-    .firestore()
-    .collection(collection)
-    .doc(id)
-    .delete();
   try {
+    await firebase
+      .firestore()
+      .collection(collection)
+      .doc(id)
+      .delete();
     console.log('deleted Poll');
   } catch (err) {
     console.log(err);
@@ -109,18 +109,18 @@ export async function deleteData(collection, id) {
 // Add Data to Array and create new document if not allready existing
 export async function addToArray(collection, id, array, value) {
   // as it is only used for user input the timestamp doesn't need to be set in the vuex store
-  await firebase
-    .firestore()
-    .collection(collection)
-    .doc(id)
-    .set(
-      {
-        [array]: firebase.firestore.FieldValue.arrayUnion(value),
-        updatedAt: serverTimestamp,
-      },
-      { merge: true }
-    );
   try {
+    await firebase
+      .firestore()
+      .collection(collection)
+      .doc(id)
+      .set(
+        {
+          [array]: firebase.firestore.FieldValue.arrayUnion(value),
+          updatedAt: serverTimestamp,
+        },
+        { merge: true }
+      );
     console.log('added ' + value + ' to array:' + array);
   } catch (err) {
     console.log(err);
@@ -129,12 +129,12 @@ export async function addToArray(collection, id, array, value) {
 
 export async function addDataWithId(collection, document, payload) {
   // as it is only used for user creation the timestamp doesn't need to be set in the vuex store
-  await firebase
-    .firestore()
-    .collection(collection)
-    .doc(document)
-    .set({ ...payload, createdAt: serverTimestamp });
   try {
+    await firebase
+      .firestore()
+      .collection(collection)
+      .doc(document)
+      .set({ ...payload, createdAt: serverTimestamp });
     console.log('added to ' + collection + ' with id: ' + document);
   } catch (err) {
     throw err;
