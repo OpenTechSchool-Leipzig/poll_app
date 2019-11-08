@@ -135,14 +135,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  background-color: $primary-dark;
-}
-header {
-  @include section-header;
-}
 ul {
   list-style: none;
   margin: 5px 0 10px;

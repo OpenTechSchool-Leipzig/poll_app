@@ -1,5 +1,5 @@
 <template>
-  <div class="poll-preview">
+  <div class="container">
     <header>
       <h2>Poll Preview</h2>
     </header>
@@ -115,11 +115,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.poll-preview {
-  width: 100%;
+.container {
   height: 100%;
-  background-color: $primary-dark;
   overflow: hidden;
+}
+.poll-preview {
   &__title {
     @extend .poll-title;
   }
@@ -145,9 +145,6 @@ export default {
     flex-direction: column;
     align-items: center;
   }
-}
-header {
-  @include section-header;
 }
 .date-wrapper {
   display: flex;

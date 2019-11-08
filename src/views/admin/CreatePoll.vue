@@ -254,9 +254,7 @@ export default {
 .col-right {
   width: 64%;
 }
-header {
-  @include section-header;
-}
+
 .q-button {
   &__wrapper {
     width: 100%;

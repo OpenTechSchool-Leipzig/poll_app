@@ -1,15 +1,19 @@
 <template>
-  <div>
-    <h2>Your Team:</h2>
+  <div class="container">
+    <header>
+      <h2>Your Team</h2>
+    </header>
     <ul>
-      <li
-        class="box"
-        v-for="user in users"
-        :key="user.id"
-        @click="promoteUser(user.id, !!user.admin)"
-      >
+      <li class="box" v-for="user in users" :key="user.id">
         <div>user: {{ user.name }} email: {{ user.email }}</div>
         <div v-if="user.admin" class="tag is-primary">admin</div>
+        <DefaultButton
+          name="promote"
+          v-if="!user.admin"
+          hasConfirmation
+          isDanger
+          @click="promoteUser(user.id, !!user.admin)"
+        />
       </li>
     </ul>
   </div>
@@ -17,10 +21,14 @@
 
 <script>
 import { functions } from '../../utility/firebase';
+import DefaultButton from '../basic/Buttons/DefaultButton.vue';
 
 export default {
   props: {
     users: Array,
+  },
+  components: {
+    DefaultButton,
   },
   methods: {
     promoteUser(userId, isAdmin) {
@@ -39,5 +47,11 @@ export default {
 <style lang="scss" scoped>
 .box {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+ul {
+  padding: 0.75rem;
 }
 </style>

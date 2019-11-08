@@ -177,9 +177,6 @@ form {
   justify-content: flex-start;
   align-items: center;
 }
-header {
-  @include section-header;
-}
 input,
 select {
   padding: 0.5rem;

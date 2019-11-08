@@ -28,3 +28,26 @@
   max-width: 1000px;
   width: 100%;
 }
+
+//header
+.container {
+  width: 100%;
+  background-color: $primary-dark;
+  padding-bottom: 1px;
+  @include main-radius;
+  margin-bottom: 0.75rem;
+
+  header {
+    width: 100%;
+    padding: 10px 0;
+    margin: 0;
+    background-color: $primary;
+    @include shadow1;
+    @include top-radius;
+    h2 {
+      margin: 0 auto;
+      font-size: 1.75rem;
+      text-decoration: underline;
+    }
+  }
+}
