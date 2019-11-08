@@ -77,14 +77,15 @@ export default {
       // this is neccassary because I require an valid uid for creation requests
       const unsubscribe = auth.onAuthStateChanged(user => {
         if (user) {
-          this.$store.dispatch('createUser', {
-            id: user.uid,
-            info: {
-              email: this.email,
-              name: this.name,
-            },
-          });
-          unsubscribe();
+          this.$store
+            .dispatch('createUser', {
+              id: user.uid,
+              info: {
+                email: this.email,
+                name: this.name,
+              },
+            })
+            .then(unsubscribe());
         } else {
           console.error("couldn't update Userdata");
         }

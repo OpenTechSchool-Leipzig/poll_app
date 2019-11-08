@@ -19,7 +19,10 @@
           type="date"
           v-model="value.date"
         />
-        <div v-if="showDateWarning" class="warning-text">Date can't be in past</div>
+        <div v-if="showDateWarning" class="notification is-warning">
+          <button class="delete" @click.prevent="showDateWarning = false"></button>
+          Your selected date lies in the past
+        </div>
       </div>
     </form>
 
@@ -70,7 +73,6 @@ export default {
           this.showDateWarning = false;
         } else if (val && val.date) {
           this.showDateWarning = true;
-          delete this.value.date;
         }
         this.$emit('input', this.value);
       },
@@ -129,7 +131,7 @@ export default {
     font-size: 1.17em;
     color: #2c3e50;
     &--title {
-      width: 70%;
+      flex: 1 0 65%;
     }
     &--date {
       text-align: right;
@@ -147,11 +149,13 @@ export default {
   }
 }
 .date-wrapper {
+  flex: 0 0 30%;
   display: flex;
   flex-direction: column;
+  position: relative;
 }
-.warning-text {
-  font-size: 14px;
-  color: red;
+.notification {
+  position: absolute;
+  top: 100%;
 }
 </style>
