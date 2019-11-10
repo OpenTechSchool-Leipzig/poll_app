@@ -1,8 +1,5 @@
 <template>
-  <div class="container">
-    <header>
-      <h2>Your Team</h2>
-    </header>
+  <SectionContainer title="Your Team">
     <ul>
       <li class="box" v-for="user in users" :key="user.id">
         <div>user: {{ user.name }} email: {{ user.email }}</div>
@@ -16,19 +13,15 @@
         />
       </li>
     </ul>
-  </div>
+  </SectionContainer>
 </template>
 
 <script>
 import { functions } from '../../utility/firebase';
-import DefaultButton from '../basic/Buttons/DefaultButton.vue';
 
 export default {
   props: {
     users: Array,
-  },
-  components: {
-    DefaultButton,
   },
   methods: {
     promoteUser(userId, isAdmin) {
@@ -49,9 +42,8 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 0.75rem;
-}
-ul {
-  padding: 0.75rem;
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
 }
 </style>

@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <header>
-      <h2>{{ title }}</h2>
-    </header>
-    <ListFilterBar :value="filters" searchTarget="Poll Title" />
+  <SectionContainer :title="title">
+    <template slot="filter">
+      <ListFilterBar :value="filters" searchTarget="Poll Title" />
+    </template>
+
     <ul>
       <li v-for="poll in filteredPolls" class="poll" :key="poll.id">
         <div class="poll__short" :class="{ expanded: expanded.includes(poll.id) }">
@@ -36,16 +36,14 @@
         </ul>
       </li>
     </ul>
-  </div>
+    <template slot="controls" v-if="hasBackButton">
+      <DefaultButton name="Go Back" isDanger @click="$emit('navBack')" />
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
-// This Component should work for Lists of Polls and Templates
-// A better solution for the button part might be using <slot></slot>
-
 import QuestionListItem from '../questions/QuestionListItem.vue';
-import ListFilterBar from '../basic/ListFilterBar.vue';
-import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   data: function() {
@@ -59,13 +57,12 @@ export default {
   },
   components: {
     QuestionListItem,
-    ListFilterBar,
-    IconButton,
   },
   props: {
     title: String,
     polls: Array,
     buttons: Array,
+    hasBackButton: Boolean,
   },
   computed: {
     filteredPolls() {

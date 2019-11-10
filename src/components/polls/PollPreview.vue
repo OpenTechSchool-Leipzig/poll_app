@@ -1,9 +1,5 @@
 <template>
-  <div class="container">
-    <header>
-      <h2>Poll Preview</h2>
-    </header>
-
+  <SectionContainer title="Poll Preview">
     <form class="poll-preview__title">
       <input
         class="poll-preview__input poll-preview__input--title"
@@ -26,7 +22,7 @@
       </div>
     </form>
 
-    <slot></slot>
+    <slot name="default"></slot>
 
     <transition-group tag="ul">
       <PollQuestion
@@ -39,7 +35,11 @@
         @removeQuestion="forwardRemoveEmit"
       />
     </transition-group>
-  </div>
+
+    <template slot="controls">
+      <slot name="controls"></slot>
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
