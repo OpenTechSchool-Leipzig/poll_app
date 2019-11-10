@@ -1,9 +1,5 @@
 <template>
-  <div class="poll-preview">
-    <header>
-      <h2>Poll Preview</h2>
-    </header>
-
+  <SectionContainer title="Poll Preview" isFullHeight>
     <form class="poll-preview__title">
       <input
         class="poll-preview__input poll-preview__input--title"
@@ -12,15 +8,21 @@
         v-model="value.title"
         placeholder="Poll Title"
       />
-      <input
-        class="poll-preview__input poll-preview__input--date"
-        :class="{ 'poll-preview__input--highlight': isTemplateLoaded }"
-        type="date"
-        v-model="value.date"
-      />
+      <div class="date-wrapper">
+        <input
+          class="poll-preview__input poll-preview__input--date"
+          :class="{ 'poll-preview__input--highlight': isTemplateLoaded }"
+          type="date"
+          v-model="value.date"
+        />
+        <div v-if="showDateWarning" class="notification is-warning">
+          <button class="delete" @click.prevent="showDateWarning = false"></button>
+          Your selected date lies in the past
+        </div>
+      </div>
     </form>
 
-    <slot></slot>
+    <slot name="default"></slot>
 
     <transition-group tag="ul">
       <PollQuestion
@@ -33,7 +35,11 @@
         @removeQuestion="forwardRemoveEmit"
       />
     </transition-group>
-  </div>
+
+    <template slot="controls">
+      <slot name="controls"></slot>
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
@@ -52,14 +58,24 @@ export default {
     return {
       // state as model for child
       test: [],
+      showDateWarning: false,
     };
   },
   watch: {
     questions() {
       this.populateAnswers();
     },
-    value() {
-      this.$emit('input', this.value);
+    value: {
+      deep: true,
+      handler: function(val) {
+        // validate date
+        if (val && val.date && this.isValidDate(val.date)) {
+          this.showDateWarning = false;
+        } else if (val && val.date) {
+          this.showDateWarning = true;
+        }
+        this.$emit('input', this.value);
+      },
     },
   },
   methods: {
@@ -78,16 +94,30 @@ export default {
       // in vuex-Store, which would also allow to load templates or poll from the pollOverview Page
       this.$emit('removeQuestion', id);
     },
+    isValidDate(val) {
+      let selected = new Date(val)
+        .toISOString()
+        .substring(0, 10)
+        .split('-');
+      let today = new Date()
+        .toISOString()
+        .substring(0, 10)
+        .split('-');
+      if (selected[0] < today[0]) {
+        return false; // previous year
+      } else if (selected[0] === today[0] && selected[1] < today[1]) {
+        return false; // same year previous month
+      } else if (selected[0] === today[0] && selected[1] === today[1] && selected[2] < today[2]) {
+        return false; // same year and month earlier day
+      }
+      return true;
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
 .poll-preview {
-  width: 100%;
-  height: 100%;
-  background-color: $primary-dark;
-  overflow: hidden;
   &__title {
     @extend .poll-title;
   }
@@ -97,7 +127,7 @@ export default {
     font-size: 1.17em;
     color: #2c3e50;
     &--title {
-      width: 70%;
+      flex: 1 0 65%;
     }
     &--date {
       text-align: right;
@@ -106,15 +136,21 @@ export default {
       background-color: rgba(yellow, 0.7);
     }
   }
-  ul {
-    list-style: none;
-    padding: 0 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
 }
-header {
-  @include section-header;
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.date-wrapper {
+  flex: 0 0 30%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.notification {
+  position: absolute;
+  top: 100%;
 }
 </style>

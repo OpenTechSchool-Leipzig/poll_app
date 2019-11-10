@@ -1,10 +1,4 @@
-const admin = require('firebase-admin');
-const serviceAccount = require('./ServiceAccountKeyDemo.json');
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: 'https://ots-poll.firebaseio.com',
-});
+const admin = require('./initFirebase')();
 
 const details = process.argv[2];
 

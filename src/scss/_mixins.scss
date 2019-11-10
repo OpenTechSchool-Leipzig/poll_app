@@ -13,14 +13,19 @@
   background: linear-gradient(16deg, $primary-dark 0%, $primary 100%);
 }
 
-//header
-@mixin section-header {
-  width: 100%;
-  padding: 10px 0; //create variables for padding vlaues and border radius
-  margin: 0;
-  background-color: $primary;
-  @include shadow1;
-  h2 {
-    margin: 0 auto;
-  }
+//radius
+@mixin top-radius {
+  border-top-left-radius: $radius-main;
+  border-top-right-radius: $radius-main;
 }
+
+@mixin bottom-radius {
+  border-top-left-radius: $radius-main;
+  border-top-right-radius: $radius-main;
+}
+
+@mixin main-radius {
+  border-radius: $radius-main;
+}
+
+

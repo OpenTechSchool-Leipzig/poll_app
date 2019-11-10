@@ -3,6 +3,9 @@ service cloud.firestore {
     match /{document=**} {
       allow read, write: if request.auth.uid != null && request.auth.token.admin == true;
     }
+    match /{collectionName}/{documentId} {
+      allow create: if collectionName == "users" && request.auth.uid != null;
+    }
     match /users/{userId} {
       allow read, update, delete: if request.auth.uid == userId;
       allow create: if request.auth.uid != null;
@@ -13,7 +16,7 @@ service cloud.firestore {
     }
     match /answers/{document=**} {
       allow read, delete: if request.auth.uid != null && request.auth.token.admin == true;
-      allow write, update: if true;
+      allow create, update: if true;
     }
   }
 }

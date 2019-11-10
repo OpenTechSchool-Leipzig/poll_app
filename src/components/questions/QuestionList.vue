@@ -1,9 +1,8 @@
 <template>
-  <div class="container">
-    <header>
-      <h2>Question List</h2>
-    </header>
-    <ListFilterBar v-model="filters" searchTarget="Question Text" />
+  <SectionContainer title="Question List" isFullHeight>
+    <template slot="filter">
+      <ListFilterBar v-model="filters" searchTarget="Question Text" />
+    </template>
     <transition-group tag="ul">
       <QuestionListItem
         v-for="question in sortList(filteredQuestions)"
@@ -12,12 +11,15 @@
         @selectQuestion="forwardAddEmit"
       />
     </transition-group>
-  </div>
+
+    <template slot="controls">
+      <DefaultButton :name="'New Question'" :isPrimary="true" @click="$emit('addQuestion')" />
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
 import QuestionListItem from './QuestionListItem.vue';
-import ListFilterBar from '../basic/ListFilterBar.vue';
 import { sortAphabetical, sortTimestamp } from '../../utility/sortLists';
 
 export default {
@@ -32,7 +34,6 @@ export default {
   },
   components: {
     QuestionListItem,
-    ListFilterBar,
   },
   props: {
     questions: Array,
@@ -95,15 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  height: 100%;
-  background-color: $primary-dark;
-  overflow: hidden;
-}
-header {
-  @include section-header;
-}
 ul {
   list-style: none;
   margin: 5px 0 10px;

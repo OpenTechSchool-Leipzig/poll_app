@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <div class="col-left">
+  <div class="columns">
+    <div class="column is-one-third">
       <AddQuestion
         v-show="showAddQuestion"
         @addQuestion="addQuestionHandler"
@@ -12,17 +12,17 @@
         :questions="storedQuestions"
         :selectedQuestions="poll.questions"
         @selectQuestion="selectQuestionHandler"
+        @addQuestion="showAddQuestion = true"
       />
-      <div v-show="!showAddQuestion" class="q-button__wrapper">
-        <DefaultButton :name="'New Question'" :isPrimary="true" @click="showAddQuestion = true" />
-      </div>
     </div>
-    <div class="col-right">
+    <div class="column">
       <PollList
         v-show="showTemplates"
         :title="'Templates'"
         :polls="storedTemplates"
         :buttons="['select Template']"
+        hasBackButton
+        @navBack="toggleTemplateList"
         @selectTemplate="loadTemplateHandler"
       />
 
@@ -30,46 +30,45 @@
         v-show="!showTemplates"
         v-model="poll"
         :questions="selectedQuestions"
-        :isPreview="true"
+        isPreview
         :isTemplateLoaded="isTemplateLoaded"
         @removeQuestion="removeQuestionHandler"
       >
         <QuestionPreview v-show="newQuestion" :question="newQuestion" />
+        <template slot="controls">
+          <DefaultButton
+            v-tooltip="'Save your new Poll'"
+            v-show="poll.questions.length > 1"
+            name="Create Poll"
+            @click="createPollHandler"
+            isPrimary
+          />
+          <DefaultButton
+            v-tooltip="'Save your new Poll as a Template'"
+            v-show="poll.questions.length > 1"
+            name="Save New Template"
+            @click="createTemplateHandler"
+            isPrimary
+          />
+          <DefaultButton
+            v-tooltip="'load existing Template'"
+            v-show="!isTemplateLoaded"
+            name="Load Template"
+            @click="toggleTemplateList"
+            isPrimary
+          />
+
+          <DefaultButton
+            v-tooltip="'This will override the existing Template'"
+            v-show="isTemplateLoaded"
+            name="Update Template"
+            @click="updateTemplateHandler"
+            isDanger
+            hasConfirmation
+            confirmationText="This will override the existing Template"
+          />
+        </template>
       </PollPreview>
-
-      <div class="q-button__wrapper">
-        <DefaultButton
-          v-tooltip="'Save your new Poll'"
-          v-show="poll.questions.length > 1"
-          name="Create Poll"
-          @click="createPollHandler"
-          isPrimary
-        />
-        <DefaultButton
-          v-tooltip="'Save your new Poll as a Template'"
-          v-show="poll.questions.length > 1"
-          name="Save New Template"
-          @click="createTemplateHandler"
-          isPrimary
-        />
-        <DefaultButton
-          v-tooltip="'load existing Template'"
-          v-show="!isTemplateLoaded"
-          name="Load Template"
-          @click="toggleTemplateList"
-          isPrimary
-        />
-
-        <DefaultButton
-          v-tooltip="'This will override the existing Template'"
-          v-show="isTemplateLoaded"
-          name="Update Template"
-          @click="updateTemplateHandler"
-          isDanger
-          hasConfirmation
-          confirmationText="This will override the existing Template"
-        />
-      </div>
     </div>
   </div>
 </template>
@@ -80,7 +79,6 @@ import QuestionList from '@/components/questions/QuestionList.vue';
 import PollPreview from '@/components/polls/PollPreview.vue';
 import PollList from '@/components/polls/PollList.vue';
 import QuestionPreview from '@/components/questions/QuestionPreview.vue';
-import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'createPoll',
@@ -90,7 +88,6 @@ export default {
     PollPreview,
     PollList,
     QuestionPreview,
-    DefaultButton,
   },
   data: function() {
     return {
@@ -142,8 +139,8 @@ export default {
       this.showTemplates = !this.showTemplates;
     },
     async addQuestionHandler(question) {
-      const addedQuestionId = await this.$store.dispatch('addQuestion', question);
       try {
+        const addedQuestionId = await this.$store.dispatch('addQuestion', question);
         //Add new question to current poll
         this.poll.questions.push(addedQuestionId);
         this.closeAddQuestionHandler();
@@ -162,8 +159,8 @@ export default {
         errorMsg = 'Please add at least one question';
       } else {
         pollData.state = 'draft';
-        this.$store.dispatch('addPoll', pollData);
         try {
+          await this.$store.dispatch('addPoll', pollData);
           this.$store.dispatch('addNotification', {
             title: 'Success',
             message: 'Successfully saved Poll "' + pollData.title + '"',
@@ -195,8 +192,8 @@ export default {
       //replace console logs with notifications
       const pollData = this.poll;
       if (pollData.title && pollData.questions) {
-        this.$store.dispatch('addTemplate', pollData);
         try {
+          await this.$store.dispatch('addTemplate', pollData);
           console.log('success: saved Template "' + pollData.title + '"');
         } catch (error) {
           this.$store.dispatch('addNotification', {
@@ -217,8 +214,8 @@ export default {
     },
     async updateTemplateHandler() {
       //check if changes are made
-      await this.$store.dispatch('editTemplate', this.poll);
       try {
+        await this.$store.dispatch('editTemplate', this.poll);
         console.log('success: update Template "' + this.poll.title + '"');
       } catch (error) {
         console.log(error);
@@ -240,23 +237,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
-  width: 100%;
-  display: flex;
-  justify-content: space-evenly;
+.columns {
+  margin: 0;
 }
-.col-left {
-  width: 33%;
-  min-width: 250px;
-  max-width: 400px;
-  min-height: calc(100vh - 40px);
-}
-.col-right {
-  width: 64%;
-}
-header {
-  @include section-header;
-}
+
 .q-button {
   &__wrapper {
     width: 100%;

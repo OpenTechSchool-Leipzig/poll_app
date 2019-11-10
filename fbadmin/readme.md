@@ -3,6 +3,8 @@
 This is the node.js based firebase admin SDK for the OTS-Poll app.
 
 to use it, you'll have to store your projects Admin SDK under the name ServiceAccountKey.json inside the fbadmin folder. But do not store it to a public repositiory!
+Additionally you need to set up an .env file with this following line
+`FIREBASE_DB_URL = 'your Firebase DB URL'`
 
 ## Scripts
 
@@ -12,7 +14,11 @@ Right now, the Admin SDK supports the following npm / node scripts to read or mo
 
 copy the userId from the firebase console and type: `npm rum promote <userId>` to the console. (make sure you navigated to the \fbadmin folder)
 
-### userList `<details>` | console log of all users
+### userList `<details>` | console logs a list of all users
 
 `npm rum userlist` => short info (id, email, displayName, customClaims)
 `npm rum userlist all` => all user Information
+
+### exportAnswers `<pollId>` | export answers to JSON
+
+`npm run export <pollId>` will create a .json file containing all answers for the given poll. It will be stored in `fbadmin/export`

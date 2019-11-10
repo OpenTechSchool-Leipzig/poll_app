@@ -1,10 +1,16 @@
 <template>
-  <div>
-    <h2>Your Team:</h2>
+  <SectionContainer title="Your Team">
     <ul>
       <li class="box" v-for="user in users" :key="user.id">
         <div>user: {{ user.name }} email: {{ user.email }}</div>
         <div v-if="user.admin" class="tag is-primary">admin</div>
+        <DefaultButton
+          name="promote"
+          v-if="!user.admin"
+          hasConfirmation
+          isDanger
+          @click="promoteUser(user.id, !!user.admin)"
+        />
       </li>
       <li class="box has-background-primary">
         <p>
@@ -23,7 +29,7 @@
         Cloudfunctions for promoting Users are disabled in this demo
       </li>
     </ul>
-  </div>
+  </SectionContainer>
 </template>
 
 <script>
@@ -37,5 +43,10 @@ export default {
 <style lang="scss" scoped>
 .box {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  &:not(:last-child) {
+    margin-bottom: 0.75rem;
+  }
 }
 </style>

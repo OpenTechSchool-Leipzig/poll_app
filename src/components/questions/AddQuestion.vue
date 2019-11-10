@@ -68,15 +68,8 @@
 </template>
 
 <script>
-import DefaultButton from '../basic/Buttons/DefaultButton.vue';
-import IconButton from '../basic/Buttons/IconButton.vue';
-
 export default {
   name: 'AddQuestion',
-  components: {
-    DefaultButton,
-    IconButton,
-  },
   data: function() {
     return {
       newQuestion: {
@@ -176,9 +169,6 @@ form {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-}
-header {
-  @include section-header;
 }
 input,
 select {

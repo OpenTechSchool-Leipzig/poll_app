@@ -56,15 +56,15 @@ const router = new Router({
             guest: true,
           },
         },
+        {
+          path: '/402',
+          name: '402',
+          component: () => import('./views/static/402.vue'),
+          meta: {
+            auth: true,
+          },
+        },
       ],
-    },
-    {
-      path: '/402',
-      name: '402',
-      component: () => import('./views/static/402.vue'),
-      meta: {
-        auth: true,
-      },
     },
     // dynamic path to poll
     {

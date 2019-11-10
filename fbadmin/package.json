@@ -4,12 +4,14 @@
   "description": "serverside admin SDK for firebase",
   "main": "index.js",
   "scripts": {
-    "promote": "node promote.js",
-    "userlist": "node userList.js"
+    "promote": "node ./scripts/promote.js",
+    "userlist": "node ./scripts/userList.js",
+    "export": "node ./scripts/exportAnswers.js"
   },
   "author": "Markus",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "firebase-admin": "^8.5.0"
   }
 }

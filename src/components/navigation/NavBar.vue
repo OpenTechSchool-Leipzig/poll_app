@@ -55,8 +55,8 @@ export default {
   },
   methods: {
     async logOut() {
-      await auth.signOut();
       try {
+        await auth.signOut();
         console.log('logged user out');
       } catch (err) {
         console.log(err);

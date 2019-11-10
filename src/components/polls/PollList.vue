@@ -1,9 +1,9 @@
 <template>
-  <div class="container">
-    <header>
-      <h2>{{ title }}</h2>
-    </header>
-    <ListFilterBar :value="filters" searchTarget="Poll Title" />
+  <SectionContainer :title="title">
+    <template slot="filter">
+      <ListFilterBar :value="filters" searchTarget="Poll Title" />
+    </template>
+
     <ul>
       <li v-for="poll in filteredPolls" class="poll" :key="poll.id">
         <div class="poll__short" :class="{ expanded: expanded.includes(poll.id) }">
@@ -36,16 +36,14 @@
         </ul>
       </li>
     </ul>
-  </div>
+    <template slot="controls" v-if="hasBackButton">
+      <DefaultButton name="Go Back" isDanger @click="$emit('navBack')" />
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
-// This Component should work for Lists of Polls and Templates
-// A better solution for the button part might be using <slot></slot>
-
 import QuestionListItem from '../questions/QuestionListItem.vue';
-import ListFilterBar from '../basic/ListFilterBar.vue';
-import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   data: function() {
@@ -59,13 +57,12 @@ export default {
   },
   components: {
     QuestionListItem,
-    ListFilterBar,
-    IconButton,
   },
   props: {
     title: String,
     polls: Array,
     buttons: Array,
+    hasBackButton: Boolean,
   },
   computed: {
     filteredPolls() {
@@ -101,26 +98,20 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  width: 100%;
-  background-color: $primary-dark;
-  margin-bottom: 10px;
-}
-header {
-  @include section-header;
-}
 ul {
   list-style: none;
-  margin: 5px 0 10px;
+  margin: 0;
   padding: 0;
 }
 .poll {
   background-color: $primary;
-  width: calc(100% - 12px);
-  margin: auto;
-  margin-bottom: 6px;
   padding-bottom: 6px;
   @include shadow1;
+  @include main-radius;
+
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
 
   &:hover {
     @include shadow2;
@@ -129,8 +120,7 @@ ul {
 
   &__questions {
     background-color: rgba($primary-dark, 0.6);
-    width: calc(100% - 24px);
-    padding-top: 6px;
+    padding: 6px;
     height: 100%;
     margin: auto;
     p {
@@ -138,7 +128,7 @@ ul {
     }
   }
   &__short {
-    width: calc(100% - 24px);
+    @include top-radius;
     background-color: $primary-light;
     display: flex;
     flex-direction: row;
@@ -150,13 +140,14 @@ ul {
       max-width: 80%;
       margin: 0;
       text-align: left;
-      cursor: pointer;
     }
   }
   &__info {
     flex: 1 1 70%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
+    font-size: 1rem;
   }
   &__buttons {
     flex: 1 1 30%;

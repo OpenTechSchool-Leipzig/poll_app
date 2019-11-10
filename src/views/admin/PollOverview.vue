@@ -103,6 +103,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.columns {
+  margin: 0;
+}
 .column {
   flex-direction: column;
 }
