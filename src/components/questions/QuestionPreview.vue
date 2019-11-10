@@ -60,8 +60,7 @@ export default {
 .q-preview {
   background-color: white;
   border: 1px solid $primary;
-  border-radius: 5px;
-  margin: 10px;
+  @include main-radius;
   padding: 20px;
 
   &__title {
@@ -69,6 +68,7 @@ export default {
     border: none;
     background: transparent;
     width: 100%;
+    margin-bottom: 2rem;
   }
   &__choices {
     display: flex;

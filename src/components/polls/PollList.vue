@@ -100,16 +100,18 @@ export default {
 <style lang="scss" scoped>
 ul {
   list-style: none;
-  margin: 5px 0 10px;
+  margin: 0;
   padding: 0;
 }
 .poll {
   background-color: $primary;
-  width: calc(100% - 12px);
-  margin: auto;
-  margin-bottom: 6px;
   padding-bottom: 6px;
   @include shadow1;
+  @include main-radius;
+
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
 
   &:hover {
     @include shadow2;
@@ -118,8 +120,7 @@ ul {
 
   &__questions {
     background-color: rgba($primary-dark, 0.6);
-    width: calc(100% - 24px);
-    padding-top: 6px;
+    padding: 6px;
     height: 100%;
     margin: auto;
     p {
@@ -127,7 +128,7 @@ ul {
     }
   }
   &__short {
-    width: calc(100% - 24px);
+    @include top-radius;
     background-color: $primary-light;
     display: flex;
     flex-direction: row;
@@ -139,13 +140,14 @@ ul {
       max-width: 80%;
       margin: 0;
       text-align: left;
-      cursor: pointer;
     }
   }
   &__info {
     flex: 1 1 70%;
     display: flex;
     justify-content: space-between;
+    cursor: pointer;
+    font-size: 1rem;
   }
   &__buttons {
     flex: 1 1 30%;

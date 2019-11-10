@@ -96,11 +96,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  height: 100%;
-  overflow: hidden;
-}
-
 ul {
   list-style: none;
   margin: 5px 0 10px;

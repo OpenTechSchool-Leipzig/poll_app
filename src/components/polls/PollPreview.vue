@@ -1,5 +1,5 @@
 <template>
-  <SectionContainer title="Poll Preview">
+  <SectionContainer title="Poll Preview" isFullHeight>
     <form class="poll-preview__title">
       <input
         class="poll-preview__input poll-preview__input--title"
@@ -117,10 +117,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
-  height: 100%;
-  overflow: hidden;
-}
 .poll-preview {
   &__title {
     @extend .poll-title;
@@ -140,13 +136,12 @@ export default {
       background-color: rgba(yellow, 0.7);
     }
   }
-  ul {
-    list-style: none;
-    padding: 0 10px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+}
+ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .date-wrapper {
   flex: 0 0 30%;

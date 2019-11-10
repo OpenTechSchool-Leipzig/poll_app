@@ -150,11 +150,14 @@ ul.nested-list {
 }
 .question {
   background-color: $primary-light;
-  width: calc(100% - 12px);
   margin: auto;
-  margin-bottom: 6px;
   @include shadow1;
+  @include main-radius;
   transition: all 0.3s;
+
+  &:not(:last-child) {
+    margin-bottom: 6px;
+  }
 
   &:hover {
     @include shadow2;
@@ -170,7 +173,7 @@ ul.nested-list {
     }
   }
   &__short {
-    width: calc(100% - 24px);
+    @include top-radius;
     display: flex;
     flex-direction: row;
     justify-content: space-between;

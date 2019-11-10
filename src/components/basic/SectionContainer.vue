@@ -26,10 +26,12 @@ export default {
 
 <style lang="scss" scoped>
 .container {
+  @include main-radius;
   width: 100%;
   background-color: $primary-dark;
-  @include main-radius;
   margin-bottom: 0.75rem;
+  display: flex;
+  flex-direction: column;
 
   header {
     width: 100%;
@@ -46,10 +48,12 @@ export default {
   }
   &.full-height {
     height: 100%;
+    overflow: hidden;
   }
 
   .body {
     padding: 0.75rem;
+    flex-grow: 1;
   }
 
   .controls {
