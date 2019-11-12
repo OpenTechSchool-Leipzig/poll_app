@@ -13,7 +13,7 @@ export default {
       return this.name.split(' ').join('');
     },
     checkSelection() {
-      return this.localValue.includes(this.answerValue);
+      return this.value ? this.localValue.includes(this.answerValue) : false;
     },
     localValue: {
       get() {

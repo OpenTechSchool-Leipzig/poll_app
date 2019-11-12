@@ -1,11 +1,4 @@
 <template>
-  <!--
-    ToDo:
-    - create custom input components.
-    - Structure form with bulma ?
-    - replace divs that are only for v-if with templates
-    - make sure everything works fine on mobile devices
-  -->
   <li class="question__container">
     <h3 :class="{ preview: isPreview }">
       {{ question.text }}
