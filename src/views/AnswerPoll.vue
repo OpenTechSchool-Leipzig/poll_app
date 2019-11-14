@@ -49,7 +49,7 @@ export default {
     },
     allQuestionsAnswered() {
       return !this.userAnswer.some(x => {
-        return x.answer === null || x.answer === [];
+        return x.answer === null || x.answer.length === 0;
       });
     },
   },
