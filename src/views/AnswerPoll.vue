@@ -30,13 +30,11 @@
 
 <script>
 import PollQuestion from '@/components/polls/PollQuestion.vue';
-import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'AnswerPoll',
   components: {
     PollQuestion,
-    DefaultButton,
   },
   data() {
     return {

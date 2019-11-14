@@ -31,13 +31,9 @@
 
 <script>
 import { get } from 'lodash';
-import IconButton from '../basic/Buttons/IconButton.vue';
 
 export default {
   name: 'QuestionListItem',
-  components: {
-    IconButton,
-  },
   // giving each item it's own state for handling accordion functionality makes the component way more flexible
   // It might however not be a good practise...
   data: function() {

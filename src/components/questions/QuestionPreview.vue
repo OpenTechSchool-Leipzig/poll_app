@@ -29,7 +29,6 @@
 </template>
 
 <script>
-import IconButton from '../basic/Buttons/IconButton.vue';
 import RadioInput from './questionInputs/RadioInput.vue';
 import CheckBox from './questionInputs/CheckBox.vue';
 import CustomCheck from './questionInputs/CustomCheck.vue';
@@ -38,7 +37,6 @@ import TextArea from './questionInputs/TextArea.vue';
 
 export default {
   components: {
-    IconButton,
     RadioInput,
     CheckBox,
     CustomCheck,

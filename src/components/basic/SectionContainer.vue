@@ -1,5 +1,5 @@
 <template>
-  <div class="container" :class="{ 'full-height': isFullHeight }">
+  <div class="section-container" :class="{ 'full-height': isFullHeight }">
     <header>
       <h2>{{ title }}</h2>
     </header>
@@ -25,7 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.container {
+.section-container {
   @include main-radius;
   width: 100%;
   background-color: $primary-dark;
