@@ -80,6 +80,7 @@ export default {
 
 .notifications {
   position: fixed;
+  pointer-events: none;
   padding: 60px 0;
   width: 100%;
   margin: 0;
