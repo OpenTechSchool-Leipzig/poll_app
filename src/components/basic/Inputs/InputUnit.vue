@@ -16,6 +16,8 @@
             :type="type"
             v-model="localValue"
             :id="inputId"
+            :min="min"
+            :max="max"
           />
         </div>
         <div class="control" v-if="$slots.addon">
@@ -37,6 +39,14 @@ export default {
     name: String,
     validation: String,
     withoutLabel: Boolean,
+    min: {
+      type: String,
+      default: '',
+    },
+    max: {
+      type: String,
+      default: '',
+    },
   },
   computed: {
     inputId() {

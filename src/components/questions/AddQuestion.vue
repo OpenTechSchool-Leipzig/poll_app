@@ -53,8 +53,13 @@
       <div class="form-div" v-if="newQuestion.type === 'scale'">
         <InputUnit v-model="newQuestion.options.startValue" :name="'Start Value'" />
         <InputUnit v-model="newQuestion.options.endValue" :name="'End Value'" />
-        <label>Number of Steps</label>
-        <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
+        <InputUnit
+          v-model="newQuestion.options.scaleSteps"
+          :name="'Number of Steps'"
+          type="number"
+          min="3"
+          max="9"
+        />
         <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
         <label for="explanation">add textfield for explanation</label>
       </div>

@@ -2,7 +2,7 @@
   <div class="wrapper">
     <ul class="scale" :class="{ selected: localValue }">
       <li>{{ options.startValue }}</li>
-      <li>
+      <li v-if="options.scaleSteps > 0">
         <input
           type="radio"
           :value="n"
