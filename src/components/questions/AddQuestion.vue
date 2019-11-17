@@ -31,8 +31,11 @@
           </div>
         </div>
         <div v-if="!newQuestion.options.isYesNo" class="form-input">
-          <input type="choices" v-model="answerInput" />
-          <IconButton @click="addChoice" name="add answer" />
+          <InputUnit name="Answer Options">
+            <template slot="addon">
+              <IconButton @click="addChoice" name="add answer" isAddon isPrimary />
+            </template>
+          </InputUnit>
         </div>
         <ul class="choice-list">
           <li

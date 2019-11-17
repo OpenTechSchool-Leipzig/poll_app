@@ -1,14 +1,27 @@
 <template>
   <div class="field">
-    <label class="label" :for="inputId">{{ name }}</label>
+    <label v-if="!withoutLabel" class="label" :for="inputId">{{ name }}</label>
     <div class="control">
-      <input
-        class="input"
-        :class="validationClass"
-        :type="type"
-        v-model="localValue"
-        :id="inputId"
-      />
+      <div class="field" :class="{ 'has-addons': $slots.addon }">
+        <div
+          class="control"
+          :class="{ 'has-icons-left': $slots.default, 'is-expanded': $slots.addon }"
+        >
+          <span v-if="$slots.default" class="icon is-small is-left">
+            <slot></slot>
+          </span>
+          <input
+            class="input"
+            :class="{ validationClass }"
+            :type="type"
+            v-model="localValue"
+            :id="inputId"
+          />
+        </div>
+        <div class="control" v-if="$slots.addon">
+          <slot name="addon"></slot>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,10 +36,11 @@ export default {
     value: [String, Number],
     name: String,
     validation: String,
+    withoutLabel: Boolean,
   },
   computed: {
     inputId() {
-      return this.name.split(' ').join('');
+      return this.name.split(' ').join('') + Math.floor(Math.random() * 999999);
     },
     validationClass() {
       return {

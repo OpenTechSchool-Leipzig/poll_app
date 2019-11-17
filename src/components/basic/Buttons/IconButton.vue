@@ -1,10 +1,11 @@
 <template>
   <button
-    class="button is-outlined is-small is-primary"
+    class="button  is-primary"
     :class="{
       'is-loading': isLoading,
       'is-inverted': !isPrimary && !(isDanger || hasDangerIcon),
       'is-danger': isDanger || hasDangerIcon,
+      'is-outlined is-small': !isAddon,
     }"
     :disabled="isDisabled"
     @click.prevent="checkEmit"

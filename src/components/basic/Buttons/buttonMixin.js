@@ -39,6 +39,10 @@ const buttonMixin = {
       required: false,
       default: 'Are you sure?',
     },
+    isAddon: {
+      type: Boolean,
+      default: false,
+    },
   },
   methods: {
     emitEvent() {

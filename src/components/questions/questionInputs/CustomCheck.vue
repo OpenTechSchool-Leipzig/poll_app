@@ -1,6 +1,6 @@
 <template>
-  <label class="checkbox" for="custom-answer" :class="{ selected: value }">
-    <input @click.prevent id="custom-answer" :checked="localValue" type="checkbox" />
+  <label class="checkbox" :for="inputId" :class="{ selected: value }">
+    <input @click.prevent :id="inputId" :checked="localValue" type="checkbox" />
     <input class="custom-check" type="text" v-model="localValue" />
   </label>
 </template>
@@ -16,6 +16,9 @@ export default {
       set(localValue) {
         this.$emit('input', localValue);
       },
+    },
+    inputId() {
+      return 'custom-answer' + Math.floor(Math.random() * 999999);
     },
   },
 };
