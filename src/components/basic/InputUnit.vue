@@ -16,7 +16,10 @@
 <script>
 export default {
   props: {
-    type: String,
+    type: {
+      type: String,
+      default: 'text',
+    },
     value: [String, Number],
     name: String,
     validation: String,

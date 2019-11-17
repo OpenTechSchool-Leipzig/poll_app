@@ -14,6 +14,7 @@
           <RadioInput v-if="question.options.oneAnswerOnly" :name="choice" />
           <CheckBox v-else :name="choice" />
           <IconButton
+            isDanger
             @click="removeChoice(question.options.choices.indexOf(choice))"
             name="Remove Answer Option"
           />

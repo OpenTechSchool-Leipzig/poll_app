@@ -1,70 +1,66 @@
 <template>
-  <form>
-    <header>
-      <h2>New Question</h2>
-      <DefaultButton @click="$emit('close')" name="close" />
-    </header>
-    <div class="form-input">
-      <label>Question Text</label>
-      <input type="text" v-model="newQuestion.text" />
-    </div>
-    <div class="form-input">
-      <label>Question Type</label>
-      <select type="type" v-model="newQuestion.type">
-        <option disabled value>Select question type</option>
-        <option value="open">Open question</option>
-        <option value="choice">Multiple choice</option>
-        <option value="scale">Scale Question</option>
-      </select>
-    </div>
-    <div class="form-div" v-if="newQuestion.type === 'choice'">
-      <div class="form-checkboxes">
-        <div class="form-check">
-          <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo" />
-          <label for="yesno">Yes/No Question</label>
-        </div>
-        <div class="form-check" v-if="!newQuestion.options.isYesNo">
-          <input type="checkbox" id="oneansweronly" v-model="newQuestion.options.oneAnswerOnly" />
-          <label for="oneansweronly">Allow only one answer</label>
-        </div>
-        <div class="form-check">
-          <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
-          <label for="explanation">add textfield for explanation</label>
-        </div>
-        <div class="form-check" v-if="!newQuestion.options.isYesNo">
-          <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer" />
-          <label for="customanswer">allow user to add answer</label>
-        </div>
+  <SectionContainer title="New Question" isBright>
+    <form>
+      <InputUnit v-model="newQuestion.text" :name="'Question Text'" />
+      <div class="form-input">
+        <label>Question Type</label>
+        <select type="type" v-model="newQuestion.type">
+          <option disabled value>Select question type</option>
+          <option value="open">Open question</option>
+          <option value="choice">Multiple choice</option>
+          <option value="scale">Scale Question</option>
+        </select>
       </div>
-      <div v-if="!newQuestion.options.isYesNo" class="form-input">
-        <input type="choices" v-model="answerInput" />
-        <IconButton @click="addChoice" name="add answer" />
+      <div class="form-div" v-if="newQuestion.type === 'choice'">
+        <div class="form-checkboxes">
+          <div class="form-check">
+            <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo" />
+            <label for="yesno">Yes/No Question</label>
+          </div>
+          <div class="form-check" v-if="!newQuestion.options.isYesNo">
+            <input type="checkbox" id="oneansweronly" v-model="newQuestion.options.oneAnswerOnly" />
+            <label for="oneansweronly">Allow only one answer</label>
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
+            <label for="explanation">add textfield for explanation</label>
+          </div>
+          <div class="form-check" v-if="!newQuestion.options.isYesNo">
+            <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer" />
+            <label for="customanswer">allow user to add answer</label>
+          </div>
+        </div>
+        <div v-if="!newQuestion.options.isYesNo" class="form-input">
+          <input type="choices" v-model="answerInput" />
+          <IconButton @click="addChoice" name="add answer" />
+        </div>
+        <ul class="choice-list">
+          <li
+            v-for="choice in newQuestion.options.choices"
+            :key="newQuestion.options.choices.indexOf(choice)"
+          >
+            {{ choice }}
+            <IconButton
+              @click="removeChoice(newQuestion.options.choices.indexOf(choice))"
+              name="remove answer"
+            />
+          </li>
+        </ul>
       </div>
-      <ul class="choice-list">
-        <li
-          v-for="choice in newQuestion.options.choices"
-          :key="newQuestion.options.choices.indexOf(choice)"
-        >
-          {{ choice }}
-          <IconButton
-            @click="removeChoice(newQuestion.options.choices.indexOf(choice))"
-            name="remove answer"
-          />
-        </li>
-      </ul>
-    </div>
-    <div class="form-div" v-if="newQuestion.type === 'scale'">
-      <label>Start Value</label>
-      <input type="text" v-model="newQuestion.options.startValue" />
-      <label>End Value</label>
-      <input type="text" v-model="newQuestion.options.endValue" />
-      <label>Number of Steps</label>
-      <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
-      <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
-      <label for="explanation">add textfield for explanation</label>
-    </div>
-    <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
-  </form>
+      <div class="form-div" v-if="newQuestion.type === 'scale'">
+        <InputUnit v-model="newQuestion.options.startValue" :name="'Start Value'" />
+        <InputUnit v-model="newQuestion.options.endValue" :name="'End Value'" />
+        <label>Number of Steps</label>
+        <input type="number" min="3" max="9" v-model="newQuestion.options.scaleSteps" />
+        <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
+        <label for="explanation">add textfield for explanation</label>
+      </div>
+    </form>
+    <template slot="controls">
+      <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
+      <DefaultButton name="Close" isDanger @click="$emit('close')" />
+    </template>
+  </SectionContainer>
 </template>
 
 <script>
@@ -160,28 +156,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-form {
-  width: 100%;
-  height: calc(100%);
-  z-index: 1000;
-  background-color: $primary-light;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-}
-input,
-select {
-  padding: 0.5rem;
-  border-radius: 0.3rem;
-  border: 1px inset #42b983;
-}
 .form-input {
-  width: 90%;
+  width: 100%;
   margin-bottom: 10px;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  input,
+  select {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: 1px inset #42b983;
+  }
 }
 .form-div {
   width: 100%;

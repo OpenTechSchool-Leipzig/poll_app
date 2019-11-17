@@ -1,5 +1,5 @@
 <template>
-  <div class="section-container" :class="{ 'full-height': isFullHeight }">
+  <div class="section-container" :class="{ 'full-height': isFullHeight, 'is-bright': isBright }">
     <header>
       <h2>{{ title }}</h2>
     </header>
@@ -20,6 +20,7 @@ export default {
   props: {
     title: String,
     isFullHeight: Boolean,
+    isBright: Boolean,
   },
 };
 </script>
@@ -49,6 +50,18 @@ export default {
   &.full-height {
     height: 100%;
     overflow: hidden;
+  }
+
+  &.is-bright {
+    .body {
+      background-color: $primary-light;
+    }
+
+    .controls {
+      @include bottom-radius;
+      border-top: none;
+      border-bottom: 2px solid $primary;
+    }
   }
 
   .body {
