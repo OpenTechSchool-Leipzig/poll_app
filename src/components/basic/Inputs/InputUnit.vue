@@ -18,6 +18,7 @@
             :id="inputId"
             :min="min"
             :max="max"
+            :required="isRequired"
           />
         </div>
         <div class="control" v-if="$slots.addon">
@@ -29,42 +30,26 @@
 </template>
 
 <script>
+import inputMixin from './inputMixin';
+
 export default {
+  mixins: [inputMixin],
   props: {
     type: {
       type: String,
       default: 'text',
     },
-    value: [String, Number],
-    name: String,
-    validation: String,
-    withoutLabel: Boolean,
     min: {
       type: String,
-      default: '',
+      default: null,
     },
     max: {
       type: String,
-      default: '',
+      default: null,
     },
-  },
-  computed: {
-    inputId() {
-      return this.name.split(' ').join('') + Math.floor(Math.random() * 999999);
-    },
-    validationClass() {
-      return {
-        'is-danger': this.validation === 'valid' || !this.validation ? false : true,
-        'is-success': this.validation === 'valid',
-      };
-    },
-    localValue: {
-      get() {
-        return this.value;
-      },
-      set(localValue) {
-        this.$emit('input', localValue);
-      },
+    isRequired: {
+      type: Boolean,
+      default: false,
     },
   },
 };
