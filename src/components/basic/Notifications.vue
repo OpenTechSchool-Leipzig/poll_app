@@ -16,7 +16,7 @@
             @click="remove(notification)"
           ></button>
         </div>
-        <div class="message-body">{{ notification.message }}</div>
+        <div class="message-body" v-html="notification.message"></div>
       </article>
     </transition>
   </div>
@@ -84,6 +84,7 @@ export default {
   padding: 60px 0;
   width: 100%;
   margin: 0;
+  z-index: 2000;
   article {
     width: 90%;
     max-width: 800px;

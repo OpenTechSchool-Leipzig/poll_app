@@ -1,4 +1,5 @@
 <template>
+  <!-- ToDo: split content in 3 components: Open, MC, Scale -->
   <SectionContainer title="New Question" isBright>
     <form>
       <InputUnit v-model="newQuestion.text" :name="'Question Text'" />
@@ -31,9 +32,15 @@
           </div>
         </div>
         <div v-if="!newQuestion.options.isYesNo" class="form-input">
-          <InputUnit name="Answer Options">
+          <InputUnit name="Answer Options" v-model="answerInput">
             <template slot="addon">
-              <IconButton @click="addChoice" name="add answer" isAddon isPrimary />
+              <IconButton
+                @click="addChoice"
+                name="add answer"
+                isAddon
+                isPrimary
+                :disabled="this.answerInput.length === 0"
+              />
             </template>
           </InputUnit>
         </div>
@@ -44,6 +51,7 @@
           >
             {{ choice }}
             <IconButton
+              isDanger
               @click="removeChoice(newQuestion.options.choices.indexOf(choice))"
               name="remove answer"
             />
@@ -57,15 +65,25 @@
           v-model="newQuestion.options.scaleSteps"
           :name="'Number of Steps'"
           type="number"
-          min="3"
-          max="9"
+          :min="scaleMin"
+          :max="scaleMax"
         />
         <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
         <label for="explanation">add textfield for explanation</label>
       </div>
     </form>
     <template slot="controls">
-      <DefaultButton :name="'Add Question'" isPrimary @click="emitQuestion" />
+      <div
+        class="button-wrapper"
+        v-tooltip="{ content: missingInput, trigger: 'hover click', html: true }"
+      >
+        <DefaultButton
+          :name="'Add Question'"
+          isPrimary
+          @click="emitQuestion"
+          :isDisabled="missingInput"
+        />
+      </div>
       <DefaultButton name="Close" isDanger @click="$emit('close')" />
     </template>
   </SectionContainer>
@@ -74,11 +92,25 @@
 <script>
 export default {
   name: 'AddQuestion',
+  props: {
+    minLength: {
+      type: Number,
+      default: 5,
+    },
+    scaleMin: {
+      type: Number,
+      default: 3,
+    },
+    scaleMax: {
+      type: Number,
+      default: 9,
+    },
+  },
   data: function() {
     return {
       newQuestion: {
-        text: null,
-        type: null,
+        text: '',
+        type: '',
         options: {
           withText: false,
           customAnswer: false,
@@ -87,22 +119,59 @@ export default {
           choices: [],
           startValue: 'Totally Agree',
           endValue: 'Totally Disagree',
-          scaleSteps: '5',
+          scaleSteps: 5,
         },
       },
-      answerInput: null,
+      answerInput: '',
     };
   },
-  updated() {
-    this.emitObject();
+  computed: {
+    missingInput() {
+      if (!this.newQuestion) {
+        return null;
+      }
+      const { type, text, options } = this.newQuestion;
+      let missing = [];
+      if (text.length <= this.minLength) {
+        missing.push(`Question text has to be longer than ${this.minLength - 1} symbols!`);
+      }
+      if (!type) {
+        missing.push('Please choose a question type!');
+      } else {
+        switch (type) {
+          case 'open':
+            break;
+          case 'choice':
+            if (
+              !options.isYesNo &&
+              (options.choices.length < 2 || (options.customAnswer && options.choices.length < 1))
+            ) {
+              missing.push('Multiple Choice Questions require at least 2 answer options!');
+            }
+            break;
+          case 'scale':
+            if (options.scaleSteps < this.scaleMin) {
+              missing.push(`Scale Steps can't be less than ${this.scaleMin}!`);
+            } else if (options.scaleSteps > this.scaleMax) {
+              missing.push(`Scale Steps can't be more than ${this.scaleMax}!`);
+            }
+        }
+      }
+      if (missing.length === 0) {
+        return null;
+      } else {
+        return missing.join('<br> ');
+      }
+    },
   },
   methods: {
     emitQuestion() {
-      let errorMsg;
-      if (!this.newQuestion.text || this.newQuestion.text.length < 4) {
-        errorMsg = 'Invalid input: Question text has to be longer than 3 symbols';
-      } else if (!this.newQuestion.type) {
-        errorMsg = 'Please choose a question type';
+      if (this.missingInput) {
+        this.$store.dispatch('addNotification', {
+          title: 'Error',
+          message: this.missingInput,
+          type: 'danger',
+        });
       } else {
         let value = JSON.parse(JSON.stringify(this.newQuestion));
         //v-model overwrites all values. So we have to define default options in the object
@@ -140,19 +209,20 @@ export default {
         // reset the reference for question preview
         this.$emit('newQuestion', null);
       }
-      if (errorMsg) {
-        this.$store.dispatch('addNotification', {
-          title: 'Error',
-          message: errorMsg,
-          type: 'danger',
-        });
-      }
     },
     emitObject() {
       // emit question Object for question preview
       this.$emit('newQuestion', this.newQuestion);
     },
     addChoice() {
+      if (this.answerInput.length === 0) {
+        this.$store.dispatch('addNotification', {
+          title: "Answer Oprion can't be empty",
+          message: 'Please enter some text before you add an answer',
+          type: 'danger',
+        });
+        return;
+      }
       this.newQuestion.options.choices.push(this.answerInput);
       this.answerInput = '';
     },
@@ -160,10 +230,17 @@ export default {
       this.newQuestion.options.choices.splice(n, 1);
     },
   },
+  updated() {
+    this.emitObject();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+.button-wrapper {
+  display: inline-block;
+  margin-right: 6px;
+}
 .form-input {
   width: 100%;
   margin-bottom: 10px;
