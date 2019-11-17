@@ -58,7 +58,11 @@ export default {
       this.userAnswer = this.activePoll.questions.map(question => {
         return {
           questionId: question.id,
-          answer: question.type === 'choice' && !question.options.isYesNo ? [] : null,
+          answer:
+            question.type === 'choice' &&
+            !(question.options.isYesNo || question.options.oneAnswerOnly)
+              ? []
+              : null,
         };
       });
     },

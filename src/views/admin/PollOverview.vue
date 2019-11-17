@@ -1,6 +1,6 @@
 <template>
   <div class="columns">
-    <div class="column is-three-fiths-desktop">
+    <div class="column is-three-fifths-desktop">
       <PollList
         v-if="!!populatedPolls"
         :title="'All Polls'"
@@ -24,7 +24,7 @@
         @clearState="clearStateSelection"
       />
     </div>
-    <div class="column is-two-fiths-desktop">
+    <div class="column is-two-fifths-desktop">
       <UserList :users="userList"></UserList>
     </div>
   </div>
@@ -79,25 +79,9 @@ export default {
       }
     },
     clearStateSelection() {
-      console.log('clearState');
       this.pollToUpdate.id = null;
       this.pollToUpdate.initialState = null;
     },
-  },
-  mounted: function() {
-    // Where to place all the requests
-    if (this.$store.state.polls.polls.length < 1) {
-      this.$store.dispatch('fetchPolls');
-    }
-    if (this.$store.state.questions.questions.length < 1) {
-      this.$store.dispatch('fetchQuestions');
-    }
-    if (this.$store.state.templates.templates.length < 1) {
-      this.$store.dispatch('fetchTemplates');
-    }
-    if (this.$store.state.user.userList.length < 1) {
-      this.$store.dispatch('fetchUsers');
-    }
   },
 };
 </script>

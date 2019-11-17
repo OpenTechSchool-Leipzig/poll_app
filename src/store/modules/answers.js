@@ -4,10 +4,9 @@ const answerStore = {
   state: {
     answers: [],
   },
-
   mutations: {
     updateAnswers(state, answerList) {
-      state.polls = answerList;
+      state.answers = answerList;
     },
   },
   actions: {
