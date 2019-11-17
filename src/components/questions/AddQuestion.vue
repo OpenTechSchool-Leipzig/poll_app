@@ -2,15 +2,14 @@
   <!-- ToDo: split content in 3 components: Open, MC, Scale -->
   <SectionContainer title="New Question" isBright>
     <form>
-      <InputUnit v-model="newQuestion.text" :name="'Question Text'" />
+      <InputUnit v-model="newQuestion.text" name="Question Text" />
       <div class="form-input">
-        <label>Question Type</label>
-        <select type="type" v-model="newQuestion.type">
+        <SelectUnit v-model="newQuestion.type" name="Question Type">
           <option disabled value>Select question type</option>
           <option value="open">Open question</option>
           <option value="choice">Multiple choice</option>
           <option value="scale">Scale Question</option>
-        </select>
+        </SelectUnit>
       </div>
       <div class="form-div" v-if="newQuestion.type === 'choice'">
         <div class="form-checkboxes">
@@ -247,12 +246,6 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  input,
-  select {
-    padding: 0.5rem;
-    border-radius: 0.3rem;
-    border: 1px inset #42b983;
-  }
 }
 .form-div {
   width: 100%;

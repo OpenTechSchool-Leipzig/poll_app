@@ -12,7 +12,7 @@
           </span>
           <input
             class="input"
-            :class="{ validationClass }"
+            :class="validationClass"
             :type="type"
             v-model="localValue"
             :id="inputId"
