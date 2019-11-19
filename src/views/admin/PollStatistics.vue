@@ -2,12 +2,14 @@
   <div>
     <div class="columns">
       <div class="column is-full" v-if="answeredPolls && answeredPolls.length > 0">
-        <select v-model="selectedPoll">
-          <option value>Select Poll</option>
+        <SelectUnit name="Select Poll" v-model="selectedPoll">
+          <template slot="icon">
+            <font-awesome-icon icon="sort-amount-up-alt" />
+          </template>
           <option v-for="poll in answeredPolls" :key="poll.id" :value="poll.id">{{
             poll.title
           }}</option>
-        </select>
+        </SelectUnit>
       </div>
     </div>
     <div class="columns">

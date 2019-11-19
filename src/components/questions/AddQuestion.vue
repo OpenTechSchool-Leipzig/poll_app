@@ -80,7 +80,7 @@
           :name="'Add Question'"
           isPrimary
           @click="emitQuestion"
-          :isDisabled="missingInput"
+          :isDisabled="!!missingInput"
         />
       </div>
       <DefaultButton name="Close" isDanger @click="$emit('close')" />

@@ -10,7 +10,9 @@ export default {
   },
   computed: {
     inputId() {
-      return this.name.split(' ').join('') + Math.floor(Math.random() * 999999);
+      return this.name && name.length > 0
+        ? this.name.split(' ').join('') + Math.floor(Math.random() * 999999)
+        : 'unknown' + Math.floor(Math.random() * 999999);
     },
     validationClass() {
       return {

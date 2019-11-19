@@ -2,25 +2,24 @@
   <div class="field">
     <label v-if="!withoutLabel" class="label" :for="inputId">{{ name }}</label>
     <div class="control">
-      <div class="field" :class="{ 'has-addons': $slots.addon }">
-        <div
-          class="control"
-          :class="{ 'has-icons-left': $slots.default, 'is-expanded': $slots.addon }"
+      <div
+        class="field"
+        :class="{ 'has-addons': $slots.addon, 'is-grouped': $slots.group && !$slots.addon }"
+      >
+        <InputElement
+          :name="name"
+          v-model="localValue"
+          :min="min"
+          :max="max"
+          :type="type"
+          :isRequired="isRequired"
+          :isExpanded="$slots.addon"
         >
-          <span v-if="$slots.default" class="icon is-small is-left">
-            <slot></slot>
-          </span>
-          <input
-            class="input"
-            :class="validationClass"
-            :type="type"
-            v-model="localValue"
-            :id="inputId"
-            :min="min"
-            :max="max"
-            :required="isRequired"
-          />
-        </div>
+          <template slot="icon">
+            <slot name="default"></slot>
+          </template>
+        </InputElement>
+        <slot name="group"></slot>
         <div class="control" v-if="$slots.addon">
           <slot name="addon"></slot>
         </div>
