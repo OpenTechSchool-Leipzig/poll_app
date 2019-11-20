@@ -13,7 +13,8 @@
           :max="max"
           :type="type"
           :isRequired="isRequired"
-          :isExpanded="$slots.addon"
+          :isExpanded="!!$slots.addon"
+          :id="inputId"
         >
           <template slot="icon">
             <slot name="default"></slot>
@@ -39,11 +40,11 @@ export default {
       default: 'text',
     },
     min: {
-      type: String,
+      type: Number,
       default: null,
     },
     max: {
-      type: String,
+      type: Number,
       default: null,
     },
     isRequired: {
@@ -53,9 +54,3 @@ export default {
   },
 };
 </script>
-
-<style lang="scss" scoped>
-.input:invalid {
-  @extend .is-danger;
-}
-</style>

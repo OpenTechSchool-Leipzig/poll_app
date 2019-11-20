@@ -6,7 +6,7 @@
         class="field"
         :class="{ 'has-addons': $slots.addon, 'is-grouped': $slots.group && !$slots.addon }"
       >
-        <SelectElement :name="name" v-model="localValue">
+        <SelectElement :name="name" v-model="localValue" :id="inputId">
           <template slot="icon">
             <slot name="icon"></slot>
           </template>

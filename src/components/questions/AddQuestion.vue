@@ -11,38 +11,40 @@
           <option value="scale">Scale Question</option>
         </SelectUnit>
       </div>
-      <div class="form-div" v-if="newQuestion.type === 'choice'">
-        <div class="form-checkboxes">
-          <div class="form-check">
-            <input type="checkbox" id="yesno" v-model="newQuestion.options.isYesNo" />
-            <label for="yesno">Yes/No Question</label>
-          </div>
-          <div class="form-check" v-if="!newQuestion.options.isYesNo">
-            <input type="checkbox" id="oneansweronly" v-model="newQuestion.options.oneAnswerOnly" />
-            <label for="oneansweronly">Allow only one answer</label>
-          </div>
-          <div class="form-check">
-            <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
-            <label for="explanation">add textfield for explanation</label>
-          </div>
-          <div class="form-check" v-if="!newQuestion.options.isYesNo">
-            <input type="checkbox" id="customanswer" v-model="newQuestion.options.customAnswer" />
-            <label for="customanswer">allow user to add answer</label>
-          </div>
-        </div>
-        <div v-if="!newQuestion.options.isYesNo" class="form-input">
-          <InputUnit name="Answer Options" v-model="answerInput">
-            <template slot="addon">
-              <IconButton
-                @click="addChoice"
-                name="add answer"
-                isAddon
-                isPrimary
-                :disabled="this.answerInput.length === 0"
-              />
-            </template>
-          </InputUnit>
-        </div>
+      <template v-if="newQuestion.type === 'choice'">
+        <CheckboxUnit
+          name="Yes/No Question"
+          v-model="newQuestion.options.isYesNo"
+          title="Multiple Choice Options"
+        >
+          <template slot="group">
+            <CheckboxElement
+              name="Allow only one answer"
+              v-model="newQuestion.options.oneAnswerOnly"
+              v-if="!newQuestion.options.isYesNo"
+            />
+            <CheckboxElement
+              name="Add textfield for explanation"
+              v-model="newQuestion.options.withText"
+            />
+            <CheckboxElement
+              name="Allow user to add answer"
+              v-model="newQuestion.options.customAnswer"
+              v-if="!newQuestion.options.isYesNo"
+            />
+          </template>
+        </CheckboxUnit>
+        <InputUnit name="Answer Options" v-model="answerInput" v-if="!newQuestion.options.isYesNo">
+          <template slot="addon">
+            <IconButton
+              @click="addChoice"
+              name="add answer"
+              isAddon
+              isPrimary
+              :disabled="this.answerInput.length === 0"
+            />
+          </template>
+        </InputUnit>
         <ul class="choice-list">
           <li
             v-for="choice in newQuestion.options.choices"
@@ -56,7 +58,7 @@
             />
           </li>
         </ul>
-      </div>
+      </template>
       <div class="form-div" v-if="newQuestion.type === 'scale'">
         <InputUnit v-model="newQuestion.options.startValue" :name="'Start Value'" />
         <InputUnit v-model="newQuestion.options.endValue" :name="'End Value'" />
@@ -67,8 +69,7 @@
           :min="scaleMin"
           :max="scaleMax"
         />
-        <input type="checkbox" id="explanation" v-model="newQuestion.options.withText" />
-        <label for="explanation">add textfield for explanation</label>
+        <CheckboxUnit name="Add textfield for explanation" v-model="newQuestion.options.withText" />
       </div>
     </form>
     <template slot="controls">
@@ -192,9 +193,10 @@ export default {
             break;
         }
         this.$emit('addQuestion', value);
+        // restore initial state after emit => there might be a more elegant way I guess!
         this.newQuestion = {
-          text: null,
-          type: null,
+          text: '',
+          type: '',
           options: {
             withText: false,
             customAnswer: false,
@@ -216,7 +218,7 @@ export default {
     addChoice() {
       if (this.answerInput.length === 0) {
         this.$store.dispatch('addNotification', {
-          title: "Answer Oprion can't be empty",
+          title: "Answer Option can't be empty",
           message: 'Please enter some text before you add an answer',
           type: 'danger',
         });

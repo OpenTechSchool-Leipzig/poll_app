@@ -7,9 +7,13 @@ export default {
     value: [String, Number],
     validation: String,
     withoutLabel: Boolean,
+    id: [String, Number],
   },
   computed: {
     inputId() {
+      if (this.id) {
+        return this.id;
+      }
       return this.name && this.name.length > 0
         ? this.name.split(' ').join('') + Math.floor(Math.random() * 999999)
         : 'unknown' + Math.floor(Math.random() * 999999);
