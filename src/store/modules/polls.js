@@ -39,7 +39,13 @@ const pollStore = {
                   const answerPerQuestion = answerValues.find(
                     val => val.questionId === question.id
                   );
-                  questionAnswers.push(answerPerQuestion.answer);
+                  // add custom answers to array
+                  // TODO: handle customAnswer with only one answer allowed (right now there is no inputUnit for custom radio)
+                  let mergedAnswer = answerPerQuestion.answer;
+                  if (answerPerQuestion.customAnswer) {
+                    mergedAnswer.push('*' + answerPerQuestion.customAnswer);
+                  }
+                  questionAnswers.push(mergedAnswer);
                 });
                 return { ...question, answers: questionAnswers };
               });

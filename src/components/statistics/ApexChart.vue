@@ -21,7 +21,22 @@ export default {
     },
     options: {
       type: Object,
-      default: () => {},
+      default: () => {
+        return {
+          labels: [],
+          chart: {
+            stacked: false,
+          },
+          dataLabels: {
+            enabled: true,
+          },
+          plotOptions: {
+            bar: {
+              horizontal: false,
+            },
+          },
+        };
+      },
     },
     type: {
       type: String,
@@ -71,6 +86,9 @@ export default {
           ...newOptions,
           chart: {
             stacked: true,
+          },
+          dataLabels: {
+            enabled: false,
           },
         };
       }
