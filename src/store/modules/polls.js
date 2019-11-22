@@ -34,6 +34,7 @@ const pollStore = {
             if (answerData) {
               questionObjects = questionObjects.map(question => {
                 let questionAnswers = [];
+                let questionComments = [];
                 answerData.userAnswers.forEach(ans => {
                   const answerValues = Object.values(ans);
                   const answerPerQuestion = answerValues.find(
@@ -46,8 +47,12 @@ const pollStore = {
                     mergedAnswer.push('*' + answerPerQuestion.customAnswer);
                   }
                   questionAnswers.push(mergedAnswer);
+                  // add comments if available
+                  if (answerPerQuestion.text) {
+                    questionComments.push(answerPerQuestion.text);
+                  }
                 });
-                return { ...question, answers: questionAnswers };
+                return { ...question, answers: questionAnswers, comments: questionComments };
               });
               poll.latestAnswer = answerData.updatedAt;
             }

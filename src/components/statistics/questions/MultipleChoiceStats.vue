@@ -8,6 +8,12 @@
       :isStacked="isStacked"
     />
     <CheckboxUnit v-model="isStacked" name="show stacked view" v-if="chartType === 'bar'" />
+    <div v-if="question.comments.length > 0">
+      <h4>Comments</h4>
+      <ul class="comment-list">
+        <li v-for="(comment, key) in question.comments" :key="key">{{ comment }}</li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -79,3 +85,13 @@ export default {
   },
 };
 </script>
+<style lang="scss" scoped>
+.comment-list {
+  list-style-type: disc;
+  padding-left: 2rem;
+  li {
+    font-size: 0.8rem;
+    text-align: left;
+  }
+}
+</style>
