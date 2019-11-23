@@ -54,15 +54,27 @@ export default {
     transformedSeries() {
       if (this.isStacked) {
         return this.series;
-      } else if (this.isScale) {
+      } else if (this.isScale && this.unansweredCount) {
         return [
           {
             name: 'Scale Answers',
             data: Object.entries(this.series).map(([x, y]) => [parseInt(x), y]),
           },
-          this.unansweredCount && {
+          {
             name: 'unanswered',
-            data: [[0.2, this.unansweredCount]],
+            data: Object.entries(this.series).map(([x]) => {
+              if (x - 1 === this.max) {
+                return [parseInt(x), this.unansweredCount];
+              }
+              return [parseInt(x), 0];
+            }),
+          },
+        ];
+      } else if (this.isScale) {
+        return [
+          {
+            name: 'Scale Answers',
+            data: Object.entries(this.series).map(([x, y]) => [parseInt(x), y]),
           },
         ];
       } else if (this.type === 'bar') {
@@ -116,10 +128,15 @@ export default {
           },
           xaxis: {
             type: 'numeric',
-            min: this.unansweredCount ? 0 : 1,
-            max: this.max + 1,
-            tickAmount: this.max + (this.unansweredCount ? 1 : 0),
+            min: 0,
+            max: this.max + (this.unansweredCount ? 2 : 1),
+            tickAmount: this.max + (this.unansweredCount ? 2 : 1),
             tickPlacement: 'on',
+          },
+          plotOptions: {
+            bar: {
+              columnWidth: '90%',
+            },
           },
         };
       }

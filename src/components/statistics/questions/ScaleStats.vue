@@ -3,9 +3,9 @@
     <ApexChart
       :series="dataObject"
       type="bar"
-      :options="meanAnnotation"
+      :options="annotations"
       isScale
-      :max="max"
+      :max="scaleMax"
       :unansweredCount="unansweredCount"
     />
   </div>
@@ -22,11 +22,37 @@ export default {
     ApexChart,
   },
   computed: {
-    meanAnnotation() {
+    annotations() {
       return {
         annotations: {
-          position: 'front',
+          position: 'back',
           xaxis: [
+            {
+              x: this.minValue,
+              x2: this.maxValue,
+              strokeDashArray: 0,
+              borderColor: '#ff9e09',
+              fillColor: '#ffd088',
+              opacity: 0.3,
+              offsetX: 0,
+              offsetY: 0,
+              label: {
+                borderColor: '#ff9e09',
+                borderWidth: 1,
+                text: `Range: ${this.minValue} - ${this.maxValue}`,
+                textAnchor: 'middle',
+                position: 'top',
+                orientation: 'horizontal',
+                offsetX: 50,
+                offsetY: 50,
+                style: {
+                  background: '#fff',
+                  color: '#777',
+                  fontSize: '12px',
+                  cssClass: 'apexcharts-xaxis-annotation-label',
+                },
+              },
+            },
             {
               x: this.mean,
               strokeDashArray: 0,
@@ -56,7 +82,7 @@ export default {
         },
       };
     },
-    max() {
+    scaleMax() {
       return parseInt(this.question.options.scaleSteps);
     },
     unansweredCount() {
@@ -76,13 +102,32 @@ export default {
         }
       });
 
-      for (let i = 0; i < this.max; i++) {
+      for (let i = 0; i < this.scaleMax; i++) {
         counts[i + 1] = counts[i + 1] || 0;
+      }
+      if (this.unansweredCount) {
+        counts[this.scaleMax + 1] = 0;
       }
       return counts;
     },
     labels() {
       return Object.keys(this.dataObject);
+    },
+    minValue() {
+      for (let i = 0; i < this.scaleMax; i++) {
+        if (this.dataObject[i + 1] > 0) {
+          return this.dataObject[i + 1];
+        }
+      }
+      return null;
+    },
+    maxValue() {
+      let maxCount = 0;
+      for (let i = 0; i < this.scaleMax; i++) {
+        if (this.dataObject[i + 1] > 0) maxCount = i + 1;
+        console.log(maxCount);
+      }
+      return maxCount;
     },
   },
 };

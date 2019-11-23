@@ -13,19 +13,10 @@
       </div>
     </div>
     <div class="columns">
-      <div class="column is-three-fifths-desktop">
-        <template v-if="selectedPollData && selectedPollData.questions.length">
-          <QuestionStats
-            v-for="question in selectedPollData.questions"
-            :key="question.id"
-            :question="question"
-          />
-        </template>
-      </div>
-      <div class="column is-two-fifths-desktop">
+      <div class="column is-4-desktop">
         <div class="box" v-if="selectedPollData">
-          <h2>{{ selectedPollData.title }}</h2>
-          <h4>{{ selectedPollData.date }}</h4>
+          <h2 class="title is-3">{{ selectedPollData.title }}</h2>
+          <h4 class="subtitle is-5">{{ selectedPollData.date }}</h4>
           <p>
             <b>Number of Answers:</b>
             <span>{{ answerCount }}</span>
@@ -35,6 +26,15 @@
             <span>{{ selectedPollData.latestAnswer.toDate().toLocaleDateString() }}</span>
           </p>
         </div>
+      </div>
+      <div class="column is-8-desktop">
+        <template v-if="selectedPollData && selectedPollData.questions.length">
+          <QuestionStats
+            v-for="question in selectedPollData.questions"
+            :key="question.id"
+            :question="question"
+          />
+        </template>
       </div>
     </div>
   </div>
