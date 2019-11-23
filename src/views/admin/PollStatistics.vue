@@ -6,31 +6,33 @@
           <template slot="icon">
             <font-awesome-icon icon="sort-amount-up-alt" />
           </template>
-          <option v-for="poll in answeredPolls" :key="poll.id" :value="poll.id">{{
-            poll.title
-          }}</option>
+          <option v-for="poll in answeredPolls" :key="poll.id" :value="poll.id">
+            {{ poll.title }}
+          </option>
         </SelectUnit>
       </div>
     </div>
     <div class="columns">
       <div class="column is-three-fifths-desktop">
-        <div v-if="selectedPollData && selectedPollData.questions.length">
-          <template v-for="question in selectedPollData.questions">
-            <MultipleChoiceStats
-              :key="question.id"
-              v-if="question.type === 'choice'"
-              :question="question"
-            />
-          </template>
-        </div>
+        <template v-if="selectedPollData && selectedPollData.questions.length">
+          <QuestionStats
+            v-for="question in selectedPollData.questions"
+            :key="question.id"
+            :question="question"
+          />
+        </template>
       </div>
       <div class="column is-two-fifths-desktop">
         <div class="box" v-if="selectedPollData">
           <h2>{{ selectedPollData.title }}</h2>
           <h4>{{ selectedPollData.date }}</h4>
           <p>
-            <b>Anzahl antworten:</b>
+            <b>Number of Answers:</b>
             <span>{{ answerCount }}</span>
+          </p>
+          <p>
+            <b>last Answer added:</b>
+            <span>{{ selectedPollData.latestAnswer.toDate().toLocaleDateString() }}</span>
           </p>
         </div>
       </div>
@@ -39,12 +41,12 @@
 </template>
 
 <script>
-import MultipleChoiceStats from '@/components/statistics/questions/MultipleChoiceStats.vue';
+import QuestionStats from '@/components/statistics/QuestionStats.vue';
 
 export default {
   name: 'PollStatistics',
   components: {
-    MultipleChoiceStats,
+    QuestionStats,
   },
   data() {
     return {

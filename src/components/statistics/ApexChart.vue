@@ -18,6 +18,7 @@ export default {
     },
     labels: {
       type: Array,
+      default: () => [],
     },
     options: {
       type: Object,
@@ -45,11 +46,25 @@ export default {
     },
     horizontal: Boolean,
     isStacked: Boolean,
+    isScale: Boolean,
+    unansweredCount: Number,
+    max: Number,
   },
   computed: {
     transformedSeries() {
       if (this.isStacked) {
         return this.series;
+      } else if (this.isScale) {
+        return [
+          {
+            name: 'Scale Answers',
+            data: Object.entries(this.series).map(([x, y]) => [parseInt(x), y]),
+          },
+          this.unansweredCount && {
+            name: 'unanswered',
+            data: [[0, this.unansweredCount]],
+          },
+        ];
       } else if (this.type === 'bar') {
         return [
           {
@@ -89,6 +104,24 @@ export default {
           },
           dataLabels: {
             enabled: false,
+          },
+        };
+      }
+      if (this.isScale) {
+        newOptions = {
+          ...this.options,
+          ...newOptions,
+          xaxis: {
+            type: 'numeric',
+            min: this.unansweredCount ? 0 : 1,
+            max: this.max + 1,
+            tickAmount: this.max + 1,
+            tickPlacement: 'on',
+          },
+          plotOptions: {
+            bar: {
+              columnWidth: '100%',
+            },
           },
         };
       }
