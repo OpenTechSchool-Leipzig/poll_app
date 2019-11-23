@@ -62,7 +62,7 @@ export default {
           },
           this.unansweredCount && {
             name: 'unanswered',
-            data: [[0, this.unansweredCount]],
+            data: [[0.2, this.unansweredCount]],
           },
         ];
       } else if (this.type === 'bar') {
@@ -111,17 +111,15 @@ export default {
         newOptions = {
           ...this.options,
           ...newOptions,
+          chart: {
+            stacked: true,
+          },
           xaxis: {
             type: 'numeric',
             min: this.unansweredCount ? 0 : 1,
             max: this.max + 1,
-            tickAmount: this.max + 1,
+            tickAmount: this.max + (this.unansweredCount ? 1 : 0),
             tickPlacement: 'on',
-          },
-          plotOptions: {
-            bar: {
-              columnWidth: '100%',
-            },
           },
         };
       }
