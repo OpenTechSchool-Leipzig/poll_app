@@ -20,14 +20,7 @@
 </template>
 
 <script>
-import DefaultButton from '../basic/Buttons/DefaultButton.vue';
-import DefaultModal from '../basic/DefaultModal.vue';
-
 export default {
-  components: {
-    DefaultButton,
-    DefaultModal,
-  },
   props: {
     pollId: String,
     pollTitle: String,

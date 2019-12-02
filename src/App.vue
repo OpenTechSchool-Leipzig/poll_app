@@ -8,14 +8,8 @@
 
 <script>
 import { auth } from '@/utility/firebase';
-import ConfirmationModal from '@/components/basic/ConfirmationModal.vue';
-import Notifications from '@/components/basic/Notifications.vue';
 
 export default {
-  components: {
-    ConfirmationModal,
-    Notifications,
-  },
   mounted() {
     // this method creates an observer that should be triggered on signIn and signOut
     auth.onAuthStateChanged(user => {

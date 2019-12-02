@@ -24,12 +24,7 @@
 </template>
 
 <script>
-import DefaultButton from './Buttons/DefaultButton.vue';
-
 export default {
-  components: {
-    DefaultButton,
-  },
   props: {
     title: String,
     submitBtn: Object,

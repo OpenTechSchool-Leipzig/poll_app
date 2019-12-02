@@ -2,12 +2,14 @@
   <div class="filter-body">
     <div class="level is-mobile">
       <div class="level-left">
-        <div class="control has-icons-left">
-          <input class="input" v-model="value.search" v-tooltip="'Search in ' + searchTarget" />
-          <span class="icon is-small is-left">
-            <font-awesome-icon icon="search" />
-          </span>
-        </div>
+        <InputUnit
+          name="search"
+          v-model="value.search"
+          v-tooltip="'Search in ' + searchTarget"
+          withoutLabel
+        >
+          <font-awesome-icon icon="search" />
+        </InputUnit>
       </div>
       <div class="level-left">
         <div class="control">
@@ -23,7 +25,7 @@
         </div>
       </div>
     </div>
-
+    <!-- make filters dynamic -->
     <div v-if="showFilters">
       <div v-if="typeof value.type != 'undefined'" class="field">
         <div class="control is-expanded">
@@ -92,10 +94,9 @@ export default {
 
 <style lang="scss" scoped>
 .filter-body {
-  padding: 10px 10px 20px 10px;
+  padding: 0.75rem;
   background-color: $dark;
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
+  @include bottom-radius;
   @include shadow1;
 }
 .button {

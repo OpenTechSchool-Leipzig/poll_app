@@ -15,14 +15,8 @@
 
 <script>
 import { mapState } from 'vuex';
-import DefaultModal from './DefaultModal.vue';
-import DefaultButton from './Buttons/DefaultButton.vue';
 
 export default {
-  components: {
-    DefaultModal,
-    DefaultButton,
-  },
   computed: {
     ...mapState({
       title: state => state.confirmationDialog.title,

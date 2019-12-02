@@ -20,8 +20,8 @@
 }
 
 @mixin bottom-radius {
-  border-top-left-radius: $radius-main;
-  border-top-right-radius: $radius-main;
+  border-bottom-left-radius: $radius-main;
+  border-bottom-right-radius: $radius-main;
 }
 
 @mixin main-radius {

@@ -20,6 +20,11 @@
               :name="button"
               @click="emitButton(button, poll.id)"
             />
+            <IconButton
+              v-if="answeredPollIds && answeredPollIds.includes(poll.id)"
+              name="View Statistics"
+              @click="emitButton('View Statistics', poll.id)"
+            />
           </div>
         </div>
         <ul
@@ -73,6 +78,9 @@ export default {
             (!this.filters.state || x.state === this.filters.state)
         );
       return [];
+    },
+    answeredPollIds() {
+      return this.$store.getters.answeredPollIds;
     },
   },
   methods: {

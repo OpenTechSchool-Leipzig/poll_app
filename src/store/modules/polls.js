@@ -21,12 +21,42 @@ const pollStore = {
       const { polls } = state;
       const questions = getters.populatedQuestions;
       const { userList } = rootState.user;
+      const { answers } = rootState.answers;
 
       let popPolls = cloneDeep(polls);
 
       if (popPolls.length > 0 && questions && questions.length > 0 && userList.length > 0) {
         popPolls.forEach(poll => {
-          const questionObjects = questions.filter(x => poll.questions.includes(x.id));
+          let questionObjects = questions.filter(x => poll.questions.includes(x.id));
+          // this population setup might be highly inefficient for bigger amounts of data. => this could be better done by the backend I guess
+          if (answers.length > 0) {
+            const answerData = answers.find(answer => answer.id === poll.id);
+            if (answerData) {
+              questionObjects = questionObjects.map(question => {
+                let questionAnswers = [];
+                let questionComments = [];
+                answerData.userAnswers.forEach(ans => {
+                  const answerValues = Object.values(ans);
+                  const answerPerQuestion = answerValues.find(
+                    val => val.questionId === question.id
+                  );
+                  // add custom answers to array
+                  // TODO: handle customAnswer with only one answer allowed (right now there is no inputUnit for custom radio)
+                  let mergedAnswer = answerPerQuestion.answer;
+                  if (answerPerQuestion.customAnswer) {
+                    mergedAnswer.push('*' + answerPerQuestion.customAnswer);
+                  }
+                  questionAnswers.push(mergedAnswer);
+                  // add comments if available
+                  if (answerPerQuestion.text) {
+                    questionComments.push(answerPerQuestion.text);
+                  }
+                });
+                return { ...question, answers: questionAnswers, comments: questionComments };
+              });
+              poll.latestAnswer = answerData.updatedAt;
+            }
+          }
           poll.questions = questionObjects;
           poll.createdBy = userList.find(x => x.id === poll.createdBy);
           poll.activatedBy = userList.find(x => x.id === poll.activatedBy);
@@ -35,6 +65,17 @@ const pollStore = {
         return popPolls;
       }
       return null;
+    },
+    answeredPolls: (state, getters) => {
+      if (getters.populatedPolls && getters.populatedPolls.length > 0) {
+        return getters.populatedPolls.filter(poll =>
+          poll.questions.some(q => q.answers && q.answers.length > 0)
+        );
+      }
+    },
+    answeredPollIds: (state, getters) => {
+      if (!getters.answeredPolls) return null;
+      return getters.answeredPolls.map(poll => poll.id);
     },
   },
   mutations: {

@@ -18,16 +18,8 @@
 
 <script>
 import { auth } from '@/utility/firebase';
-import FormCard from '@/components/basic/FormCard.vue';
-import InputUnit from '@/components/basic/InputUnit.vue';
-import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
-  components: {
-    FormCard,
-    InputUnit,
-    DefaultButton,
-  },
   data() {
     return {
       email: null,

@@ -30,13 +30,11 @@
 
 <script>
 import PollQuestion from '@/components/polls/PollQuestion.vue';
-import DefaultButton from '@/components/basic/Buttons/DefaultButton.vue';
 
 export default {
   name: 'AnswerPoll',
   components: {
     PollQuestion,
-    DefaultButton,
   },
   data() {
     return {
@@ -51,7 +49,7 @@ export default {
     },
     allQuestionsAnswered() {
       return !this.userAnswer.some(x => {
-        return x.answer === null || x.answer === [];
+        return x.answer === null || x.answer.length === 0;
       });
     },
   },
@@ -60,7 +58,11 @@ export default {
       this.userAnswer = this.activePoll.questions.map(question => {
         return {
           questionId: question.id,
-          answer: question.type === 'choice' && !question.options.isYesNo ? [] : null,
+          answer:
+            question.type === 'choice' &&
+            !(question.options.isYesNo || question.options.oneAnswerOnly)
+              ? []
+              : null,
         };
       });
     },

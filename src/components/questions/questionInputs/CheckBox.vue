@@ -10,10 +10,10 @@ export default {
   props: ['value', 'answerValue', 'name'],
   computed: {
     inputId() {
-      return this.name.split(' ').join('');
+      return this.name.split(' ').join('') + Math.floor(Math.random() * 999999);
     },
     checkSelection() {
-      return this.localValue.includes(this.answerValue);
+      return this.value ? this.localValue.includes(this.answerValue) : false;
     },
     localValue: {
       get() {

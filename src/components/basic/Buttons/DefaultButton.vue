@@ -1,7 +1,12 @@
 <template>
   <button
-    class="button is-outlined"
-    :class="{ 'is-loading': isLoading, 'is-primary': isPrimary, 'is-danger': isDanger }"
+    class="button"
+    :class="{
+      'is-loading': isLoading,
+      'is-primary': isPrimary,
+      'is-danger': isDanger,
+      'is-outlined': !isAddon,
+    }"
     :disabled="isDisabled"
     @click.prevent="checkEmit"
   >

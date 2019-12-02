@@ -32,6 +32,24 @@ const router = new Router({
           },
         },
         {
+          path: 'statistics',
+          name: 'statistics',
+          component: () =>
+            import(/* webpackChunkName: "admin-group" */ './views/admin/PollStatistics.vue'),
+          meta: {
+            admin: true,
+          },
+        },
+        {
+          path: '/statistics/:pollId',
+          name: 'statistics',
+          component: () =>
+            import(/* webpackChunkName: "admin-group" */ './views/admin/PollStatistics.vue'),
+          meta: {
+            admin: true,
+          },
+        },
+        {
           path: '/preview/:pollId',
           name: 'previewPoll',
           component: () => import('./views/admin/PollPreview.vue'),
