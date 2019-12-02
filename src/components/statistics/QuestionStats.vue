@@ -10,7 +10,10 @@
     <div v-if="question.type === 'open'">
       <h3 class="title is-4">Answers</h3>
       <ul class="answer-list">
-        <li v-for="(answer, key) in openAnswers" :key="key">{{ answer }}</li>
+        <li v-if="!openAnswers || openAnswers.length === 0">No answer has been given!</li>
+        <template v-else>
+          <li v-for="(answer, key) in openAnswers" :key="key">{{ answer }}</li>
+        </template>
       </ul>
     </div>
     <div v-if="question.comments.length > 0">
