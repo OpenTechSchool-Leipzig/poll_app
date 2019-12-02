@@ -8,6 +8,7 @@
         :buttons="['Change State', 'Visit Poll']"
         @ChangeState="handleStateSelection"
         @VisitPoll="visitPollHandler"
+        @ViewStatistics="viewStatisticsHandler"
       />
       <PollList
         v-if="!!populatedTemplates"
@@ -77,6 +78,9 @@ export default {
       } else {
         this.$router.push({ path: `/preview/${id}` });
       }
+    },
+    viewStatisticsHandler(id) {
+      this.$router.push({ path: `/statistics/${id}` });
     },
     clearStateSelection() {
       this.pollToUpdate.id = null;

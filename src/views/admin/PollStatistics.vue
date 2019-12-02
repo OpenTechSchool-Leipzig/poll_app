@@ -6,9 +6,9 @@
           <template slot="icon">
             <font-awesome-icon icon="sort-amount-up-alt" />
           </template>
-          <option v-for="poll in answeredPolls" :key="poll.id" :value="poll.id">
-            {{ poll.title }}
-          </option>
+          <option v-for="poll in answeredPolls" :key="poll.id" :value="poll.id">{{
+            poll.title
+          }}</option>
         </SelectUnit>
       </div>
     </div>
@@ -71,7 +71,11 @@ export default {
       return count;
     },
   },
-  methods: {},
+  mounted() {
+    if (this.$route.params.pollId) {
+      this.selectedPoll = this.$route.params.pollId;
+    }
+  },
 };
 </script>
 

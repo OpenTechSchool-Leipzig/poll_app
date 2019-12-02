@@ -23,5 +23,9 @@
   {
     "icon": "minus",
     "labels": ["remove"]
+  },
+  {
+    "icon": "sort-amount-up-alt",
+    "labels": ["statistics", "result"]
   }
 ]

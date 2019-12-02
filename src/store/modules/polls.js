@@ -73,6 +73,10 @@ const pollStore = {
         );
       }
     },
+    answeredPollIds: (state, getters) => {
+      if (!getters.answeredPolls) return null;
+      return getters.answeredPolls.map(poll => poll.id);
+    },
   },
   mutations: {
     updatePolls(state, pollList) {
