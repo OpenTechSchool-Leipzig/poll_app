@@ -78,7 +78,7 @@ export default {
   &__container {
     background-color: $primary-light;
     border-radius: 4px;
-    margin: 10px 0;
+    margin: 10px auto;
     width: 100%;
     max-width: 1000px;
 

@@ -125,7 +125,6 @@ export default {
       let maxCount = 0;
       for (let i = 0; i < this.scaleMax; i++) {
         if (this.dataObject[i + 1] > 0) maxCount = i + 1;
-        console.log(maxCount);
       }
       return maxCount;
     },

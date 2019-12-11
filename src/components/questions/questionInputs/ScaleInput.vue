@@ -43,6 +43,7 @@ export default {
 .scale {
   @extend .question-input;
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
   list-style-type: none;
 
