@@ -116,7 +116,7 @@ export default {
     minValue() {
       for (let i = 0; i < this.scaleMax; i++) {
         if (this.dataObject[i + 1] > 0) {
-          return this.dataObject[i + 1];
+          return i + 1;
         }
       }
       return null;

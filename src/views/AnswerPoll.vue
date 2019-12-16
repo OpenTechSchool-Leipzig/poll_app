@@ -127,6 +127,7 @@ export default {
     list-style: none;
     margin: 10px 0;
     padding: 0;
+    width: 100%;
   }
   &__badge {
     padding: 20px;
