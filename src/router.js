@@ -57,32 +57,31 @@ const router = new Router({
             admin: true,
           },
         },
-        {
-          path: '/login',
-          name: 'login',
-          component: () => import(/* webpackChunkName: "admin-group" */ './views/admin/Login.vue'),
-          meta: {
-            guest: true,
-          },
-        },
-        {
-          path: '/signup',
-          name: 'signup',
-          component: () =>
-            import(/* webpackChunkName: "admin-group" */ './views/admin/Register.vue'),
-          meta: {
-            guest: true,
-          },
-        },
-        {
-          path: '/402',
-          name: '402',
-          component: () => import('./views/static/402.vue'),
-          meta: {
-            auth: true,
-          },
-        },
       ],
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import(/* webpackChunkName: "admin-group" */ './views/admin/Login.vue'),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: '/signup',
+      name: 'signup',
+      component: () => import(/* webpackChunkName: "admin-group" */ './views/admin/Register.vue'),
+      meta: {
+        guest: true,
+      },
+    },
+    {
+      path: '/402',
+      name: '402',
+      component: () => import('./views/static/402.vue'),
+      meta: {
+        auth: true,
+      },
     },
     // dynamic path to poll
     {
