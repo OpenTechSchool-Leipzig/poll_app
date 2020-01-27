@@ -12,7 +12,7 @@
         </SelectUnit>
       </div>
     </div>
-    <div class="columns">
+    <div class="columns" ref="content">
       <div class="column is-4-desktop">
         <div class="box" v-if="selectedPollData">
           <h2 class="title is-3">{{ selectedPollData.title }}</h2>
@@ -37,10 +37,14 @@
         </template>
       </div>
     </div>
+    <div>
+      <default-button @click="downloadPdf">Download PDF</default-button>
+    </div>
   </div>
 </template>
 
 <script>
+import jsPDF from 'jspdf';
 import QuestionStats from '@/components/statistics/QuestionStats.vue';
 
 export default {
@@ -69,6 +73,16 @@ export default {
         if (length > count) count = length;
       });
       return count;
+    },
+  },
+  methods: {
+    downloadPdf() {
+      const doc = new jsPDF();
+      const contentHtml = this.$refs.content.innerHTML;
+      doc.fromHTML(contentHtml, 15, 15, {
+        width: 170,
+      });
+      doc.save('sample.pdf');
     },
   },
   mounted() {
