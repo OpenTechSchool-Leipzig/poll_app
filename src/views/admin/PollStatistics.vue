@@ -38,7 +38,7 @@
       </div>
     </div>
     <div>
-      <default-button @click="downloadPdf">Download PDF</default-button>
+      <default-button @click="downloadPdf" name="Download PDF" />
     </div>
   </div>
 </template>
