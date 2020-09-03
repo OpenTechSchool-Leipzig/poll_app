@@ -28,7 +28,7 @@ export default {
       console.log(`ID: ${userId}, isAdmin: ${isAdmin}`);
       if (!isAdmin) {
         const addAdminRole = functions.httpsCallable('addAdminRole');
-        addAdminRole({ userId: userId }).then(res => {
+        addAdminRole({ userId }).then(res => {
           console.log(res);
         });
       }

@@ -50,7 +50,7 @@ export default {
         });
       }
 
-      let counts = {};
+      const counts = {};
       answers.forEach(answer => {
         if (!answer || answer.length === 0) answer = 'unanswered';
         counts[answer] = (counts[answer] || 0) + 1;

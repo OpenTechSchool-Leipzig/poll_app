@@ -95,7 +95,7 @@ export default {
       return this.question.answers.reduce((acc, x) => acc + x) / this.validAnswerCount;
     },
     dataObject() {
-      let counts = {};
+      const counts = {};
       this.question.answers.forEach(answer => {
         if (answer) {
           counts[answer] = (counts[answer] || 0) + 1;
