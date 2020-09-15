@@ -3,7 +3,7 @@
     <div class="modal">
       <div class="modal-background" @click.prevent="emitClose"></div>
       <div class="modal-content">
-        <div class="box">
+        <div class="box content">
           <slot></slot>
         </div>
       </div>

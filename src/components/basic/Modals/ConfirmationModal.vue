@@ -1,6 +1,6 @@
 <template>
   <default-modal v-if="visible" @closeModal="cancel">
-    <h2>{{ title }}</h2>
+    <h2 class="title is-4">{{ title }}</h2>
     <p>{{ text }}</p>
     <div class="level">
       <div class="level-item">
