@@ -12,9 +12,6 @@ import {
 const pollStore = {
   state: {
     polls: [],
-    // an gloablly available state for the active poll might be neccassary
-    // (e.g: navigating from Overview to CreatePoll View after selection)
-    // activePoll: {}
   },
   getters: {
     populatedPolls: (state, getters, rootState) => {
