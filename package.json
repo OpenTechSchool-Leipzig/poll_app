@@ -18,7 +18,7 @@
     "core-js": "^3.5.0",
     "firebase": "^7.19.1",
     "jspdf": "^1.5.3",
-    "lodash": "^4.17.19",
+    "lodash": "^4.17.21",
     "register-service-worker": "^1.6.2",
     "v-tooltip": "^2.0.2",
     "vue": "^2.6.11",
